@@ -2,7 +2,6 @@ package com.termux.app.terminal;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -359,6 +358,7 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
             .setView(view)
             .create();
         dialog.setCanceledOnTouchOutside(false);
+        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         android.widget.LinearLayout container = new android.widget.LinearLayout(mActivity);
         container.setOrientation(android.widget.LinearLayout.VERTICAL);
@@ -426,8 +426,8 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         if (service == null) return;
 
         if (service.getTermuxSessionsSize() >= MAX_SESSIONS) {
-            new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setTitle(R.string.title_max_terminals_reached).setMessage(R.string.msg_max_terminals_reached)
-                .setPositiveButton(android.R.string.ok, null).show();
+            androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setTitle(R.string.title_max_terminals_reached).setMessage(R.string.msg_max_terminals_reached)
+                .setPositiveButton(android.R.string.ok, null).create(); d.show(); if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         } else {
             TerminalSession currentSession = mActivity.getCurrentSession();
 

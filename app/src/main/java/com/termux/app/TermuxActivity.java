@@ -646,6 +646,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 .setView(view)
                 .create();
             dialog.setCanceledOnTouchOutside(false);
+            if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
             android.widget.LinearLayout container = new android.widget.LinearLayout(TermuxActivity.this);
             container.setOrientation(android.widget.LinearLayout.VERTICAL);
@@ -783,10 +784,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         com.google.android.material.button.MaterialButton openRepo = view.findViewById(R.id.m3_pkg_open_repo);
 
         androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.m3_packages_title)
             .setView(view)
-            .setNegativeButton(android.R.string.cancel, null)
             .create();
+        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         Runnable load = () -> loadPackagesIntoDialog(search, progress, status, list);
         search.addTextChangedListener(new android.text.TextWatcher() {
             public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
@@ -896,6 +896,29 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         item.setEnabled(enabled); item.setAlpha(enabled ? 1f : 0.5f);
         item.setOnClickListener(v -> { if (mContextMenuDialog != null) mContextMenuDialog.dismiss(); action.run(); });
         container.addView(item);
+    }
+
+    public void showM3MessageDialog(String title, String message, int iconRes) {
+        View content = getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
+        LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
+        View header = getLayoutInflater().inflate(R.layout.m3_context_menu_item, items, false);
+        ((android.widget.ImageView) header.findViewById(R.id.menu_item_icon)).setImageResource(iconRes);
+        ((TextView) header.findViewById(R.id.menu_item_text)).setText(title);
+        header.setClickable(false); header.setFocusable(false);
+        items.addView(header);
+        TextView body = new TextView(this);
+        body.setText(message);
+        int pad = (int) (16 * getResources().getDisplayMetrics().density);
+        body.setPadding(pad, pad/2, pad, pad);
+        body.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, R.attr.colorOnSurface, 0xFF222222));
+        items.addView(body);
+        androidx.appcompat.app.AlertDialog d = new MaterialAlertDialogBuilder(this).setView(content).create();
+        d.show();
+        if (d.getWindow() != null) {
+            d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            int margin = (int) (8 * getResources().getDisplayMetrics().density);
+            d.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
+        }
     }
 
     public void showTermuxContextMenu() {

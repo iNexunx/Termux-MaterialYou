@@ -1,7 +1,6 @@
 package com.termux.app.terminal;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -708,31 +707,35 @@ public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
 
         LinkedHashSet<CharSequence> urlSet = TermuxUrlUtils.extractUrls(text);
         if (urlSet.isEmpty()) {
-            new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setMessage(R.string.title_select_url_none_found).show();
+            mActivity.showM3MessageDialog(mActivity.getString(R.string.title_select_url_dialog), mActivity.getString(R.string.title_select_url_none_found), R.drawable.ic_m3_link);
             return;
         }
 
         final CharSequence[] urls = urlSet.toArray(new CharSequence[0]);
-        Collections.reverse(Arrays.asList(urls)); // Latest first.
-
-        // Click to copy url to clipboard:
-        final androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setItems(urls, (di, which) -> {
-            String url = (String) urls[which];
-            ShareUtils.copyTextToClipboard(mActivity, url, mActivity.getString(R.string.msg_select_url_copied_to_clipboard));
-        }).setTitle(R.string.title_select_url_dialog).create();
-
-        // Long press to open URL:
-        dialog.setOnShowListener(di -> {
-            ListView lv = dialog.getListView(); // this is a ListView with your "buds" in it
-            lv.setOnItemLongClickListener((parent, view, position, id) -> {
-                dialog.dismiss();
-                String url = (String) urls[position];
-                ShareUtils.openUrl(mActivity, url);
-                return true;
-            });
-        });
-
+        Collections.reverse(Arrays.asList(urls));
+        android.view.View content = mActivity.getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
+        android.widget.LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setView(content).create();
+        for (CharSequence u : urls) {
+            String url = String.valueOf(u);
+            android.view.View item = mActivity.getLayoutInflater().inflate(R.layout.m3_context_menu_item, items, false);
+            ((android.widget.ImageView) item.findViewById(R.id.menu_item_icon)).setImageResource(R.drawable.ic_m3_link);
+            android.widget.TextView tv = item.findViewById(R.id.menu_item_text);
+            tv.setText(url);
+            tv.setMaxLines(2);
+            item.setOnClickListener(v -> { dialog.dismiss(); ShareUtils.copyTextToClipboard(mActivity, url, mActivity.getString(R.string.msg_select_url_copied_to_clipboard)); });
+            item.setOnLongClickListener(v -> { dialog.dismiss(); ShareUtils.openUrl(mActivity, url); return true; });
+            items.addView(item);
+        }
         dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            int margin = (int) (8 * mActivity.getResources().getDisplayMetrics().density);
+            dialog.getWindow().setLayout(mActivity.getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+        return;
+
+
     }
 
     public void reportIssueFromTranscript() {

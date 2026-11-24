@@ -84,6 +84,13 @@ public final class TextInputDialogUtils {
         dialogHolder[0] = dialog;
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            int margin = dp(activity, 12);
+            android.view.WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+            lp.width = activity.getResources().getDisplayMetrics().widthPixels - margin * 2;
+            dialog.getWindow().setAttributes(lp);
+        }
         if (stackedButtons) stackDialogButtons(dialog);
     }
 

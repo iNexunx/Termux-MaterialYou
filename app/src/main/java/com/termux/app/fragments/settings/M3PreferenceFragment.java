@@ -28,17 +28,19 @@ public abstract class M3PreferenceFragment extends PreferenceFragmentCompat {
             CharSequence[] values = lp.getEntryValues();
             int checked = lp.findIndexOfValue(lp.getValue());
             final int[] selected = {checked};
-            new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+            androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
                 .setTitle(lp.getTitle())
-                .setSingleChoiceItems(entries, checked, (d, which) -> selected[0] = which)
+                .setSingleChoiceItems(entries, checked, (dlg, which) -> selected[0] = which)
                 .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok, (d, w) -> {
+                .setPositiveButton(android.R.string.ok, (dlg, w) -> {
                     if (selected[0] >= 0 && values != null && selected[0] < values.length) {
                         String v = values[selected[0]].toString();
                         if (lp.callChangeListener(v)) lp.setValue(v);
                     }
                 })
-                .show();
+                .create();
+            d.show();
+            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             return;
         }
         super.onDisplayPreferenceDialog(preference);
