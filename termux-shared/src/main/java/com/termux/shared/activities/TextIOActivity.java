@@ -66,7 +66,7 @@ public class TextIOActivity extends AppCompatActivity {
 
     protected Context wrapM3Context(Context context) {
         try {
-            android.content.SharedPreferences p = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE));
+            android.content.SharedPreferences p = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
             String lang = p.getString("m3_language", "system");
             if (lang != null && !lang.isEmpty() && !"system".equals(lang)) {
                 java.util.Locale locale = java.util.Locale.forLanguageTag(lang);
@@ -112,7 +112,7 @@ public class TextIOActivity extends AppCompatActivity {
 
     protected void applyM3Theme() {
         try {
-            android.content.SharedPreferences p = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE));
+            android.content.SharedPreferences p = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
             String accent = p.getString("m3_accent", "default");
             String mode = p.getString("m3_theme_mode", "system");
             if ("material_you".equals(mode) && android.os.Build.VERSION.SDK_INT >= 31) {
