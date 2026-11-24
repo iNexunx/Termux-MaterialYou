@@ -45,7 +45,6 @@ public final class TextInputDialogUtils {
         View view = LayoutInflater.from(activity).inflate(R.layout.dialog_m3_text_input, null, false);
         final EditText input = view.findViewById(R.id.dialog_text_input);
         TextInputLayout inputLayout = view.findViewById(R.id.dialog_text_input_layout);
-        inputLayout.setHint(activity.getString(titleText));
         input.setSingleLine();
         if (initialText != null) {
             input.setText(initialText);
@@ -60,8 +59,10 @@ public final class TextInputDialogUtils {
             return true;
         });
 
+        android.widget.TextView titleView = view.findViewById(R.id.dialog_m3_title);
+        if (titleView != null) titleView.setText(titleText);
+        else inputLayout.setHint(activity.getString(titleText));
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity)
-            .setTitle(titleText)
             .setView(view)
             .setPositiveButton(positiveButtonText, (d, whichButton) -> {
                 if (onPositive != null) onPositive.onTextSet(input.getText().toString());

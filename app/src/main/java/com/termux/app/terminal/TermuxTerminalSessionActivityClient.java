@@ -353,17 +353,36 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
             android.text.Selection.setSelection(input.getText(), sessionToRename.mSessionName.length());
         }
 
+        android.widget.LinearLayout outer = new android.widget.LinearLayout(mActivity);
+        outer.setOrientation(android.widget.LinearLayout.VERTICAL);
+        outer.setBackgroundResource(R.drawable.m3_dialog_outer_bg);
+        int outerPad = (int) (16 * mActivity.getResources().getDisplayMetrics().density);
+        outer.setPadding(outerPad, outerPad, outerPad, outerPad);
+
+        com.google.android.material.textview.MaterialTextView title = new com.google.android.material.textview.MaterialTextView(mActivity);
+        title.setText(R.string.title_rename_session);
+        title.setTextAppearance(mActivity, com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6);
+        title.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorOnSurface, 0xFF222222));
+        title.setPadding(0,0,0,(int)(12*mActivity.getResources().getDisplayMetrics().density));
+        outer.addView(title);
+
+        // remove padding from inflated view since outer handles it
+        view.setPadding(0,0,0,0);
+        if (view instanceof android.view.ViewGroup) {
+            android.view.ViewGroup vg = (android.view.ViewGroup) view;
+            for (int i=0;i<vg.getChildCount();i++) vg.getChildAt(i).setPadding(0, vg.getChildAt(i).getPaddingTop(), 0, vg.getChildAt(i).getPaddingBottom());
+        }
+        outer.addView(view);
+
         androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity)
-            .setTitle(R.string.title_rename_session)
-            .setView(view)
+            .setView(outer)
             .create();
         dialog.setCanceledOnTouchOutside(false);
         if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         android.widget.LinearLayout container = new android.widget.LinearLayout(mActivity);
         container.setOrientation(android.widget.LinearLayout.VERTICAL);
-        int pad = (int) (20 * mActivity.getResources().getDisplayMetrics().density);
-        container.setPadding(pad, (int) (8 * mActivity.getResources().getDisplayMetrics().density), pad, (int) (16 * mActivity.getResources().getDisplayMetrics().density));
+        container.setPadding(0, (int) (8 * mActivity.getResources().getDisplayMetrics().density), 0, 0);
 
         com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonStyle);
         confirm.setText(R.string.action_rename_session_confirm);
@@ -427,7 +446,7 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
 
         if (service.getTermuxSessionsSize() >= MAX_SESSIONS) {
             androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setTitle(R.string.title_max_terminals_reached).setMessage(R.string.msg_max_terminals_reached)
-                .setPositiveButton(android.R.string.ok, null).create(); d.show(); if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                .setPositiveButton(android.R.string.ok, null).create(); d.show(); if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(R.drawable.m3_dialog_outer_bg);
         } else {
             TerminalSession currentSession = mActivity.getCurrentSession();
 

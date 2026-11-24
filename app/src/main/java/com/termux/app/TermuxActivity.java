@@ -639,8 +639,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             com.google.android.material.textfield.TextInputLayout inputLayout = view.findViewById(com.termux.shared.R.id.dialog_text_input_layout);
             inputLayout.setHint(getString(R.string.title_create_named_session));
             input.setSingleLine();
+            android.widget.TextView dlgTitle = view.findViewById(com.termux.shared.R.id.dialog_m3_title);
+            if (dlgTitle != null) dlgTitle.setText(R.string.title_create_named_session);
             androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(TermuxActivity.this)
-                .setTitle(R.string.title_create_named_session)
                 .setView(view)
                 .create();
             dialog.setCanceledOnTouchOutside(false);
@@ -675,13 +676,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             cancel.setOnClickListener(x -> dialog.dismiss());
             failsafe.setOnClickListener(x -> { mTermuxTerminalSessionActivityClient.addNewSession(true, input.getText().toString()); dialog.dismiss(); });
 
-            dialog.setOnShowListener(d -> {
-                android.view.ViewGroup parent = (android.view.ViewGroup) view.getParent();
-                if (parent != null) {
-                    int idx = parent.indexOfChild(view);
-                    parent.addView(container, idx + 1);
-                }
-            });
+            if (view instanceof android.widget.LinearLayout) ((android.widget.LinearLayout) view).addView(container);
+            else dialog.setOnShowListener(d -> { android.view.ViewGroup parent = (android.view.ViewGroup) view.getParent(); if (parent != null) { int idx = parent.indexOfChild(view); parent.addView(container, idx + 1); } });
             dialog.show();
             return true;
         });
@@ -1018,7 +1014,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         });
         b.setNegativeButton(android.R.string.cancel, null);
         androidx.appcompat.app.AlertDialog d = b.create(); d.show();
-        if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(R.drawable.m3_dialog_outer_bg);
     }
 
     private void onResetTerminalSession(TerminalSession session) {
@@ -1044,7 +1040,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                     (dialog, which) -> ActivityUtils.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(TermuxConstants.TERMUX_STYLING_FDROID_PACKAGE_URL))))
                 .setNegativeButton(android.R.string.cancel, null).create();
             d.show();
-            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(R.drawable.m3_dialog_outer_bg);
         }
     }
     private void toggleKeepScreenOn() {

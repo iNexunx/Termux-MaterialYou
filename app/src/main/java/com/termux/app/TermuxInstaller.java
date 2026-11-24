@@ -341,18 +341,20 @@ final class TermuxInstaller {
 
         activity.runOnUiThread(() -> {
             try {
-                new com.google.android.material.dialog.MaterialAlertDialogBuilder(activity)
-                    .setTitle(R.string.bootstrap_error_title)
-                    .setMessage(R.string.bootstrap_error_body)
-                    .setNegativeButton(R.string.bootstrap_error_abort, (dialog, which) -> {
-                        dialog.dismiss();
-                        activity.finish();
-                    })
+                android.view.View bv = android.view.LayoutInflater.from(activity).inflate(com.termux.shared.R.layout.dialog_show_message, null, false);
+                ((android.widget.TextView)bv.findViewById(com.termux.shared.R.id.dialog_title)).setText(R.string.bootstrap_error_title);
+                ((android.widget.TextView)bv.findViewById(com.termux.shared.R.id.dialog_message)).setText(R.string.bootstrap_error_body);
+                androidx.appcompat.app.AlertDialog bd = new com.google.android.material.dialog.MaterialAlertDialogBuilder(activity)
+                    .setView(bv)
+                    .setNegativeButton(R.string.bootstrap_error_abort, (dialog, which) -> { dialog.dismiss(); activity.finish(); })
                     .setPositiveButton(R.string.bootstrap_error_try_again, (dialog, which) -> {
                         dialog.dismiss();
                         FileUtils.deleteFile("termux prefix directory", TERMUX_PREFIX_DIR_PATH, true);
                         TermuxInstaller.setupBootstrapIfNeeded(activity, whenDone);
-                    }).show();
+                    }).create();
+                bd.show();
+                if (bd.getWindow()!=null) bd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                try { com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(bd); } catch(Throwable ignored){}
             } catch (WindowManager.BadTokenException e1) {
                 // Activity already dismissed - ignore.
             }
