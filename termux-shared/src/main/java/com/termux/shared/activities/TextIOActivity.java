@@ -58,8 +58,30 @@ public class TextIOActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "TextIOActivity";
 
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(wrapM3Context(newBase));
+    }
+
+    protected Context wrapM3Context(Context context) {
+        try {
+            android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context);
+            String lang = p.getString("m3_language", "system");
+            if (lang != null && !lang.isEmpty() && !"system".equals(lang)) {
+                java.util.Locale locale = java.util.Locale.forLanguageTag(lang);
+                java.util.Locale.setDefault(locale);
+                android.content.res.Configuration config = new android.content.res.Configuration(context.getResources().getConfiguration());
+                config.setLocale(locale);
+                config.setLayoutDirection(locale);
+                context = context.createConfigurationContext(config);
+            }
+        } catch (Throwable ignored) {}
+        return context;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        applyM3Theme();
         super.onCreate(savedInstanceState);
         Logger.logVerbose(LOG_TAG, "onCreate");
 
@@ -87,6 +109,36 @@ public class TextIOActivity extends AppCompatActivity {
         updateUI();
     }
 
+
+    protected void applyM3Theme() {
+        try {
+            android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+            String accent = p.getString("m3_accent", "default");
+            String mode = p.getString("m3_theme_mode", "system");
+            if ("material_you".equals(mode) && android.os.Build.VERSION.SDK_INT >= 31) {
+                // Dynamic colors handled by app where available
+            }
+            int res = getM3ThemeResId(accent);
+            if (res != 0) setTheme(res);
+        } catch (Throwable ignored) {}
+    }
+
+    protected int getM3ThemeResId(String accent) {
+        String pkg = getPackageName();
+        String name = "Theme_TermuxApp_M3_";
+        if ("blue".equals(accent)) name += "Blue";
+        else if ("teal".equals(accent)) name += "Teal";
+        else if ("green".equals(accent)) name += "Green";
+        else if ("orange".equals(accent)) name += "Orange";
+        else if ("rose".equals(accent)) name += "Rose";
+        else if ("lavender".equals(accent)) name += "Lavender";
+        else if ("red".equals(accent)) name += "Red";
+        else if ("amber".equals(accent)) name += "Amber";
+        else if ("cyan".equals(accent)) name += "Cyan";
+        else if ("indigo".equals(accent)) name += "Indigo";
+        else name += "Default";
+        return getResources().getIdentifier(name, "style", pkg);
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
