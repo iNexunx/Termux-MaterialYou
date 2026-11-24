@@ -32,14 +32,20 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
+    <style name="Widget.Termux.M3.DialogButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.Termux.M3.DialogButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog.Flush">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
     <style name="ThemeOverlay.Termux.M3.Dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">?attr/colorSurface</item>
-        <item name="colorOnSurface">?attr/colorOnSurface</item>
-        <item name="colorPrimary">?attr/colorPrimary</item>
-        <item name="colorOnPrimary">?attr/colorOnPrimary</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.Termux.M3.PillButton</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.Termux.M3.PillButton.Outlined</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Widget.Termux.M3.PillButton.Outlined</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Termux.M3.DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Termux.M3.DialogButton.Text</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.Termux.M3.DialogButton.Text</item>
     </style>
 
     <style name="Widget.Termux.M3.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
