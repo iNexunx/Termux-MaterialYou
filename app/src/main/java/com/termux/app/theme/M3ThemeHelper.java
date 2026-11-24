@@ -61,13 +61,16 @@ public final class M3ThemeHelper {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         String accent = prefs.getString(PREF_ACCENT, "default");
         String mode = prefs.getString(PREF_MODE, "system");
-        if ("material_you".equals(mode)) {
+        boolean dynamicMode = "material_you".equals(mode);
+        boolean defaultAccent = accent == null || accent.isEmpty() || "default".equals(accent);
+        if (dynamicMode || defaultAccent) {
             if (applyDynamicColorsIfAvailable(activity)) return;
-            String seed = prefs.getString(PREF_SEED_COLOR, null);
-            Integer argb = null;
-            if (seed != null) { try { argb = (int) Long.parseLong(seed, 16); } catch (NumberFormatException ignored) {} }
-            if (argb == null) argb = getWallpaperPrimaryColor(activity);
-            if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
+            Integer argb = getWallpaperPrimaryColor(activity);
+            if (argb != null) {
+                activity.setTheme(getThemeResId(ACCENTS[nearestAccentIndex(argb)]));
+                return;
+            }
+            if (defaultAccent) { activity.setTheme(R.style.Theme_TermuxApp_M3_Default); return; }
         }
         activity.setTheme(getThemeResId(accent));
     }

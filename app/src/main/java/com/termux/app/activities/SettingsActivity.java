@@ -8,7 +8,7 @@ import android.os.Environment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
+import com.termux.app.fragments.settings.M3PreferenceFragment;
 
 import com.termux.R;
 import com.termux.app.theme.M3ThemeHelper;
@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
         return true;
     }
 
-    public static class RootPreferencesFragment extends PreferenceFragmentCompat {
+    public static class RootPreferencesFragment extends M3PreferenceFragment {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             Context context = getContext();

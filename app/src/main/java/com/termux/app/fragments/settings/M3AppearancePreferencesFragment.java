@@ -5,14 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.Keep;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
+import com.termux.app.fragments.settings.M3PreferenceFragment;
 import androidx.preference.PreferenceManager;
 
 import com.termux.R;
 import com.termux.app.theme.M3ThemeHelper;
 
 @Keep
-public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
+public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
