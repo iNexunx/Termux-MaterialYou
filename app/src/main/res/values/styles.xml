@@ -53,6 +53,8 @@
         <item name="trackTint">@color/m3_switch_track</item>
     </style>
 
+    <style name="Widget.Termux.M3" parent="@android:style/Widget" />
+
     <style name="Widget.Termux.M3.SelectionPill">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">40dp</item>
