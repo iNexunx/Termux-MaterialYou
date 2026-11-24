@@ -57,6 +57,27 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
 
         AppCompatActivityUtils.setToolbar(this, com.termux.shared.R.id.toolbar);
         AppCompatActivityUtils.setShowBackButtonInActionBar(this, true);
+        getSupportFragmentManager().addOnBackStackChangedListener(this::updateSettingsTitle);
+        getSupportFragmentManager().registerFragmentLifecycleCallbacks(new androidx.fragment.app.FragmentManager.FragmentLifecycleCallbacks() {
+            @Override public void onFragmentResumed(@NonNull androidx.fragment.app.FragmentManager fm, @NonNull androidx.fragment.app.Fragment f) { updateSettingsTitle(); }
+        }, false);
+        updateSettingsTitle();
+    }
+
+    private void updateSettingsTitle() {
+        androidx.fragment.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.settings);
+        CharSequence title = getString(R.string.action_open_settings);
+        if (f instanceof com.termux.app.fragments.settings.M3AppearancePreferencesFragment) title = getString(R.string.m3_appearance_title);
+        else if (f instanceof com.termux.app.fragments.settings.TermuxPreferencesFragment) title = getString(R.string.termux_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.termux.TerminalIOPreferencesFragment) title = getString(R.string.termux_terminal_io_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.termux.TerminalViewPreferencesFragment) title = getString(R.string.termux_terminal_view_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.termux.DebuggingPreferencesFragment) title = getString(R.string.termux_debugging_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.TermuxAPIPreferencesFragment) title = getString(R.string.termux_api_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.TermuxFloatPreferencesFragment) title = getString(R.string.termux_float_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.TermuxTaskerPreferencesFragment) title = getString(R.string.termux_tasker_preferences_title);
+        else if (f instanceof com.termux.app.fragments.settings.TermuxWidgetPreferencesFragment) title = getString(R.string.termux_widget_preferences_title);
+        else if (f instanceof RootPreferencesFragment) title = getString(R.string.action_open_settings);
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(title);
     }
 
     @Override

@@ -22,6 +22,26 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
         bindSummary("m3_language");
         bindSummary("terminal_font");
         bindSummary("terminal_color_scheme");
+        bindTerminalViewSwitch("terminal_margin_adjustment");
+        bindTerminalViewSwitch("extra_keys_floating");
+    }
+
+    private void bindTerminalViewSwitch(String key) {
+        androidx.preference.SwitchPreferenceCompat p = findPreference(key);
+        if (p == null) return;
+        com.termux.shared.termux.settings.preferences.TermuxAppSharedPreferences prefs = com.termux.shared.termux.settings.preferences.TermuxAppSharedPreferences.build(requireContext(), true);
+        if (prefs == null) return;
+        if ("terminal_margin_adjustment".equals(key)) p.setChecked(prefs.isTerminalMarginAdjustmentEnabled());
+        if ("extra_keys_floating".equals(key)) p.setChecked(prefs.isExtraKeysFloating());
+        p.setOnPreferenceChangeListener((pref, newValue) -> {
+            boolean v = Boolean.TRUE.equals(newValue);
+            com.termux.shared.termux.settings.preferences.TermuxAppSharedPreferences pr = com.termux.shared.termux.settings.preferences.TermuxAppSharedPreferences.build(requireContext(), true);
+            if (pr == null) return false;
+            if ("terminal_margin_adjustment".equals(key)) pr.setTerminalMarginAdjustment(v);
+            if ("extra_keys_floating".equals(key)) pr.setExtraKeysFloating(v);
+            if (getActivity() instanceof com.termux.app.TermuxActivity) ((com.termux.app.TermuxActivity) getActivity()).reloadTerminalStyling();
+            return true;
+        });
     }
 
     private void bindSummary(String key) {

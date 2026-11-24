@@ -445,8 +445,12 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         if (service == null) return;
 
         if (service.getTermuxSessionsSize() >= MAX_SESSIONS) {
-            androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setTitle(R.string.title_max_terminals_reached).setMessage(R.string.msg_max_terminals_reached)
-                .setPositiveButton(android.R.string.ok, null).create(); d.show(); if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(R.drawable.m3_dialog_outer_bg);
+            android.view.View mv = android.view.LayoutInflater.from(mActivity).inflate(com.termux.shared.R.layout.dialog_show_message, null, false);
+            ((android.widget.TextView)mv.findViewById(com.termux.shared.R.id.dialog_title)).setText(R.string.title_max_terminals_reached);
+            ((android.widget.TextView)mv.findViewById(com.termux.shared.R.id.dialog_message)).setText(R.string.msg_max_terminals_reached);
+            androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setView(mv)
+                .setPositiveButton(android.R.string.ok, null).create(); d.show();
+            if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         } else {
             TerminalSession currentSession = mActivity.getCurrentSession();
 

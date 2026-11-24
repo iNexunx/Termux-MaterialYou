@@ -40,7 +40,11 @@ public abstract class M3PreferenceFragment extends PreferenceFragmentCompat {
                 })
                 .create();
             d.show();
-            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(com.termux.R.drawable.m3_dialog_outer_bg);
+            if (d.getWindow() != null) {
+                d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                android.view.View decor = d.getWindow().getDecorView();
+                if (decor != null) decor.setBackgroundResource(com.termux.R.drawable.m3_dialog_outer_bg);
+            }
             return;
         }
         super.onDisplayPreferenceDialog(preference);

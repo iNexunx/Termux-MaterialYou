@@ -1005,16 +1005,15 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private void showKillSessionDialog(TerminalSession session) {
         if (session == null) return;
 
-        final MaterialAlertDialogBuilder b = new MaterialAlertDialogBuilder(this);
-        b.setIcon(R.drawable.ic_m3_power);
-        b.setMessage(R.string.title_confirm_kill_process);
-        b.setPositiveButton(R.string.action_kill_process_confirm, (dialog, id) -> {
-            dialog.dismiss();
-            session.finishIfRunning();
-        });
-        b.setNegativeButton(android.R.string.cancel, null);
-        androidx.appcompat.app.AlertDialog d = b.create(); d.show();
-        if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(R.drawable.m3_dialog_outer_bg);
+        View cv = getLayoutInflater().inflate(com.termux.shared.R.layout.dialog_show_message, null, false);
+        ((android.widget.TextView)cv.findViewById(com.termux.shared.R.id.dialog_title)).setText(getString(R.string.action_kill_process, session.getPid()));
+        ((android.widget.TextView)cv.findViewById(com.termux.shared.R.id.dialog_message)).setText(R.string.title_confirm_kill_process);
+        androidx.appcompat.app.AlertDialog d = new MaterialAlertDialogBuilder(this).setView(cv)
+            .setPositiveButton(R.string.action_kill_process_confirm, (dialog,id)->{dialog.dismiss(); session.finishIfRunning();})
+            .setNegativeButton(android.R.string.cancel, null).create();
+        d.show();
+        if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(d);
     }
 
     private void onResetTerminalSession(TerminalSession session) {
@@ -1035,12 +1034,15 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         } catch (ActivityNotFoundException | IllegalArgumentException e) {
             // The startActivity() call is not documented to throw IllegalArgumentException.
             // However, crash reporting shows that it sometimes does, so catch it here.
-            androidx.appcompat.app.AlertDialog d = new MaterialAlertDialogBuilder(this).setIcon(R.drawable.ic_m3_palette).setMessage(getString(R.string.error_styling_not_installed))
-                .setPositiveButton(R.string.action_styling_install,
-                    (dialog, which) -> ActivityUtils.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(TermuxConstants.TERMUX_STYLING_FDROID_PACKAGE_URL))))
+            View sv = getLayoutInflater().inflate(com.termux.shared.R.layout.dialog_show_message, null, false);
+            ((android.widget.TextView)sv.findViewById(com.termux.shared.R.id.dialog_title)).setText(R.string.action_style_terminal);
+            ((android.widget.TextView)sv.findViewById(com.termux.shared.R.id.dialog_message)).setText(R.string.error_styling_not_installed);
+            androidx.appcompat.app.AlertDialog d = new MaterialAlertDialogBuilder(this).setView(sv)
+                .setPositiveButton(R.string.action_styling_install, (dialog, which) -> ActivityUtils.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(TermuxConstants.TERMUX_STYLING_FDROID_PACKAGE_URL))))
                 .setNegativeButton(android.R.string.cancel, null).create();
             d.show();
-            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(R.drawable.m3_dialog_outer_bg);
+            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(d);
         }
     }
     private void toggleKeepScreenOn() {

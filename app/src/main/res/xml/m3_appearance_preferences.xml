@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
-        app:key="m3_language" app:icon="@drawable/ic_m3_language"
-        app:title="@string/m3_language_title"
-        app:summary="@string/m3_language_summary"
-        app:entries="@array/m3_language_entries"
-        app:entryValues="@array/m3_language_values"
-        app:defaultValue="system" />
+    <PreferenceCategory app:title="@string/m3_appearance_title">
+        <ListPreference
+            app:key="m3_language" app:icon="@drawable/ic_m3_language"
+            app:title="@string/m3_language_title"
+            app:summary="@string/m3_language_summary"
+            app:entries="@array/m3_language_entries"
+            app:entryValues="@array/m3_language_values"
+            app:defaultValue="system" />
 
-    <ListPreference
-        app:key="m3_accent" app:icon="@drawable/ic_m3_palette"
-        app:title="@string/m3_accent_title"
-        app:summary="@string/m3_accent_summary"
-        app:entries="@array/m3_accent_entries"
-        app:entryValues="@array/m3_accent_values"
-        app:defaultValue="default" />
+        <ListPreference
+            app:key="m3_accent" app:icon="@drawable/ic_m3_palette"
+            app:title="@string/m3_accent_title"
+            app:summary="@string/m3_accent_summary"
+            app:entries="@array/m3_accent_entries"
+            app:entryValues="@array/m3_accent_values"
+            app:defaultValue="default" />
+    </PreferenceCategory>
 
-    <ListPreference
-        app:key="terminal_font" app:icon="@drawable/ic_m3_font"
-        app:title="@string/m3_terminal_font_title"
-        app:summary="@string/m3_terminal_font_summary"
-        app:entries="@array/m3_terminal_font_entries"
-        app:entryValues="@array/m3_terminal_font_values"
-        app:defaultValue="monospace" />
+    <PreferenceCategory app:title="@string/termux_terminal_view_preferences_title">
+        <ListPreference
+            app:key="terminal_font" app:icon="@drawable/ic_m3_font"
+            app:title="@string/m3_terminal_font_title"
+            app:summary="@string/m3_terminal_font_summary"
+            app:entries="@array/m3_terminal_font_entries"
+            app:entryValues="@array/m3_terminal_font_values"
+            app:defaultValue="monospace" />
 
-    <ListPreference
-        app:key="terminal_color_scheme" app:icon="@drawable/ic_m3_palette"
-        app:title="@string/m3_terminal_color_scheme_title"
-        app:summary="@string/m3_terminal_color_scheme_summary"
-        app:entries="@array/m3_terminal_color_scheme_entries"
-        app:entryValues="@array/m3_terminal_color_scheme_values"
-        app:defaultValue="termux" />
+        <ListPreference
+            app:key="terminal_color_scheme" app:icon="@drawable/ic_m3_palette"
+            app:title="@string/m3_terminal_color_scheme_title"
+            app:summary="@string/m3_terminal_color_scheme_summary"
+            app:entries="@array/m3_terminal_color_scheme_entries"
+            app:entryValues="@array/m3_terminal_color_scheme_values"
+            app:defaultValue="termux" />
+
+        <SwitchPreferenceCompat
+            app:key="terminal_margin_adjustment" app:icon="@drawable/ic_m3_terminal"
+            app:summaryOff="@string/termux_terminal_view_terminal_margin_adjustment_off"
+            app:summaryOn="@string/termux_terminal_view_terminal_margin_adjustment_on"
+            app:title="@string/termux_terminal_view_terminal_margin_adjustment_title" />
+
+        <SwitchPreferenceCompat
+            app:key="extra_keys_floating" app:icon="@drawable/ic_m3_float"
+            app:defaultValue="false"
+            app:summaryOff="@string/termux_terminal_view_extra_keys_floating_off"
+            app:summaryOn="@string/termux_terminal_view_extra_keys_floating_on"
+            app:title="@string/termux_terminal_view_extra_keys_floating_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
