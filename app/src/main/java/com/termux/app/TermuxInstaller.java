@@ -218,6 +218,24 @@ final class TermuxInstaller {
                     if (symlinks.isEmpty())
                         throw new RuntimeException("No SYMLINKS.txt encountered");
                     for (Pair<String, String> symlink : symlinks) {
+                        File symlinkFile = new File(symlink.second);
+                        File parent = symlinkFile.getParentFile();
+                        if (parent != null && !parent.exists()) {
+                            error = ensureDirectoryExists(parent);
+                            if (error != null) {
+                                showBootstrapErrorDialog(activity, whenDone, Error.getErrorMarkdownString(error));
+                                return;
+                            }
+                        }
+                        try {
+                            android.system.StructStat st = Os.lstat(symlink.second);
+                            if (OsConstants.S_ISLNK(st.st_mode) || symlinkFile.exists()) {
+                                //noinspection ResultOfMethodCallIgnored
+                                symlinkFile.delete();
+                            }
+                        } catch (android.system.ErrnoException ignored) {
+                            // Path does not exist, ok to create symlink.
+                        }
                         Os.symlink(symlink.first, symlink.second);
                     }
 
