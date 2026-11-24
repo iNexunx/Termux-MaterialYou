@@ -6,8 +6,10 @@ import androidx.annotation.Keep;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import com.termux.R;
+import com.termux.app.theme.M3ThemeHelper;
 
 @Keep
 public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
@@ -32,6 +34,12 @@ public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
         });
 
         preference.setOnPreferenceChangeListener((p, newValue) -> {
+            if ("m3_accent".equals(key) && isAdded()) {
+                PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .edit()
+                    .putString(M3ThemeHelper.PREF_SEED_COLOR, M3ThemeHelper.getSeedColor((String) newValue))
+                    .apply();
+            }
             if (isAdded() && getActivity() != null) {
                 getActivity().recreate();
             }

@@ -28,7 +28,7 @@ package com.termux.shared.termux.settings.preferences;
  *          `KEY_LAST_NOTIFICATION_ID` and `DEFAULT_VALUE_KEY_LAST_NOTIFICATION_ID`.
  *
  * - 0.6.0 (2021-03-24)
- *      - Change `DEFAULT_VALUE_KEEP_SCREEN_ON` value to `false` in `TERMUX_APP`.
+ *      - Keep screen on is enabled by default on first install in `TERMUX_APP`.
  *
  * - 0.7.0 (2021-03-27)
  *      - Added following to `TERMUX_APP`:
@@ -122,7 +122,7 @@ public final class TermuxPreferenceConstants {
          * Defines the key for whether to always keep screen on.
          */
         public static final String KEY_KEEP_SCREEN_ON = "screen_always_on";
-        public static final boolean DEFAULT_VALUE_KEEP_SCREEN_ON = false;
+        public static final boolean DEFAULT_VALUE_KEEP_SCREEN_ON = true;
 
 
         /**

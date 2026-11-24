@@ -42,4 +42,33 @@
         <item name="buttonBarNeutralButtonStyle">@style/Widget.Termux.M3.PillButton.Outlined</item>
     </style>
 
+    <style name="Widget.Termux.M3.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="thumbTint">@color/m3_switch_thumb</item>
+        <item name="trackTint">@color/m3_switch_track</item>
+    </style>
+
+    <style name="TextAppearance.Termux.M3.ActionMode" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">?attr/m3OnPrimaryContainer</item>
+    </style>
+
+    <style name="Widget.Termux.M3.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">?attr/m3PrimaryContainer</item>
+        <item name="titleTextStyle">@style/TextAppearance.Termux.M3.ActionMode</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.Termux.M3.ActionMode</item>
+    </style>
+
+    <style name="Widget.Termux.M3.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">28dp</item>
+        <item name="boxCornerRadiusTopEnd">28dp</item>
+        <item name="boxCornerRadiusBottomStart">28dp</item>
+        <item name="boxCornerRadiusBottomEnd">28dp</item>
+        <item name="boxStrokeColor">?attr/colorPrimary</item>
+        <item name="hintTextColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.Termux.M3.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+    </style>
+
 </resources>

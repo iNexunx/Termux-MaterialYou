@@ -1,14 +1,17 @@
 package com.termux.shared.termux.interact;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.text.Selection;
-import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.ViewGroup.LayoutParams;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
+import com.termux.shared.R;
 
 public final class TextInputDialogUtils {
 
@@ -21,52 +24,44 @@ public final class TextInputDialogUtils {
                                  int neutralButtonText, final TextSetListener onNeutral,
                                  int negativeButtonText, final TextSetListener onNegative,
                                  final DialogInterface.OnDismissListener onDismiss) {
-        final EditText input = new EditText(activity);
+        View view = LayoutInflater.from(activity).inflate(R.layout.dialog_m3_text_input, null, false);
+        final EditText input = view.findViewById(R.id.dialog_text_input);
+        TextInputLayout inputLayout = view.findViewById(R.id.dialog_text_input_layout);
+        inputLayout.setHint(activity.getString(titleText));
         input.setSingleLine();
         if (initialText != null) {
             input.setText(initialText);
             Selection.setSelection(input.getText(), initialText.length());
         }
 
-        final AlertDialog[] dialogHolder = new AlertDialog[1];
+        final Dialog[] dialogHolder = new Dialog[1];
         input.setImeActionLabel(activity.getResources().getString(positiveButtonText), KeyEvent.KEYCODE_ENTER);
         input.setOnEditorActionListener((v, actionId, event) -> {
-            onPositive.onTextSet(input.getText().toString());
-            dialogHolder[0].dismiss();
+            if (onPositive != null) onPositive.onTextSet(input.getText().toString());
+            if (dialogHolder[0] != null) dialogHolder[0].dismiss();
             return true;
         });
 
-        float dipInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, activity.getResources().getDisplayMetrics());
-        // https://www.google.com/design/spec/components/dialogs.html#dialogs-specs
-        int paddingTopAndSides = Math.round(16 * dipInPixels);
-        int paddingBottom = Math.round(24 * dipInPixels);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity)
+            .setTitle(titleText)
+            .setView(view)
+            .setPositiveButton(positiveButtonText, (d, whichButton) -> {
+                if (onPositive != null) onPositive.onTextSet(input.getText().toString());
+            });
 
-        LinearLayout layout = new LinearLayout(activity);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        layout.setPadding(paddingTopAndSides, paddingTopAndSides, paddingTopAndSides, paddingBottom);
-        layout.addView(input);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
-            .setTitle(titleText).setView(layout)
-            .setPositiveButton(positiveButtonText, (d, whichButton) -> onPositive.onTextSet(input.getText().toString()));
-
-        if (onNeutral != null) {
+        if (onNeutral != null)
             builder.setNeutralButton(neutralButtonText, (dialog, which) -> onNeutral.onTextSet(input.getText().toString()));
-        }
 
-        if (onNegative == null) {
+        if (onNegative == null)
             builder.setNegativeButton(android.R.string.cancel, null);
-        } else {
+        else
             builder.setNegativeButton(negativeButtonText, (dialog, which) -> onNegative.onTextSet(input.getText().toString()));
-        }
 
         if (onDismiss != null)
             builder.setOnDismissListener(onDismiss);
 
-        dialogHolder[0] = builder.create();
+        dialogHolder[0] = builder.show();
         dialogHolder[0].setCanceledOnTouchOutside(false);
-        dialogHolder[0].show();
     }
 
 }

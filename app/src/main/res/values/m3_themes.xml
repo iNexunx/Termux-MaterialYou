@@ -27,6 +27,10 @@
         <item name="extraKeysButtonBackgroundColor">#EADDFF</item>
         <item name="extraKeysButtonActiveBackgroundColor">#D0BCFF</item>
         <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="actionModeStyle">@style/Widget.Termux.M3.ActionMode</item>
+        <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
+        <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
@@ -56,6 +60,10 @@
         <item name="extraKeysButtonBackgroundColor">#D3E3FF</item>
         <item name="extraKeysButtonActiveBackgroundColor">#AECBFA</item>
         <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="actionModeStyle">@style/Widget.Termux.M3.ActionMode</item>
+        <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
+        <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
@@ -85,6 +93,10 @@
         <item name="extraKeysButtonBackgroundColor">#B2F2EB</item>
         <item name="extraKeysButtonActiveBackgroundColor">#80DEEA</item>
         <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="actionModeStyle">@style/Widget.Termux.M3.ActionMode</item>
+        <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
+        <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
@@ -114,6 +126,10 @@
         <item name="extraKeysButtonBackgroundColor">#C4EDC9</item>
         <item name="extraKeysButtonActiveBackgroundColor">#A8DAB5</item>
         <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="actionModeStyle">@style/Widget.Termux.M3.ActionMode</item>
+        <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
+        <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
@@ -143,6 +159,10 @@
         <item name="extraKeysButtonBackgroundColor">#FFDCC2</item>
         <item name="extraKeysButtonActiveBackgroundColor">#FFB784</item>
         <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="actionModeStyle">@style/Widget.Termux.M3.ActionMode</item>
+        <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
+        <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
@@ -172,6 +192,10 @@
         <item name="extraKeysButtonBackgroundColor">#FFD8E4</item>
         <item name="extraKeysButtonActiveBackgroundColor">#F4B8CC</item>
         <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="android:buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="actionModeStyle">@style/Widget.Termux.M3.ActionMode</item>
+        <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
+        <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>

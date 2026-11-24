@@ -105,9 +105,15 @@
             android:theme="@style/Theme.TermuxApp.DayNight.NoActionBar" />
 
         <activity
-            android:name=".shared.activities.ReportActivity"
-            android:theme="@style/Theme.MarkdownViewActivity.DayNight"
-            android:documentLaunchMode="intoExisting" />
+            android:name=".app.activities.M3ReportActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TermuxApp.M3.Purple"
+            android:documentLaunchMode="intoExisting">
+            <intent-filter>
+                <action android:name="com.termux.shared.action.REPORT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".app.api.file.FileReceiverActivity"

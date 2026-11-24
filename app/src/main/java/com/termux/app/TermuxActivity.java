@@ -1,7 +1,6 @@
 package com.termux.app;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -44,6 +43,7 @@ import com.termux.app.activities.SettingsActivity;
 import com.termux.shared.termux.crash.TermuxCrashUtils;
 import com.termux.shared.termux.settings.preferences.TermuxAppSharedPreferences;
 import com.termux.app.theme.M3ThemeHelper;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.termux.app.terminal.TermuxSessionsListViewController;
 import com.termux.app.terminal.io.TerminalToolbarViewPager;
 import com.termux.app.terminal.TermuxTerminalViewClient;
@@ -630,6 +630,17 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
 
 
+
+    private MenuItem addThemedMenuItem(Menu menu, int id, int titleRes, int iconRes) {
+        return addThemedMenuItem(menu, id, getString(titleRes), iconRes);
+    }
+
+    private MenuItem addThemedMenuItem(Menu menu, int id, String title, int iconRes) {
+        MenuItem item = menu.add(Menu.NONE, id, Menu.NONE, title);
+        item.setIcon(iconRes);
+        return item;
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         TerminalSession currentSession = getCurrentSession();
@@ -637,21 +648,23 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         boolean autoFillEnabled = mTerminalView.isAutoFillEnabled();
 
-        menu.add(Menu.NONE, CONTEXT_MENU_SELECT_URL_ID, Menu.NONE, R.string.action_select_url);
-        menu.add(Menu.NONE, CONTEXT_MENU_SHARE_TRANSCRIPT_ID, Menu.NONE, R.string.action_share_transcript);
+        addThemedMenuItem(menu, CONTEXT_MENU_SELECT_URL_ID, R.string.action_select_url, R.drawable.ic_m3_link);
+        addThemedMenuItem(menu, CONTEXT_MENU_SHARE_TRANSCRIPT_ID, R.string.action_share_transcript, R.drawable.ic_m3_share);
         if (!DataUtils.isNullOrEmpty(mTerminalView.getStoredSelectedText()))
-            menu.add(Menu.NONE, CONTEXT_MENU_SHARE_SELECTED_TEXT, Menu.NONE, R.string.action_share_selected_text);
+            addThemedMenuItem(menu, CONTEXT_MENU_SHARE_SELECTED_TEXT, R.string.action_share_selected_text, R.drawable.ic_m3_share);
         if (autoFillEnabled)
-            menu.add(Menu.NONE, CONTEXT_MENU_AUTOFILL_USERNAME, Menu.NONE, R.string.action_autofill_username);
+            addThemedMenuItem(menu, CONTEXT_MENU_AUTOFILL_USERNAME, R.string.action_autofill_username, R.drawable.ic_m3_person);
         if (autoFillEnabled)
-            menu.add(Menu.NONE, CONTEXT_MENU_AUTOFILL_PASSWORD, Menu.NONE, R.string.action_autofill_password);
-        menu.add(Menu.NONE, CONTEXT_MENU_RESET_TERMINAL_ID, Menu.NONE, R.string.action_reset_terminal);
-        menu.add(Menu.NONE, CONTEXT_MENU_KILL_PROCESS_ID, Menu.NONE, getResources().getString(R.string.action_kill_process, getCurrentSession().getPid())).setEnabled(currentSession.isRunning());
-        menu.add(Menu.NONE, CONTEXT_MENU_STYLING_ID, Menu.NONE, R.string.action_style_terminal);
-        menu.add(Menu.NONE, CONTEXT_MENU_TOGGLE_KEEP_SCREEN_ON, Menu.NONE, R.string.action_toggle_keep_screen_on).setCheckable(true).setChecked(mPreferences.shouldKeepScreenOn());
-        menu.add(Menu.NONE, CONTEXT_MENU_HELP_ID, Menu.NONE, R.string.action_open_help);
-        menu.add(Menu.NONE, CONTEXT_MENU_SETTINGS_ID, Menu.NONE, R.string.action_open_settings);
-        menu.add(Menu.NONE, CONTEXT_MENU_REPORT_ID, Menu.NONE, R.string.action_report_issue);
+            addThemedMenuItem(menu, CONTEXT_MENU_AUTOFILL_PASSWORD, R.string.action_autofill_password, R.drawable.ic_m3_person);
+        addThemedMenuItem(menu, CONTEXT_MENU_RESET_TERMINAL_ID, R.string.action_reset_terminal, R.drawable.ic_m3_restart);
+        addThemedMenuItem(menu, CONTEXT_MENU_KILL_PROCESS_ID, getResources().getString(R.string.action_kill_process, getCurrentSession().getPid()), R.drawable.ic_m3_power)
+            .setEnabled(currentSession.isRunning());
+        addThemedMenuItem(menu, CONTEXT_MENU_STYLING_ID, R.string.action_style_terminal, R.drawable.ic_m3_palette);
+        addThemedMenuItem(menu, CONTEXT_MENU_TOGGLE_KEEP_SCREEN_ON, R.string.action_toggle_keep_screen_on, R.drawable.ic_m3_lightbulb)
+            .setCheckable(true).setChecked(mPreferences.shouldKeepScreenOn());
+        addThemedMenuItem(menu, CONTEXT_MENU_HELP_ID, R.string.action_open_help, R.drawable.ic_m3_help);
+        addThemedMenuItem(menu, CONTEXT_MENU_SETTINGS_ID, R.string.action_open_settings, R.drawable.ic_m3_settings);
+        addThemedMenuItem(menu, CONTEXT_MENU_REPORT_ID, R.string.action_report_issue, R.drawable.ic_m3_report);
     }
 
     /** Hook system menu to show context menu instead. */
@@ -717,14 +730,14 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private void showKillSessionDialog(TerminalSession session) {
         if (session == null) return;
 
-        final AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setIcon(android.R.drawable.ic_dialog_alert);
+        final MaterialAlertDialogBuilder b = new MaterialAlertDialogBuilder(this);
+        b.setIcon(R.drawable.ic_m3_power);
         b.setMessage(R.string.title_confirm_kill_process);
-        b.setPositiveButton(android.R.string.yes, (dialog, id) -> {
+        b.setPositiveButton(R.string.action_kill_process_confirm, (dialog, id) -> {
             dialog.dismiss();
             session.finishIfRunning();
         });
-        b.setNegativeButton(android.R.string.no, null);
+        b.setNegativeButton(android.R.string.cancel, null);
         b.show();
     }
 
@@ -746,7 +759,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         } catch (ActivityNotFoundException | IllegalArgumentException e) {
             // The startActivity() call is not documented to throw IllegalArgumentException.
             // However, crash reporting shows that it sometimes does, so catch it here.
-            new AlertDialog.Builder(this).setMessage(getString(R.string.error_styling_not_installed))
+            new MaterialAlertDialogBuilder(this).setIcon(R.drawable.ic_m3_palette).setMessage(getString(R.string.error_styling_not_installed))
                 .setPositiveButton(R.string.action_styling_install,
                     (dialog, which) -> ActivityUtils.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(TermuxConstants.TERMUX_STYLING_FDROID_PACKAGE_URL))))
                 .setNegativeButton(android.R.string.cancel, null).show();

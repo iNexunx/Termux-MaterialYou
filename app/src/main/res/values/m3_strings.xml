@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="m3_appearance_title">Apariencia (Material You)</string>
     <string name="m3_appearance_summary">Color de acento, tema claro/oscuro y colores dinámicos</string>
@@ -6,8 +6,6 @@
     <string name="m3_accent_summary">Color base de botones, teclas, menús y superficies</string>
     <string name="m3_mode_title">Tema de la interfaz</string>
     <string name="m3_mode_summary">Claro, oscuro, seguir el sistema o Material You</string>
-    <string name="m3_restart_hint">Los cambios se aplican al volver a iniciar la pantalla</string>
-
     <string-array name="m3_accent_entries">
         <item>Uva</item>
         <item>Azul</item>

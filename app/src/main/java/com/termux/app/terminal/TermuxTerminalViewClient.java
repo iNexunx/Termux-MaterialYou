@@ -144,6 +144,9 @@ public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
      * Should be called when mActivity.reloadActivityStyling() is called
      */
     public void onReloadActivityStyling() {
+        // Keep the screen awake state in sync with the persisted preference.
+        mActivity.getTerminalView().setKeepScreenOn(mActivity.getPreferences().shouldKeepScreenOn());
+
         // Show the soft keyboard if required
         setSoftKeyboardState(false, true);
 

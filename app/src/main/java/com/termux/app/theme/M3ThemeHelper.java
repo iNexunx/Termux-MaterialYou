@@ -17,8 +17,10 @@ public final class M3ThemeHelper {
 
     public static final String PREF_ACCENT = "m3_accent";
     public static final String PREF_MODE = "m3_theme_mode";
+    public static final String PREF_SEED_COLOR = "m3_seed_color";
 
     private static final String[] ACCENTS = {"purple", "blue", "teal", "green", "orange", "rose"};
+    private static final int[] SEEDS = {0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E};
 
     private M3ThemeHelper() {}
 
@@ -26,13 +28,7 @@ public final class M3ThemeHelper {
     public static void apply(Activity activity) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         String mode = prefs.getString(PREF_MODE, "system");
-
-        if ("material_you".equals(mode)) {
-            String wallpaperAccent = resolveWallpaperAccent(activity);
-            if (!wallpaperAccent.equals(prefs.getString(PREF_ACCENT, "purple"))) {
-                prefs.edit().putString(PREF_ACCENT, wallpaperAccent).apply();
-            }
-        }
+        String accent = prefs.getString(PREF_ACCENT, "purple");
 
         if ("light".equals(mode)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -42,7 +38,21 @@ public final class M3ThemeHelper {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
 
-        activity.setTheme(getThemeResId(prefs.getString(PREF_ACCENT, "purple")));
+        if ("material_you".equals(mode)) {
+            String seed = prefs.getString(PREF_SEED_COLOR, null);
+            Integer argb = null;
+            if (seed != null) {
+                try {
+                    argb = (int) Long.parseLong(seed, 16);
+                } catch (NumberFormatException ignored) {
+                    argb = null;
+                }
+            }
+            if (argb == null) argb = getWallpaperPrimaryColor(activity);
+            if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
+        }
+
+        activity.setTheme(getThemeResId(accent));
     }
 
     public static int getThemeResId(String accent) {
@@ -54,33 +64,43 @@ public final class M3ThemeHelper {
         return R.style.Theme_TermuxApp_M3_Purple;
     }
 
-    /** Maps the wallpaper primary colour to the closest predefined tonal palette. */
-    public static String resolveWallpaperAccent(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            WallpaperManager manager = WallpaperManager.getInstance(context);
-            WallpaperColors colors = manager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
-            if (colors != null && colors.getPrimaryColor() != null) {
-                int argb = colors.getPrimaryColor().toArgb();
-                int targetR = (argb >> 16) & 0xFF;
-                int targetG = (argb >> 8) & 0xFF;
-                int targetB = argb & 0xFF;
-                int[] seeds = {0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E};
-                int bestIndex = 0;
-                long bestDistance = Long.MAX_VALUE;
-                for (int i = 0; i < seeds.length; i++) {
-                    int r = (seeds[i] >> 16) & 0xFF;
-                    int g = (seeds[i] >> 8) & 0xFF;
-                    int b = seeds[i] & 0xFF;
-                    long dr = targetR - r, dg = targetG - g, db = targetB - b;
-                    long distance = dr * dr + dg * dg + db * db;
-                    if (distance < bestDistance) {
-                        bestDistance = distance;
-                        bestIndex = i;
-                    }
-                }
-                return ACCENTS[bestIndex];
+    public static String getSeedColor(String accent) {
+        int index = 0;
+        for (int i = 0; i < ACCENTS.length; i++) {
+            if (ACCENTS[i].equals(accent)) {
+                index = i;
+                break;
             }
         }
-        return "purple";
+        return String.format("%06X", SEEDS[index]);
+    }
+
+    private static Integer getWallpaperPrimaryColor(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            WallpaperColors colors = WallpaperManager.getInstance(context)
+                .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            if (colors != null && colors.getPrimaryColor() != null)
+                return colors.getPrimaryColor().toArgb();
+        }
+        return null;
+    }
+
+    private static int nearestAccentIndex(int argb) {
+        int targetR = (argb >> 16) & 0xFF;
+        int targetG = (argb >> 8) & 0xFF;
+        int targetB = argb & 0xFF;
+        int bestIndex = 0;
+        long bestDistance = Long.MAX_VALUE;
+        for (int i = 0; i < SEEDS.length; i++) {
+            long dr = targetR - ((SEEDS[i] >> 16) & 0xFF);
+            long dg = targetG - ((SEEDS[i] >> 8) & 0xFF);
+            long db = targetB - (SEEDS[i] & 0xFF);
+            long distance = dr * dr + dg * dg + db * db;
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestIndex = i;
+            }
+        }
+        return bestIndex;
     }
 }

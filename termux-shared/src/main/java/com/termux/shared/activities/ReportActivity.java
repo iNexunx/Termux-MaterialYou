@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -68,6 +69,8 @@ public class ReportActivity extends AppCompatActivity {
     private Bundle mBundle;
 
     private static final String LOG_TAG = "ReportActivity";
+
+    public static final String ACTION_REPORT = "com.termux.shared.action.REPORT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -352,7 +355,14 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private static Intent createContentIntent(@NonNull final Context context, final ReportInfo reportInfo, final String reportInfoFilePath) {
-        Intent intent = new Intent(context, ReportActivity.class);
+        Intent intent = new Intent(ACTION_REPORT);
+        intent.setPackage(context.getPackageName());
+        ResolveInfo resolved = context.getPackageManager().resolveActivity(intent, 0);
+        if (resolved == null || resolved.activityInfo == null) {
+            intent = new Intent(context, ReportActivity.class);
+        } else {
+            intent.setClassName(resolved.activityInfo.packageName, resolved.activityInfo.name);
+        }
         Bundle bundle = new Bundle();
 
         if (reportInfoFilePath != null) {
