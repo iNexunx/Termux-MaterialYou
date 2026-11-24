@@ -360,7 +360,7 @@ public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
 
     @Override
     public boolean onShowContextMenu() {
-        mActivity.getTerminalView().showContextMenu();
+        mActivity.showTermuxContextMenu();
         return true;
     }
 

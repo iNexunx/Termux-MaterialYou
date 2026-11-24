@@ -34,4 +34,6 @@
         <item>system</item>
         <item>material_you</item>
     </string-array>
+    <string name="m3_sessions_title">Sesiones</string>
+    <string name="m3_theme_toggle">Cambiar tema</string>
 </resources>

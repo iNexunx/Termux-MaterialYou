@@ -4,59 +4,140 @@
     android:id="@+id/activity_termux_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/activity_termux_root_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginHorizontal="3dp"
+        android:layout_marginHorizontal="0dp"
         android:layout_marginVertical="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_height="match_parent"
             android:layout_above="@+id/terminal_toolbar_view_pager"
-            android:layout_height="match_parent">
+            android:layout_alignParentTop="true">
 
-            <com.termux.view.TerminalView
-                android:id="@+id/terminal_view"
+            <FrameLayout
+                android:id="@+id/terminal_content_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:defaultFocusHighlightEnabled="false"
-                android:focusableInTouchMode="true"
-                android:scrollbarThumbVertical="@drawable/terminal_scroll_shape"
-                android:scrollbars="vertical"
-                tools:ignore="UnusedAttribute" />
+                android:layout_height="match_parent">
+
+                <com.termux.view.TerminalView
+                    android:id="@+id/terminal_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusableInTouchMode="true"
+                    android:scrollbarThumbVertical="@drawable/terminal_scroll_shape"
+                    android:scrollbars="vertical"
+                    tools:ignore="UnusedAttribute" />
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/left_drawer"
-                android:layout_width="240dp"
+                android:layout_width="320dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/m3_drawer_bg"
                 android:choiceMode="singleChoice"
+                android:descendantFocusability="blocksDescendants"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0dp"
-                android:descendantFocusability="blocksDescendants"
+                android:elevation="8dp"
                 android:orientation="vertical"
-                android:background="?attr/termuxActivityDrawerBackground">
+                android:paddingStart="14dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="14dp">
 
                 <LinearLayout
+                    android:id="@+id/drawer_header_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="48dp"
                     android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/drawer_sessions_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/m3_sessions_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/drawer_theme_switch_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_m3_sun"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/drawer_theme_switch"
+                            style="@style/Widget.Termux.M3.Switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:checked="false" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_m3_moon"
+                            app:tint="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+
                     <ImageButton
                         android:id="@+id/settings_button"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/ic_m3_settings"
                         android:background="@drawable/m3_icon_button"
                         android:contentDescription="@string/action_open_settings"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_m3_settings"
+                        app:tint="?attr/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/drawer_color_button"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/m3_color_button_bg"
+                        android:contentDescription="@string/m3_accent_title"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_m3_palette"
                         app:tint="?attr/colorPrimary" />
                 </LinearLayout>
 
@@ -67,45 +148,65 @@
                     android:layout_gravity="top"
                     android:layout_weight="1"
                     android:choiceMode="singleChoice"
-                    android:longClickable="true" />
+                    android:clipToPadding="false"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="10dp"
+                    android:longClickable="true"
+                    android:paddingBottom="8dp"
+                    android:scrollbarStyle="outsideOverlay" />
 
                 <LinearLayout
-                    style="?android:attr/buttonBarStyle"
+                    android:id="@+id/drawer_bottom_buttons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/toggle_keyboard_button"
-                        style="?attr/buttonBarButtonStyle"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="6dp"
                         android:layout_weight="1"
                         android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
                         android:maxLines="1"
+                        android:minHeight="48dp"
                         android:singleLine="true"
+                        android:text="@string/action_toggle_soft_keyboard"
+                        android:textAllCaps="false"
                         android:textSize="12sp"
+                        app:cornerRadius="24dp"
                         app:icon="@drawable/ic_m3_keyboard"
-                        app:iconPadding="4dp"
+                        app:iconGravity="textStart"
+                        app:iconPadding="6dp"
                         app:iconSize="18dp"
-                        android:text="@string/action_toggle_soft_keyboard" />
+                        app:strokeColor="?attr/colorPrimary" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/new_session_button"
-                        style="?attr/buttonBarButtonStyle"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="6dp"
                         android:layout_weight="1"
                         android:ellipsize="end"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
                         android:maxLines="1"
+                        android:minHeight="48dp"
                         android:singleLine="true"
+                        android:text="@string/action_new_session"
+                        android:textAllCaps="false"
                         android:textSize="12sp"
+                        app:cornerRadius="24dp"
                         app:icon="@drawable/ic_m3_new_session"
-                        app:iconPadding="4dp"
-                        app:iconSize="18dp"
-                        android:text="@string/action_new_session" />
+                        app:iconGravity="textStart"
+                        app:iconPadding="6dp"
+                        app:iconSize="18dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -113,11 +214,11 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/terminal_toolbar_view_pager"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="37.5dp"
-            android:background="@color/black"
-            android:layout_alignParentBottom="true" />
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/colorSurface"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

@@ -51,10 +51,7 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
 
     @Override
     public void onM3ThemeChanged() {
-        M3ThemeHelper.apply(this);
-        getDelegate().applyDayNight();
-        View root = findViewById(android.R.id.content);
-        if (root != null) { root.invalidate(); root.requestLayout(); }
+        // Theme is applied via activity recreate from M3AppearancePreferencesFragment.
     }
 
     @Override

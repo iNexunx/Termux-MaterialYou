@@ -75,7 +75,11 @@ public class MessageDialogUtils {
         if (onDismiss != null)
             builder.setOnDismissListener(onDismiss);
 
-        builder.show();
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(d -> {
+            try { com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(dialog); } catch (Throwable ignored) {}
+        });
+        dialog.show();
     }
 
     public static void exitAppWithErrorMessage(Context context, String titleText, String messageText) {

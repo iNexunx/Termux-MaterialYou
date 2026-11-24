@@ -344,10 +344,71 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
     public void renameSession(final TerminalSession sessionToRename) {
         if (sessionToRename == null) return;
 
-        TextInputDialogUtils.textInput(mActivity, R.string.title_rename_session, sessionToRename.mSessionName, R.string.action_rename_session_confirm, text -> {
-            renameSession(sessionToRename, text);
+        android.view.View view = android.view.LayoutInflater.from(mActivity).inflate(com.termux.shared.R.layout.dialog_m3_text_input, null, false);
+        final android.widget.EditText input = view.findViewById(com.termux.shared.R.id.dialog_text_input);
+        com.google.android.material.textfield.TextInputLayout inputLayout = view.findViewById(com.termux.shared.R.id.dialog_text_input_layout);
+        inputLayout.setHint(mActivity.getString(R.string.title_rename_session));
+        input.setSingleLine();
+        if (sessionToRename.mSessionName != null) {
+            input.setText(sessionToRename.mSessionName);
+            android.text.Selection.setSelection(input.getText(), sessionToRename.mSessionName.length());
+        }
+
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity)
+            .setTitle(R.string.title_rename_session)
+            .setView(view)
+            .create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        android.widget.LinearLayout container = new android.widget.LinearLayout(mActivity);
+        container.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int pad = (int) (16 * mActivity.getResources().getDisplayMetrics().density);
+        container.setPadding(pad, 0, pad, pad);
+
+        com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonStyle);
+        confirm.setText(R.string.action_rename_session_confirm);
+        confirm.setAllCaps(false);
+        confirm.setOnClickListener(v -> {
+            renameSession(sessionToRename, input.getText().toString());
             termuxSessionListNotifyUpdated();
-        }, -1, null, -1, null, null);
+            dialog.dismiss();
+        });
+
+        com.google.android.material.button.MaterialButton cancel = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+        cancel.setText(android.R.string.cancel);
+        cancel.setAllCaps(false);
+        cancel.setOnClickListener(v -> dialog.dismiss());
+
+        com.google.android.material.button.MaterialButton kill = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+        kill.setText(R.string.action_kill_process_confirm);
+        kill.setAllCaps(false);
+        kill.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, 0xFFD32F2F));
+        kill.setStrokeColor(android.content.res.ColorStateList.valueOf(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, 0xFFD32F2F)));
+        kill.setOnClickListener(v -> {
+            dialog.dismiss();
+            TermuxService service = mActivity.getTermuxService();
+            if (service != null) service.removeTermuxSession(sessionToRename);
+        });
+
+        android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = (int) (8 * mActivity.getResources().getDisplayMetrics().density);
+        confirm.setLayoutParams(lp);
+        android.widget.LinearLayout.LayoutParams lp2 = new android.widget.LinearLayout.LayoutParams(lp);
+        cancel.setLayoutParams(lp2);
+        android.widget.LinearLayout.LayoutParams lp3 = new android.widget.LinearLayout.LayoutParams(
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        kill.setLayoutParams(lp3);
+
+        container.addView(confirm);
+        container.addView(cancel);
+        container.addView(kill);
+        dialog.setView(view);
+        dialog.setOnShowListener(d -> {
+            android.view.ViewGroup parent = (android.view.ViewGroup) view.getParent();
+            if (parent != null) parent.addView(container);
+        });
+        dialog.show();
     }
 
     private void renameSession(TerminalSession sessionToRename, String text) {

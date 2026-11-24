@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import android.util.TypedValue;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -620,13 +621,18 @@ public final class ExtraKeysView extends GridLayout {
             button = createSpecialButton(extraButton.getKey(), false);
             if (button == null) return;
         } else {
-            button = new MaterialButton(getContext(), null, android.R.attr.buttonBarButtonStyle);
+            button = new MaterialButton(getContext(), null, com.google.android.material.R.attr.materialButtonStyle);
             button.setTextColor(mButtonTextColor);
+            button.setAllCaps(false);
+            button.setInsetTop(0);
+            button.setInsetBottom(0);
         }
         button.setText(extraButton.getDisplay());
-        button.setAllCaps(mButtonTextAllCaps);
-        button.setPadding(0, 0, 0, 0);
-        button.setCornerRadius(1000);
+        button.setMaxLines(1);
+        button.setSingleLine(true);
+        button.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        button.setPadding(dpToPx(6), 0, dpToPx(6), 0);
+        button.setCornerRadius(dpToPx(16));
         button.setMinHeight(0);
         button.setMinWidth(0);
         button.setMinimumWidth(0);
@@ -685,8 +691,23 @@ public final class ExtraKeysView extends GridLayout {
         SpecialButtonState state = mSpecialButtons.get(SpecialButton.valueOf(buttonKey));
         if (state == null) return null;
         state.setIsCreated(true);
-        MaterialButton button = new MaterialButton(getContext(), null, android.R.attr.buttonBarButtonStyle);
+        MaterialButton button = new MaterialButton(getContext(), null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
         button.setTextColor(state.isActive ? mButtonActiveTextColor : mButtonTextColor);
+        button.setAllCaps(false);
+        button.setInsetTop(0);
+        button.setInsetBottom(0);
+        button.setCornerRadius(dpToPx(14));
+        button.setMaxLines(1);
+        button.setSingleLine(true);
+        button.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        button.setPadding(dpToPx(4), 0, dpToPx(4), 0);
+        button.setMinHeight(dpToPx(44));
+        button.setMinimumHeight(dpToPx(44));
+        if (android.os.Build.VERSION.SDK_INT >= 26) {
+            button.setAutoSizeTextTypeUniformWithConfiguration(8, 13, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
+        } else {
+            button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 12);
+        }
         if (needUpdate) {
             state.buttons.add(button);
         }

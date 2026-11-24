@@ -48,7 +48,6 @@ public final class M3ThemeHelper {
             if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
         }
         activity.setTheme(getThemeResId(accent));
-        if (activity instanceof M3ThemeAware) ((M3ThemeAware) activity).onM3ThemeChanged();
     }
 
     public interface M3ThemeAware { void onM3ThemeChanged(); }
