@@ -928,7 +928,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             mTermuxTerminalSessionActivityClient.setCurrentSession(session);
             getDrawer().closeDrawers();
         });
-        addContextMenuItem(items, R.drawable.ic_m3_edit, getString(R.string.action_rename_session), true, false, false, () -> mTermuxTerminalSessionActivityClient.renameSession(session));
+        addContextMenuItem(items, R.drawable.ic_m3_edit, getString(R.string.title_rename_session), true, false, false, () -> mTermuxTerminalSessionActivityClient.renameSession(session));
         addContextMenuItem(items, R.drawable.ic_m3_restart, getString(R.string.action_reset_terminal), true, false, false, () -> onResetTerminalSession(session));
         addContextMenuItem(items, R.drawable.ic_m3_power, getResources().getString(R.string.action_kill_process, session.getPid()), session.isRunning(), false, false, () -> showKillSessionDialog(session));
         mContextMenuDialog = new MaterialAlertDialogBuilder(this).setView(content).create();
