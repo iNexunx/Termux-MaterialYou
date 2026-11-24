@@ -562,7 +562,7 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
                     props.load(in);
                 }
             }
-
+            applyM3TerminalColorScheme(props);
             TerminalColors.COLOR_SCHEME.updateWith(props);
             TerminalSession session = mActivity.getCurrentSession();
             if (session != null && session.getEmulator() != null) {
@@ -570,11 +570,36 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
             }
             updateBackgroundColor();
 
-            final Typeface newTypeface = (fontFile.exists() && fontFile.length() > 0) ? Typeface.createFromFile(fontFile) : Typeface.MONOSPACE;
+            Typeface newTypeface = (fontFile.exists() && fontFile.length() > 0) ? Typeface.createFromFile(fontFile) : getM3Typeface();
             mActivity.getTerminalView().setTypeface(newTypeface);
         } catch (Exception e) {
             Logger.logStackTraceWithMessage(LOG_TAG, "Error in checkForFontAndColors()", e);
         }
+    }
+
+    private Typeface getM3Typeface() {
+        String font = mActivity.getPreferences().getTerminalFont();
+        if ("sans-serif".equals(font)) return Typeface.SANS_SERIF;
+        if ("serif".equals(font)) return Typeface.SERIF;
+        if ("firacode".equals(font)) {
+            try { return Typeface.createFromAsset(mActivity.getAssets(), "fonts/FiraCode-Regular.ttf"); } catch (Exception ignored) {}
+        }
+        if ("jetbrains".equals(font)) {
+            try { return Typeface.createFromAsset(mActivity.getAssets(), "fonts/JetBrainsMono-Regular.ttf"); } catch (Exception ignored) {}
+        }
+        return Typeface.MONOSPACE;
+    }
+
+    private void applyM3TerminalColorScheme(Properties props) {
+        // User-supplied colors.properties wins; only apply M3 scheme if it has no explicit foreground/background.
+        if (props.containsKey("foreground") || props.containsKey("background")) return;
+        String scheme = mActivity.getPreferences().getTerminalColorScheme();
+        if ("black".equals(scheme)) { props.put("background","#000000"); props.put("foreground","#FFFFFF"); props.put("cursor","#FFFFFF"); }
+        else if ("solarized_dark".equals(scheme)) { props.put("background","#002B36"); props.put("foreground","#839496"); props.put("cursor","#93A1A1"); }
+        else if ("dracula".equals(scheme)) { props.put("background","#282A36"); props.put("foreground","#F8F8F2"); props.put("cursor","#F8F8F2"); }
+        else if ("nord".equals(scheme)) { props.put("background","#2E3440"); props.put("foreground","#D8DEE9"); props.put("cursor","#D8DEE9"); }
+        else if ("gruvbox".equals(scheme)) { props.put("background","#282828"); props.put("foreground","#EBDBB2"); props.put("cursor","#EBDBB2"); }
+        // "termux" default: keep Termux defaults
     }
 
     public void updateBackgroundColor() {

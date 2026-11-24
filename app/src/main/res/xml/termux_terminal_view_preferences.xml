@@ -17,6 +17,22 @@
             app:summaryOn="@string/termux_terminal_view_extra_keys_floating_on"
             app:title="@string/termux_terminal_view_extra_keys_floating_title" />
 
+        <ListPreference
+            app:key="terminal_font"
+            app:title="@string/m3_terminal_font_title"
+            app:summary="@string/m3_terminal_font_summary"
+            app:entries="@array/m3_terminal_font_entries"
+            app:entryValues="@array/m3_terminal_font_values"
+            app:defaultValue="monospace" />
+
+        <ListPreference
+            app:key="terminal_color_scheme"
+            app:title="@string/m3_terminal_color_scheme_title"
+            app:summary="@string/m3_terminal_color_scheme_summary"
+            app:entries="@array/m3_terminal_color_scheme_entries"
+            app:entryValues="@array/m3_terminal_color_scheme_values"
+            app:defaultValue="termux" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

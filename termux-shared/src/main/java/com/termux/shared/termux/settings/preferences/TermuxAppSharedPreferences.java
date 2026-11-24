@@ -90,6 +90,22 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
         SharedPreferenceUtils.setBoolean(mSharedPreferences, TERMUX_APP.KEY_EXTRA_KEYS_FLOATING, value, false);
     }
 
+    public String getTerminalFont() {
+        return SharedPreferenceUtils.getString(mSharedPreferences, TERMUX_APP.KEY_TERMINAL_FONT, TERMUX_APP.DEFAULT_VALUE_TERMINAL_FONT, false);
+    }
+
+    public void setTerminalFont(String value) {
+        SharedPreferenceUtils.setString(mSharedPreferences, TERMUX_APP.KEY_TERMINAL_FONT, value, false);
+    }
+
+    public String getTerminalColorScheme() {
+        return SharedPreferenceUtils.getString(mSharedPreferences, TERMUX_APP.KEY_TERMINAL_COLOR_SCHEME, TERMUX_APP.DEFAULT_VALUE_TERMINAL_COLOR_SCHEME, false);
+    }
+
+    public void setTerminalColorScheme(String value) {
+        SharedPreferenceUtils.setString(mSharedPreferences, TERMUX_APP.KEY_TERMINAL_COLOR_SCHEME, value, false);
+    }
+
 
 
     public boolean isTerminalMarginAdjustmentEnabled() {

@@ -106,6 +106,12 @@ public final class TermuxPreferenceConstants {
         public static final String KEY_EXTRA_KEYS_FLOATING = "extra_keys_floating";
         public static final boolean DEFAULT_VALUE_EXTRA_KEYS_FLOATING = false;
 
+        public static final String KEY_TERMINAL_FONT = "terminal_font";
+        public static final String DEFAULT_VALUE_TERMINAL_FONT = "monospace";
+
+        public static final String KEY_TERMINAL_COLOR_SCHEME = "terminal_color_scheme";
+        public static final String DEFAULT_VALUE_TERMINAL_COLOR_SCHEME = "termux";
+
 
         /**
          * Defines the key for whether the soft keyboard will be enabled, for cases where users want

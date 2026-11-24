@@ -79,4 +79,29 @@ class TerminalViewPreferencesDataStore extends PreferenceDataStore {
         }
     }
 
+    @Override
+    public void putString(String key, String value) {
+        if (mPreferences == null || key == null) return;
+        switch (key) {
+            case "terminal_font":
+                mPreferences.setTerminalFont(value); break;
+            case "terminal_color_scheme":
+                mPreferences.setTerminalColorScheme(value); break;
+            default: break;
+        }
+    }
+
+    @Override
+    public String getString(String key, String defValue) {
+        if (mPreferences == null) return defValue;
+        switch (key) {
+            case "terminal_font":
+                return mPreferences.getTerminalFont();
+            case "terminal_color_scheme":
+                return mPreferences.getTerminalColorScheme();
+            default:
+                return defValue;
+        }
+    }
+
 }

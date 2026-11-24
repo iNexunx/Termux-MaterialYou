@@ -89,4 +89,13 @@
         <item>id</item>
         <item>ar</item>
     </string-array>
+    <string name="m3_terminal_font_title">Fuente de terminal</string>
+    <string name="m3_terminal_font_summary">Fuente usada en la consola</string>
+    <string name="m3_terminal_color_scheme_title">Tema de consola</string>
+    <string name="m3_terminal_color_scheme_summary">Colores de fondo/texto de la terminal</string>
+    <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item></string-array>
+    <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item></string-array>
+    <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Drácula</item><item>Nord</item><item>Gruvbox</item></string-array>
+    <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>dracula</item><item>nord</item><item>gruvbox</item></string-array>
+
 </resources>
