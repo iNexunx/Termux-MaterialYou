@@ -43,6 +43,7 @@ import com.termux.app.activities.HelpActivity;
 import com.termux.app.activities.SettingsActivity;
 import com.termux.shared.termux.crash.TermuxCrashUtils;
 import com.termux.shared.termux.settings.preferences.TermuxAppSharedPreferences;
+import com.termux.app.theme.M3ThemeHelper;
 import com.termux.app.terminal.TermuxSessionsListViewController;
 import com.termux.app.terminal.io.TerminalToolbarViewPager;
 import com.termux.app.terminal.TermuxTerminalViewClient;
@@ -459,6 +460,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         // trigger recreation of activity when uiMode/dark mode configuration is changed so that
         // day or night theme takes affect.
         AppCompatActivityUtils.setNightMode(this, NightMode.getAppNightMode().getName(), true);
+
+        // Material 3: user-selected accent palette, theme mode and dynamic colours.
+        M3ThemeHelper.apply(this);
     }
 
     private void setMargins() {

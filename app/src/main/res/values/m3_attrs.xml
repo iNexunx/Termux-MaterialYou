@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="M3Theme">
+        <attr name="m3PrimaryContainer" format="color" />
+        <attr name="m3OnPrimaryContainer" format="color" />
+        <attr name="m3SecondaryContainer" format="color" />
+        <attr name="m3OnSecondaryContainer" format="color" />
+        <attr name="m3SurfaceContainer" format="color" />
+    </declare-styleable>
+</resources>

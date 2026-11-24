@@ -59,11 +59,9 @@ public class TermuxSessionsListViewController extends ArrayAdapter<TermuxSession
 
         boolean shouldEnableDarkTheme = ThemeUtils.shouldEnableDarkTheme(mActivity, NightMode.getAppNightMode().getName());
 
-        if (shouldEnableDarkTheme) {
-            sessionTitleView.setBackground(
-                ContextCompat.getDrawable(mActivity, R.drawable.session_background_black_selected)
-            );
-        }
+        boolean isActiveSession = sessionAtRow == mActivity.getCurrentSession();
+        sessionTitleView.setBackground(ContextCompat.getDrawable(mActivity,
+            isActiveSession ? R.drawable.m3_session_pill_active : R.drawable.m3_session_pill));
 
         String name = sessionAtRow.mSessionName;
         String sessionTitle = sessionAtRow.getTitle();
@@ -86,8 +84,11 @@ public class TermuxSessionsListViewController extends ArrayAdapter<TermuxSession
         } else {
             sessionTitleView.setPaintFlags(sessionTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
-        int defaultColor = shouldEnableDarkTheme ? Color.WHITE : Color.BLACK;
-        int color = sessionRunning || sessionAtRow.getExitStatus() == 0 ? defaultColor : Color.RED;
+        int fallbackColor = shouldEnableDarkTheme ? Color.WHITE : Color.BLACK;
+        int defaultColor = ThemeUtils.getSystemAttrColor(mActivity, android.R.attr.textColorPrimary, fallbackColor);
+        int activeColor = ThemeUtils.getSystemAttrColor(mActivity, R.attr.m3OnPrimaryContainer, defaultColor);
+        int errorColor = ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, Color.RED);
+        int color = isActiveSession ? activeColor : (sessionRunning || sessionAtRow.getExitStatus() == 0 ? defaultColor : errorColor);
         sessionTitleView.setTextColor(color);
         return sessionRowView;
     }

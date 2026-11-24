@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 tonal palettes - LIGHT. -->
+    <!-- Purple -->
+    <style name="Theme.TermuxApp.M3.Purple" parent="Theme.TermuxActivity.DayNight.NoActionBar">
+        <item name="m3PrimaryContainer">#EADDFF</item>
+        <item name="m3OnPrimaryContainer">#21005D</item>
+        <item name="m3SecondaryContainer">#E8DEF8</item>
+        <item name="m3OnSecondaryContainer">#1D192B</item>
+        <item name="m3SurfaceContainer">#F3EDF7</item>
+        <item name="colorPrimary">#6750A4</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#4F378B</item>
+        <item name="colorSecondary">#625B71</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#4A4458</item>
+        <item name="colorSurface">#FDF7FF</item>
+        <item name="colorOnSurface">#1D1B20</item>
+        <item name="android:colorBackground">#FDF7FF</item>
+        <item name="android:windowBackground">#FDF7FF</item>
+        <item name="colorAccent">#6750A4</item>
+        <item name="android:textColorLink">#6750A4</item>
+        <item name="termuxActivityDrawerBackground">#EADDFF</item>
+        <item name="termuxActivityDrawerImageTint">#21005D</item>
+        <item name="extraKeysButtonTextColor">#1D1B20</item>
+        <item name="extraKeysButtonActiveTextColor">#6750A4</item>
+        <item name="extraKeysButtonBackgroundColor">#EADDFF</item>
+        <item name="extraKeysButtonActiveBackgroundColor">#D0BCFF</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+    </style>
+    <!-- Blue -->
+    <style name="Theme.TermuxApp.M3.Blue" parent="Theme.TermuxActivity.DayNight.NoActionBar">
+        <item name="m3PrimaryContainer">#D3E3FF</item>
+        <item name="m3OnPrimaryContainer">#004275</item>
+        <item name="m3SecondaryContainer">#E1E7F0</item>
+        <item name="m3OnSecondaryContainer">#1B3348</item>
+        <item name="m3SurfaceContainer">#EEF1F6</item>
+        <item name="colorPrimary">#0B57D0</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#0842A0</item>
+        <item name="colorSecondary">#3F6472</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#294C59</item>
+        <item name="colorSurface">#F7F9FF</item>
+        <item name="colorOnSurface">#1B1B1F</item>
+        <item name="android:colorBackground">#F7F9FF</item>
+        <item name="android:windowBackground">#F7F9FF</item>
+        <item name="colorAccent">#0B57D0</item>
+        <item name="android:textColorLink">#0B57D0</item>
+        <item name="termuxActivityDrawerBackground">#D3E3FF</item>
+        <item name="termuxActivityDrawerImageTint">#004275</item>
+        <item name="extraKeysButtonTextColor">#1B1B1F</item>
+        <item name="extraKeysButtonActiveTextColor">#0B57D0</item>
+        <item name="extraKeysButtonBackgroundColor">#D3E3FF</item>
+        <item name="extraKeysButtonActiveBackgroundColor">#AECBFA</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+    </style>
+    <!-- Teal -->
+    <style name="Theme.TermuxApp.M3.Teal" parent="Theme.TermuxActivity.DayNight.NoActionBar">
+        <item name="m3PrimaryContainer">#B2F2EB</item>
+        <item name="m3OnPrimaryContainer">#003F3F</item>
+        <item name="m3SecondaryContainer">#CFEDEA</item>
+        <item name="m3OnSecondaryContainer">#1D3B3B</item>
+        <item name="m3SurfaceContainer">#EDF4F3</item>
+        <item name="colorPrimary">#006A6A</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#004F4F</item>
+        <item name="colorSecondary">#3F6666</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#2A4C4C</item>
+        <item name="colorSurface">#F5FAFA</item>
+        <item name="colorOnSurface">#191C1C</item>
+        <item name="android:colorBackground">#F5FAFA</item>
+        <item name="android:windowBackground">#F5FAFA</item>
+        <item name="colorAccent">#006A6A</item>
+        <item name="android:textColorLink">#006A6A</item>
+        <item name="termuxActivityDrawerBackground">#B2F2EB</item>
+        <item name="termuxActivityDrawerImageTint">#003F3F</item>
+        <item name="extraKeysButtonTextColor">#191C1C</item>
+        <item name="extraKeysButtonActiveTextColor">#006A6A</item>
+        <item name="extraKeysButtonBackgroundColor">#B2F2EB</item>
+        <item name="extraKeysButtonActiveBackgroundColor">#80DEEA</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+    </style>
+    <!-- Green -->
+    <style name="Theme.TermuxApp.M3.Green" parent="Theme.TermuxActivity.DayNight.NoActionBar">
+        <item name="m3PrimaryContainer">#C4EDC9</item>
+        <item name="m3OnPrimaryContainer">#0A3F18</item>
+        <item name="m3SecondaryContainer">#D7EAD8</item>
+        <item name="m3OnSecondaryContainer">#203B26</item>
+        <item name="m3SurfaceContainer">#EEF5EE</item>
+        <item name="colorPrimary">#1B6C33</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#145026</item>
+        <item name="colorSecondary">#4A6351</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#354A3C</item>
+        <item name="colorSurface">#F6FAF6</item>
+        <item name="colorOnSurface">#1B1C1B</item>
+        <item name="android:colorBackground">#F6FAF6</item>
+        <item name="android:windowBackground">#F6FAF6</item>
+        <item name="colorAccent">#1B6C33</item>
+        <item name="android:textColorLink">#1B6C33</item>
+        <item name="termuxActivityDrawerBackground">#C4EDC9</item>
+        <item name="termuxActivityDrawerImageTint">#0A3F18</item>
+        <item name="extraKeysButtonTextColor">#1B1C1B</item>
+        <item name="extraKeysButtonActiveTextColor">#1B6C33</item>
+        <item name="extraKeysButtonBackgroundColor">#C4EDC9</item>
+        <item name="extraKeysButtonActiveBackgroundColor">#A8DAB5</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+    </style>
+    <!-- Orange -->
+    <style name="Theme.TermuxApp.M3.Orange" parent="Theme.TermuxActivity.DayNight.NoActionBar">
+        <item name="m3PrimaryContainer">#FFDCC2</item>
+        <item name="m3OnPrimaryContainer">#633400</item>
+        <item name="m3SecondaryContainer">#F5E2D0</item>
+        <item name="m3OnSecondaryContainer">#463526</item>
+        <item name="m3SurfaceContainer">#FBF2EC</item>
+        <item name="colorPrimary">#A85000</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#7E3C00</item>
+        <item name="colorSecondary">#6E5B4A</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#514234</item>
+        <item name="colorSurface">#FFF9F5</item>
+        <item name="colorOnSurface">#201B18</item>
+        <item name="android:colorBackground">#FFF9F5</item>
+        <item name="android:windowBackground">#FFF9F5</item>
+        <item name="colorAccent">#A85000</item>
+        <item name="android:textColorLink">#A85000</item>
+        <item name="termuxActivityDrawerBackground">#FFDCC2</item>
+        <item name="termuxActivityDrawerImageTint">#633400</item>
+        <item name="extraKeysButtonTextColor">#201B18</item>
+        <item name="extraKeysButtonActiveTextColor">#A85000</item>
+        <item name="extraKeysButtonBackgroundColor">#FFDCC2</item>
+        <item name="extraKeysButtonActiveBackgroundColor">#FFB784</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+    </style>
+    <!-- Rose -->
+    <style name="Theme.TermuxApp.M3.Rose" parent="Theme.TermuxActivity.DayNight.NoActionBar">
+        <item name="m3PrimaryContainer">#FFD8E4</item>
+        <item name="m3OnPrimaryContainer">#701F42</item>
+        <item name="m3SecondaryContainer">#F2DCE5</item>
+        <item name="m3OnSecondaryContainer">#452D38</item>
+        <item name="m3SurfaceContainer">#FAF0F4</item>
+        <item name="colorPrimary">#B3265E</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#8A1D47</item>
+        <item name="colorSecondary">#6F5461</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#513B47</item>
+        <item name="colorSurface">#FFF9FB</item>
+        <item name="colorOnSurface">#201B1E</item>
+        <item name="android:colorBackground">#FFF9FB</item>
+        <item name="android:windowBackground">#FFF9FB</item>
+        <item name="colorAccent">#B3265E</item>
+        <item name="android:textColorLink">#B3265E</item>
+        <item name="termuxActivityDrawerBackground">#FFD8E4</item>
+        <item name="termuxActivityDrawerImageTint">#701F42</item>
+        <item name="extraKeysButtonTextColor">#201B1E</item>
+        <item name="extraKeysButtonActiveTextColor">#B3265E</item>
+        <item name="extraKeysButtonBackgroundColor">#FFD8E4</item>
+        <item name="extraKeysButtonActiveBackgroundColor">#F4B8CC</item>
+        <item name="buttonBarButtonStyle">@style/Widget.Termux.M3.PillButton</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+    </style>
+</resources>

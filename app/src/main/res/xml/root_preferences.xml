@@ -1,6 +1,12 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
+        app:key="m3_appearance"
+        app:title="@string/m3_appearance_title"
+        app:summary="@string/m3_appearance_summary"
+        app:fragment="com.termux.app.fragments.settings.M3AppearancePreferencesFragment"/>
+
+    <Preference
         app:key="termux"
         app:title="@string/termux_preferences_title"
         app:summary="@string/termux_preferences_summary"

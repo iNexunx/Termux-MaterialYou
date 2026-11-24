@@ -10,6 +10,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.termux.R;
+import com.termux.app.theme.M3ThemeHelper;
 import com.termux.shared.activities.ReportActivity;
 import com.termux.shared.file.FileUtils;
 import com.termux.shared.models.ReportInfo;
@@ -30,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        M3ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
 
         AppCompatActivityUtils.setNightMode(this, NightMode.getAppNightMode().getName(), true);

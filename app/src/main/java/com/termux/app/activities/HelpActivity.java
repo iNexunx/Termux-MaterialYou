@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.termux.app.theme.M3ThemeHelper;
 import com.termux.shared.termux.TermuxConstants;
 
 /** Basic embedded browser for viewing help pages. */
@@ -22,6 +23,7 @@ public final class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        M3ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
 
         final RelativeLayout progressLayout = new RelativeLayout(this);

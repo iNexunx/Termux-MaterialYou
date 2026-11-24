@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        app:key="m3_theme_mode"
+        app:title="@string/m3_mode_title"
+        app:summary="@string/m3_mode_summary"
+        app:entries="@array/m3_mode_entries"
+        app:entryValues="@array/m3_mode_values"
+        app:defaultValue="system" />
+
+    <ListPreference
+        app:key="m3_accent"
+        app:title="@string/m3_accent_title"
+        app:summary="@string/m3_accent_summary"
+        app:entries="@array/m3_accent_entries"
+        app:entryValues="@array/m3_accent_values"
+        app:defaultValue="purple" />
+
+</PreferenceScreen>
