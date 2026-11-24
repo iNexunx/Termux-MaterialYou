@@ -84,9 +84,13 @@ class TerminalViewPreferencesDataStore extends PreferenceDataStore {
         if (mPreferences == null || key == null) return;
         switch (key) {
             case "terminal_font":
-                mPreferences.setTerminalFont(value); break;
+                mPreferences.setTerminalFont(value);
+                if (getActivity() instanceof com.termux.app.TermuxActivity) ((com.termux.app.TermuxActivity) getActivity()).reloadTerminalStyling();
+                break;
             case "terminal_color_scheme":
-                mPreferences.setTerminalColorScheme(value); break;
+                mPreferences.setTerminalColorScheme(value);
+                if (getActivity() instanceof com.termux.app.TermuxActivity) ((com.termux.app.TermuxActivity) getActivity()).reloadTerminalStyling();
+                break;
             default: break;
         }
     }

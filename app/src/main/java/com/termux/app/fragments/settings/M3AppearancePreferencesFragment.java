@@ -21,6 +21,8 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
         bindSummary("m3_theme_mode");
         bindSummary("m3_accent");
         bindSummary("m3_language");
+        bindSummary("terminal_font");
+        bindSummary("terminal_color_scheme");
     }
 
     private void bindSummary(String key) {
@@ -61,6 +63,17 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
                 PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(M3ThemeHelper.PREF_LANGUAGE, val).apply();
                 if (getActivity() != null) { getActivity().getWindow().setWindowAnimations(0); getActivity().recreate(); }
                 return false;
+            }
+            if ("terminal_font".equals(key) || "terminal_color_scheme".equals(key)) {
+                String prefKey = "terminal_font".equals(key) ? com.termux.shared.termux.settings.preferences.TermuxPreferenceConstants.TERMUX_APP.KEY_TERMINAL_FONT : com.termux.shared.termux.settings.preferences.TermuxPreferenceConstants.TERMUX_APP.KEY_TERMINAL_COLOR_SCHEME;
+                String current = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(prefKey, "terminal_font".equals(key) ? "monospace" : "termux");
+                if (val.equals(current)) return false;
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(prefKey, val).apply();
+                // Apply immediately to running terminal
+                if (getActivity() instanceof com.termux.app.TermuxActivity) {
+                    ((com.termux.app.TermuxActivity) getActivity()).reloadTerminalStyling();
+                }
+                return true;
             }
             return true;
         });

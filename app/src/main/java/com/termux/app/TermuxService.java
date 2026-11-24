@@ -853,6 +853,8 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
             TermuxConstants.TERMUX_APP_NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
     }
 
+    public synchronized void updateNotificationFromActivity() { updateNotification(); }
+
     /** Update the shown foreground service notification after making any changes that affect it. */
     private synchronized void updateNotification() {
         if (mWakeLock == null && mShellManager.mTermuxSessions.isEmpty() && mShellManager.mTermuxTasks.isEmpty()) {

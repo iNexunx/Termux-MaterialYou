@@ -343,6 +343,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         applyM3ThemeIfChanged(false);
         applyExtraKeysFloatingMode();
         refreshSessionStrip();
+        reloadTerminalStyling();
+        if (mTermuxService != null) try { mTermuxService.updateNotificationFromActivity(); } catch (Throwable ignored) {}
     }
 
     @Override
@@ -936,13 +938,24 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         boolean changed = !accent.equals(mAppliedM3Accent) || !mode.equals(mAppliedM3Mode) || !lang.equals(mAppliedM3Language);
         if (!forceRecreate && !changed) return;
         mAppliedM3Accent = accent; mAppliedM3Mode = mode; mAppliedM3Language = lang;
-        if (forceRecreate || (!first && changed)) { getWindow().setWindowAnimations(0); recreate(); return; }
+        if (forceRecreate || (!first && changed)) {
+            M3ThemeHelper.applyMode(this);
+            getWindow().setWindowAnimations(0);
+            recreate();
+            return;
+        }
         applyExtraKeysFloatingMode();
         refreshSessionStrip();
     }
 
     @Override
     public void onM3ThemeChanged() { applyM3ThemeIfChanged(false); }
+
+    public void reloadTerminalStyling() {
+        if (mTermuxTerminalSessionActivityClient != null) mTermuxTerminalSessionActivityClient.checkForFontAndColors();
+        if (mTermuxTerminalViewClient != null) mTermuxTerminalViewClient.onReloadActivityStyling();
+        if (mTerminalView != null) mTerminalView.invalidate();
+    }
     /** Hook system menu to show context menu instead. */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

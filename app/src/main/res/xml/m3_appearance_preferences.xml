@@ -25,4 +25,20 @@
         app:entryValues="@array/m3_accent_values"
         app:defaultValue="default" />
 
+    <ListPreference
+        app:key="terminal_font" app:icon="@drawable/ic_m3_font"
+        app:title="@string/m3_terminal_font_title"
+        app:summary="@string/m3_terminal_font_summary"
+        app:entries="@array/m3_terminal_font_entries"
+        app:entryValues="@array/m3_terminal_font_values"
+        app:defaultValue="monospace" />
+
+    <ListPreference
+        app:key="terminal_color_scheme" app:icon="@drawable/ic_m3_palette"
+        app:title="@string/m3_terminal_color_scheme_title"
+        app:summary="@string/m3_terminal_color_scheme_summary"
+        app:entries="@array/m3_terminal_color_scheme_entries"
+        app:entryValues="@array/m3_terminal_color_scheme_values"
+        app:defaultValue="termux" />
+
 </PreferenceScreen>
