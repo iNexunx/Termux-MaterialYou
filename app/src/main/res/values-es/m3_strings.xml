@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="m3_appearance_title">Apariencia (Material You)</string>
-    <string name="m3_appearance_summary">Color de acento, tema claro/oscuro y colores dinámicos</string>
+    <string name="m3_appearance_summary">Acento, idioma, fuente y tema de consola</string>
     <string name="m3_accent_title">Color de acento</string>
-    <string name="m3_accent_summary">Color base de botones, teclas, menús y superficies</string>
+    <string name="m3_accent_summary">Elige el color usado en toda la app</string>
     <string name="m3_mode_title">Tema de la interfaz</string>
     <string name="m3_mode_summary">Claro, oscuro, seguir el sistema o Material You</string>
     <string name="m3_sessions_title">Sesiones</string>
@@ -49,9 +49,9 @@
         <item>material_you</item>
     </string-array>
 
-    <string name="m3_notification_subtext">Servicio de terminal activo</string>
-    <string name="m3_notification_wakelock_on">Wakelock activo</string>
-    <string name="m3_notification_wakelock_off">Wakelock inactivo</string>
+    <string name="m3_notification_subtext">Toca para abrir</string>
+    <string name="m3_notification_wakelock_on">Wakelock activado</string>
+    <string name="m3_notification_wakelock_off">Wakelock desactivado</string>
     <plurals name="m3_notification_sessions">
         <item quantity="one">%d sesión</item>
         <item quantity="other">%d sesiones</item>
@@ -61,8 +61,8 @@
         <item quantity="other">%d tareas</item>
     </plurals>
 
-    <string name="m3_language_title">Idioma de la app</string>
-    <string name="m3_language_summary">Selecciona el idioma de la interfaz</string>
+    <string name="m3_language_title">Idioma</string>
+    <string name="m3_language_summary">Elige el idioma de la app</string>
     <string-array name="m3_language_entries">
         <item>Seguir el sistema</item>
         <item>Español</item>
@@ -90,21 +90,21 @@
         <item>ar</item>
     </string-array>
     <string name="m3_terminal_font_title">Fuente de terminal</string>
-    <string name="m3_terminal_font_summary">Fuente usada en la consola</string>
+    <string name="m3_terminal_font_summary">Se aplica inmediatamente a la terminal</string>
     <string name="m3_terminal_color_scheme_title">Tema de consola</string>
-    <string name="m3_terminal_color_scheme_summary">Colores de fondo/texto de la terminal</string>
+    <string name="m3_terminal_color_scheme_summary">Se aplica inmediatamente a la terminal</string>
     <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item></string-array>
     <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item></string-array>
     <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Drácula</item><item>Nord</item><item>Gruvbox</item></string-array>
     <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>dracula</item><item>nord</item><item>gruvbox</item></string-array>
 
-    <string name="m3_packages_title">Paquetes de Termux</string>
-    <string name="m3_packages_search_hint">Buscar paquetes instalados</string>
+    <string name="m3_packages_title">Gestor de paquetes</string>
+    <string name="m3_packages_search_hint">Buscar paquetes...</string>
     <string name="m3_packages_refresh">Actualizar</string>
     <string name="m3_packages_open_repo">Repositorio</string>
-    <string name="m3_packages_loading">Cargando paquetes instalados…</string>
+    <string name="m3_packages_loading">Cargando paquetes...</string>
     <string name="m3_packages_installed_count">Paquetes instalados: %d</string>
-    <string name="m3_packages_none">No se encontraron paquetes instalados.</string>
+    <string name="m3_packages_none">No se encontraron paquetes</string>
     <string name="m3_packages_no_match">No hay coincidencias.</string>
-    <string name="m3_session_running">Sesión activa</string>
+    <string name="m3_session_running">En ejecución</string>
 </resources>

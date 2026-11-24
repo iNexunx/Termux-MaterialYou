@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="m3_appearance_title">Appearance (Material You)</string>
-    <string name="m3_appearance_summary">Accent color, light/dark theme and dynamic colors</string>
+    <string name="m3_appearance_summary">Accent, language, font, and console theme</string>
     <string name="m3_accent_title">Accent color</string>
-    <string name="m3_accent_summary">Base color for buttons, keys, menus and surfaces</string>
+    <string name="m3_accent_summary">Choose the color used across the app</string>
     <string name="m3_mode_title">Interface theme</string>
     <string name="m3_mode_summary">Light, dark, follow system or Material You</string>
     <string name="m3_sessions_title">Sessions</string>
@@ -49,9 +49,9 @@
         <item>material_you</item>
     </string-array>
 
-    <string name="m3_notification_subtext">Terminal service running</string>
-    <string name="m3_notification_wakelock_on">Wakelock held</string>
-    <string name="m3_notification_wakelock_off">Wakelock released</string>
+    <string name="m3_notification_subtext">Tap to open</string>
+    <string name="m3_notification_wakelock_on">Wakelock on</string>
+    <string name="m3_notification_wakelock_off">Wakelock off</string>
     <plurals name="m3_notification_sessions">
         <item quantity="one">%d session</item>
         <item quantity="other">%d sessions</item>
@@ -61,8 +61,8 @@
         <item quantity="other">%d tasks</item>
     </plurals>
 
-    <string name="m3_language_title">App language</string>
-    <string name="m3_language_summary">Select interface language</string>
+    <string name="m3_language_title">Language</string>
+    <string name="m3_language_summary">Choose the app language</string>
     <string-array name="m3_language_entries">
         <item>Follow system</item>
         <item>Spanish</item>
@@ -89,22 +89,22 @@
         <item>id</item>
         <item>ar</item>
     </string-array>
-    <string name="m3_terminal_font_title">Fuente de terminal</string>
-    <string name="m3_terminal_font_summary">Fuente usada en la consola</string>
-    <string name="m3_terminal_color_scheme_title">Tema de consola</string>
-    <string name="m3_terminal_color_scheme_summary">Colores de fondo/texto de la terminal</string>
+    <string name="m3_terminal_font_title">Terminal font</string>
+    <string name="m3_terminal_font_summary">Applies immediately to the terminal</string>
+    <string name="m3_terminal_color_scheme_title">Console theme</string>
+    <string name="m3_terminal_color_scheme_summary">Applies immediately to the terminal</string>
     <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item></string-array>
     <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item></string-array>
     <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Drácula</item><item>Nord</item><item>Gruvbox</item></string-array>
     <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>dracula</item><item>nord</item><item>gruvbox</item></string-array>
 
-    <string name="m3_packages_title">Termux Packages</string>
-    <string name="m3_packages_search_hint">Search installed packages</string>
+    <string name="m3_packages_title">Package manager</string>
+    <string name="m3_packages_search_hint">Search packages...</string>
     <string name="m3_packages_refresh">Refresh</string>
     <string name="m3_packages_open_repo">Repository</string>
-    <string name="m3_packages_loading">Loading installed packages…</string>
+    <string name="m3_packages_loading">Loading packages...</string>
     <string name="m3_packages_installed_count">Installed packages: %d</string>
-    <string name="m3_packages_none">No installed packages found.</string>
+    <string name="m3_packages_none">No packages found</string>
     <string name="m3_packages_no_match">No matches.</string>
-    <string name="m3_session_running">Active session</string>
+    <string name="m3_session_running">Running</string>
 </resources>

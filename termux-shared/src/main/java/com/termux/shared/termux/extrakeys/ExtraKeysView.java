@@ -427,7 +427,7 @@ public final class ExtraKeysView extends GridLayout {
                 button.setText(buttonInfo.getDisplay());
                 button.setTextColor(mButtonTextColor);
                 button.setAllCaps(mButtonTextAllCaps);
-                button.setPadding(0, 0, 0, 0);
+                button.setPadding(dpToPx(2), 0, dpToPx(2), 0);
                 button.setSingleLine(true);
                 button.setMaxLines(1);
                 button.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -503,7 +503,11 @@ public final class ExtraKeysView extends GridLayout {
                     param.height = 0;
                 }
                 param.setMargins(keyMargin, keyMargin, keyMargin, keyMargin);
-                androidx.core.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(button, 8, 14, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
+                if (android.os.Build.VERSION.SDK_INT >= 26) {
+                    button.setAutoSizeTextTypeUniformWithConfiguration(7, 14, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
+                } else {
+                    button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11);
+                }
                 param.columnSpec = GridLayout.spec(col, GridLayout.FILL, 1.f);
                 param.rowSpec = GridLayout.spec(row, GridLayout.FILL, 1.f);
                 button.setLayoutParams(param);
@@ -631,21 +635,22 @@ public final class ExtraKeysView extends GridLayout {
         button.setMaxLines(1);
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        button.setPadding(dpToPx(8), 0, dpToPx(8), 0);
-        button.setCornerRadius(dpToPx(16));
+        button.setPadding(dpToPx(10), 0, dpToPx(10), 0);
+        button.setCornerRadius(dpToPx(20));
         button.setMinHeight(0);
         button.setMinWidth(0);
         button.setMinimumWidth(0);
         button.setMinimumHeight(0);
-        button.setWidth(Math.max(width, dpToPx(56)));
+        int minW = Math.max(width, dpToPx(56));
+        int labelLen = extraButton.getDisplay() != null ? extraButton.getDisplay().length() : 0;
+        if (labelLen > 4) minW = Math.max(minW, dpToPx(56 + (labelLen - 4) * 8));
+        button.setWidth(minW);
         button.setHeight(Math.max(height, dpToPx(44)));
-        button.setAllCaps(false);
-        button.setMaxLines(1);
-        button.setSingleLine(true);
+        button.setAllCaps(mButtonTextAllCaps);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            button.setAutoSizeTextTypeUniformWithConfiguration(9, 12, 1, TypedValue.COMPLEX_UNIT_SP);
+            button.setAutoSizeTextTypeUniformWithConfiguration(8, 13, 1, TypedValue.COMPLEX_UNIT_SP);
         } else {
-            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, Math.max(9, 12 - Math.max(0, labelLen - 4)));
         }
         setButtonBackground(button, mButtonActiveBackgroundColor);
         mPopupWindow = new PopupWindow(this);
@@ -699,22 +704,25 @@ public final class ExtraKeysView extends GridLayout {
         SpecialButtonState state = mSpecialButtons.get(SpecialButton.valueOf(buttonKey));
         if (state == null) return null;
         state.setIsCreated(true);
-        MaterialButton button = new MaterialButton(getContext(), null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+        MaterialButton button = new MaterialButton(getContext(), null, android.R.attr.buttonBarButtonStyle);
         button.setTextColor(state.isActive ? mButtonActiveTextColor : mButtonTextColor);
-        button.setAllCaps(false);
+        button.setAllCaps(mButtonTextAllCaps);
         button.setInsetTop(0);
         button.setInsetBottom(0);
-        button.setCornerRadius(dpToPx(14));
+        button.setCornerRadius(1000);
+        button.setStrokeWidth(0);
         button.setMaxLines(1);
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        button.setPadding(dpToPx(6), 0, dpToPx(6), 0);
-        button.setMinHeight(dpToPx(44));
-        button.setMinimumHeight(dpToPx(44));
+        button.setPadding(dpToPx(2), 0, dpToPx(2), 0);
+        button.setMinWidth(0);
+        button.setMinimumWidth(0);
+        button.setMinHeight(0);
+        button.setMinimumHeight(0);
         if (android.os.Build.VERSION.SDK_INT >= 26) {
-            button.setAutoSizeTextTypeUniformWithConfiguration(9, 12, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
+            button.setAutoSizeTextTypeUniformWithConfiguration(7, 14, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
         } else {
-            button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11);
+            button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 10);
         }
         if (needUpdate) {
             state.buttons.add(button);

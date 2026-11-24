@@ -10,14 +10,6 @@
         app:defaultValue="system" />
 
     <ListPreference
-        app:key="m3_theme_mode" app:icon="@drawable/ic_m3_moon"
-        app:title="@string/m3_mode_title"
-        app:summary="@string/m3_mode_summary"
-        app:entries="@array/m3_mode_entries"
-        app:entryValues="@array/m3_mode_values"
-        app:defaultValue="system" />
-
-    <ListPreference
         app:key="m3_accent" app:icon="@drawable/ic_m3_palette"
         app:title="@string/m3_accent_title"
         app:summary="@string/m3_accent_summary"

@@ -18,7 +18,6 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.m3_appearance_preferences, rootKey);
 
-        bindSummary("m3_theme_mode");
         bindSummary("m3_accent");
         bindSummary("m3_language");
         bindSummary("terminal_font");
@@ -48,13 +47,6 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
                     .putString(M3ThemeHelper.PREF_SEED_COLOR, M3ThemeHelper.getSeedColor(val))
                     .apply();
                 applyThemeNow(val, false);
-                return false;
-            }
-            if ("m3_theme_mode".equals(key)) {
-                String current = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(M3ThemeHelper.PREF_MODE, "system");
-                if (val.equals(current)) return false;
-                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(M3ThemeHelper.PREF_MODE, val).apply();
-                applyThemeNow(val, true);
                 return false;
             }
             if ("m3_language".equals(key)) {
