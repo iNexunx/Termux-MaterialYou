@@ -92,7 +92,7 @@
                             android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_m3_sun"
-                            app:tint="?attr/colorOnSurfaceVariant" />
+                            app:tint="?attr/colorOnSurface" />
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/drawer_theme_switch"
@@ -108,7 +108,7 @@
                             android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:src="@drawable/ic_m3_moon"
-                            app:tint="?attr/colorOnSurfaceVariant" />
+                            app:tint="?attr/colorOnSurface" />
                     </LinearLayout>
 
                     <ImageButton
