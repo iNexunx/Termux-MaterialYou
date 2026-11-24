@@ -43,17 +43,18 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
                 .beginTransaction()
                 .replace(R.id.settings, new RootPreferencesFragment())
                 .commit();
-            @Override
+        }
+
+        AppCompatActivityUtils.setToolbar(this, com.termux.shared.R.id.toolbar);
+        AppCompatActivityUtils.setShowBackButtonInActionBar(this, true);
+    }
+
+    @Override
     public void onM3ThemeChanged() {
         M3ThemeHelper.apply(this);
         getDelegate().applyDayNight();
         View root = findViewById(android.R.id.content);
         if (root != null) { root.invalidate(); root.requestLayout(); }
-    }
-}
-
-        AppCompatActivityUtils.setToolbar(this, com.termux.shared.R.id.toolbar);
-        AppCompatActivityUtils.setShowBackButtonInActionBar(this, true);
     }
 
     @Override
