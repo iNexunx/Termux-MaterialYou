@@ -1,53 +1,54 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:key="m3_appearance"
+        app:key="m3_appearance" app:icon="@drawable/ic_m3_palette"
         app:title="@string/m3_appearance_title"
         app:summary="@string/m3_appearance_summary"
         app:fragment="com.termux.app.fragments.settings.M3AppearancePreferencesFragment"/>
 
     <Preference
         app:key="termux"
+        app:icon="@drawable/ic_m3_settings"
         app:title="@string/termux_preferences_title"
         app:summary="@string/termux_preferences_summary"
         app:fragment="com.termux.app.fragments.settings.TermuxPreferencesFragment"/>
 
     <Preference
-        app:key="termux_api"
+        app:key="termux_api" app:icon="@drawable/ic_m3_api"
         app:title="@string/termux_api_preferences_title"
         app:summary="@string/termux_api_preferences_summary"
         app:isPreferenceVisible="false"
         app:fragment="com.termux.app.fragments.settings.TermuxAPIPreferencesFragment"/>
 
     <Preference
-        app:key="termux_float"
+        app:key="termux_float" app:icon="@drawable/ic_m3_float"
         app:title="@string/termux_float_preferences_title"
         app:summary="@string/termux_float_preferences_summary"
         app:isPreferenceVisible="false"
         app:fragment="com.termux.app.fragments.settings.TermuxFloatPreferencesFragment"/>
 
     <Preference
-        app:key="termux_tasker"
+        app:key="termux_tasker" app:icon="@drawable/ic_m3_tasker"
         app:title="@string/termux_tasker_preferences_title"
         app:summary="@string/termux_tasker_preferences_summary"
         app:isPreferenceVisible="false"
         app:fragment="com.termux.app.fragments.settings.TermuxTaskerPreferencesFragment"/>
 
     <Preference
-        app:key="termux_widget"
+        app:key="termux_widget" app:icon="@drawable/ic_m3_widget"
         app:title="@string/termux_widget_preferences_title"
         app:summary="@string/termux_widget_preferences_summary"
         app:isPreferenceVisible="false"
         app:fragment="com.termux.app.fragments.settings.TermuxWidgetPreferencesFragment"/>
 
     <Preference
-        app:key="about"
+        app:key="about" app:icon="@drawable/ic_m3_info"
         app:title="@string/about_preference_title"
         app:persistent="false"/>
     <!-- app:layout="@layout/preference_markdown_text" -->
 
     <Preference
-        app:key="donate"
+        app:key="donate" app:icon="@drawable/ic_m3_heart"
         app:title="@string/donate_preference_title"
         app:persistent="false"
         app:isPreferenceVisible="false"/>

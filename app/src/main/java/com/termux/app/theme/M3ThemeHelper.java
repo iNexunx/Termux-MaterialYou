@@ -62,6 +62,7 @@ public final class M3ThemeHelper {
         String accent = prefs.getString(PREF_ACCENT, "default");
         String mode = prefs.getString(PREF_MODE, "system");
         if ("material_you".equals(mode)) {
+            if (applyDynamicColorsIfAvailable(activity)) return;
             String seed = prefs.getString(PREF_SEED_COLOR, null);
             Integer argb = null;
             if (seed != null) { try { argb = (int) Long.parseLong(seed, 16); } catch (NumberFormatException ignored) {} }
@@ -69,6 +70,18 @@ public final class M3ThemeHelper {
             if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
         }
         activity.setTheme(getThemeResId(accent));
+    }
+
+    private static boolean applyDynamicColorsIfAvailable(Activity activity) {
+        if (Build.VERSION.SDK_INT < 31) return false;
+        try {
+            Class<?> dc = Class.forName("com.google.android.material.color.DynamicColors");
+            java.lang.reflect.Method m = dc.getMethod("applyToActivityIfAvailable", Activity.class);
+            m.invoke(null, activity);
+            return true;
+        } catch (Throwable ignored) {
+            return false;
+        }
     }
 
     public interface M3ThemeAware { void onM3ThemeChanged(); }
@@ -85,7 +98,7 @@ public final class M3ThemeHelper {
         if ("cyan".equals(accent)) return R.style.Theme_TermuxApp_M3_Cyan;
         if ("indigo".equals(accent)) return R.style.Theme_TermuxApp_M3_Indigo;
         if ("default".equals(accent)) return R.style.Theme_TermuxApp_M3_Default;
-        return R.style.Theme_TermuxApp_M3_Purple;
+        return R.style.Theme_TermuxApp_M3_Default;
     }
 
     public static String getSeedColor(String accent) {

@@ -105,14 +105,25 @@
     <style name="PreferenceThemeOverlay.Termux.M3" parent="PreferenceThemeOverlay.v14.Material">
         <item name="preferenceCategoryStyle">@style/Preference.Category.Termux.M3</item>
         <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Termux.M3</item>
+        <item name="preferenceStyle">@style/Preference.Termux.M3</item>
+        <item name="dialogPreferenceStyle">@style/Preference.Termux.M3</item>
+        <item name="preferenceScreenStyle">@style/Preference.Termux.M3</item>
+    </style>
+
+    <style name="Preference.Termux.M3" parent="Preference.Material">
+        <item name="iconSpaceReserved">false</item>
+        <item name="allowDividerAbove">false</item>
+        <item name="allowDividerBelow">false</item>
     </style>
 
     <style name="Preference.Category.Termux.M3" parent="Preference.Category.Material">
         <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="iconSpaceReserved">false</item>
     </style>
 
     <style name="Preference.SwitchPreferenceCompat.Termux.M3" parent="Preference.SwitchPreferenceCompat.Material">
         <item name="android:widgetLayout">@layout/m3_preference_switch</item>
+        <item name="iconSpaceReserved">false</item>
     </style>
 
 </resources>
