@@ -80,6 +80,7 @@ public class MessageDialogUtils {
             try { com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(dialog); } catch (Throwable ignored) {}
         });
         dialog.show();
+        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     public static void exitAppWithErrorMessage(Context context, String titleText, String messageText) {

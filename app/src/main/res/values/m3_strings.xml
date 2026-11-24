@@ -107,4 +107,5 @@
     <string name="m3_packages_none">No se encontraron paquetes instalados.</string>
     <string name="m3_packages_no_match">No hay coincidencias.</string>
     <string name="m3_session_running">Sesión activa</string>
+    <string name="m3_session_switch">Switch to session</string>
 </resources>

@@ -292,8 +292,6 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         setDrawerThemeAndColorControls();
         setPackageManagerButtonView();
 
-        registerForContextMenu(mTerminalView);
-
         FileReceiverActivity.updateFileReceiverActivityComponentsState(this);
 
         try {
@@ -921,6 +919,27 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         }
     }
 
+    public void showSessionContextMenu(TerminalSession session) {
+        if (session == null) return;
+        View content = getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
+        LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
+        boolean isCurrent = session == getCurrentSession();
+        if (!isCurrent) addContextMenuItem(items, R.drawable.ic_m3_terminal, getString(R.string.m3_session_switch), true, false, false, () -> {
+            mTermuxTerminalSessionActivityClient.setCurrentSession(session);
+            getDrawer().closeDrawers();
+        });
+        addContextMenuItem(items, R.drawable.ic_m3_edit, getString(R.string.action_rename_session), true, false, false, () -> mTermuxTerminalSessionActivityClient.renameSession(session));
+        addContextMenuItem(items, R.drawable.ic_m3_restart, getString(R.string.action_reset_terminal), true, false, false, () -> onResetTerminalSession(session));
+        addContextMenuItem(items, R.drawable.ic_m3_power, getResources().getString(R.string.action_kill_process, session.getPid()), session.isRunning(), false, false, () -> showKillSessionDialog(session));
+        mContextMenuDialog = new MaterialAlertDialogBuilder(this).setView(content).create();
+        mContextMenuDialog.show();
+        if (mContextMenuDialog.getWindow() != null) {
+            mContextMenuDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            int margin = (int) (8 * getResources().getDisplayMetrics().density);
+            mContextMenuDialog.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
     public void showTermuxContextMenu() {
         TerminalSession currentSession = getCurrentSession();
         if (currentSession == null) return;
@@ -986,10 +1005,6 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         return false;
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        showTermuxContextMenu();
-    }
 
     private void showKillSessionDialog(TerminalSession session) {
         if (session == null) return;
@@ -1002,7 +1017,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             session.finishIfRunning();
         });
         b.setNegativeButton(android.R.string.cancel, null);
-        b.show();
+        androidx.appcompat.app.AlertDialog d = b.create(); d.show();
+        if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     private void onResetTerminalSession(TerminalSession session) {
@@ -1023,10 +1039,12 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         } catch (ActivityNotFoundException | IllegalArgumentException e) {
             // The startActivity() call is not documented to throw IllegalArgumentException.
             // However, crash reporting shows that it sometimes does, so catch it here.
-            new MaterialAlertDialogBuilder(this).setIcon(R.drawable.ic_m3_palette).setMessage(getString(R.string.error_styling_not_installed))
+            androidx.appcompat.app.AlertDialog d = new MaterialAlertDialogBuilder(this).setIcon(R.drawable.ic_m3_palette).setMessage(getString(R.string.error_styling_not_installed))
                 .setPositiveButton(R.string.action_styling_install,
                     (dialog, which) -> ActivityUtils.startActivity(this, new Intent(Intent.ACTION_VIEW, Uri.parse(TermuxConstants.TERMUX_STYLING_FDROID_PACKAGE_URL))))
-                .setNegativeButton(android.R.string.cancel, null).show();
+                .setNegativeButton(android.R.string.cancel, null).create();
+            d.show();
+            if (d.getWindow() != null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
     private void toggleKeepScreenOn() {
