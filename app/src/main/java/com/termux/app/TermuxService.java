@@ -810,7 +810,10 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
 
         builder.setShowWhen(false);
         builder.setSmallIcon(R.drawable.ic_service_notification);
-        builder.setColor(0xFF2E7D32);
+        try {
+            int accent = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorPrimary, 0xFF2E7D32);
+            builder.setColor(accent);
+        } catch (Throwable ignored) { builder.setColor(0xFF2E7D32); }
         builder.setOngoing(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_SERVICE);

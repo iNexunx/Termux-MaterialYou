@@ -47,6 +47,11 @@ public class TermuxApplication extends Application {
         TermuxThemeUtils.setAppNightMode(properties.getNightMode());
         com.termux.app.theme.M3ThemeHelper.applyLanguage(this);
         com.termux.app.theme.M3ThemeHelper.applyMode(this);
+        try {
+            Class<?> dc = Class.forName("com.google.android.material.color.DynamicColors");
+            dc.getMethod("applyToActivitiesIfAvailable", Application.class).invoke(null, this);
+        } catch (Throwable ignored) {}
+
 
         // Check and create termux files directory. If failed to access it like in case of secondary
         // user or external sd card installation, then don't run files directory related code
