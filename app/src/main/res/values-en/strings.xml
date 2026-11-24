@@ -127,38 +127,4 @@
     <string name="about_preference_title">Acerca de</string>
     <string name="donate_preference_title">Donar</string>
     <string name="action_kill_process_confirm">Force close</string>
-    <string name="m3_appearance_title">Appearance (Material You)</string>
-    <string name="m3_appearance_summary">Accent color, light/dark theme and dynamic colors</string>
-    <string name="m3_accent_title">Accent color</string>
-    <string name="m3_accent_summary">Base color for buttons, extra keys, menus and surfaces</string>
-    <string name="m3_mode_title">Interface theme</string>
-    <string name="m3_mode_summary">Light, dark, follow system or Material You</string>
-    <string-array name="m3_accent_entries">
-        <item>Purple</item>
-        <item>Blue</item>
-        <item>Teal</item>
-        <item>Green</item>
-        <item>Orange</item>
-        <item>Rose</item>
-    </string-array>
-    <string-array name="m3_accent_values" translatable="false">
-        <item>purple</item>
-        <item>blue</item>
-        <item>teal</item>
-        <item>green</item>
-        <item>orange</item>
-        <item>rose</item>
-    </string-array>
-    <string-array name="m3_mode_entries">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>Follow system</item>
-        <item>Material You (dynamic)</item>
-    </string-array>
-    <string-array name="m3_mode_values" translatable="false">
-        <item>light</item>
-        <item>dark</item>
-        <item>system</item>
-        <item>material_you</item>
-    </string-array>
 </resources>
