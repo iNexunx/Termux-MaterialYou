@@ -94,22 +94,41 @@ public final class TextInputDialogUtils {
         LinearLayout layout = (LinearLayout) buttonBar;
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
-        layout.setPadding(layout.getPaddingLeft(), layout.getPaddingTop(), layout.getPaddingRight(), layout.getPaddingBottom());
+        int padH = dp(dialog.getContext(), 16);
+        int padB = dp(dialog.getContext(), 12);
+        layout.setPadding(padH, layout.getPaddingTop(), padH, padB);
+
+        // Collect visible buttons in original order and re-add in reverse so first added appears top.
+        java.util.ArrayList<View> buttons = new java.util.ArrayList<>();
         for (int i = 0; i < layout.getChildCount(); i++) {
             View child = layout.getChildAt(i);
-            if (child instanceof android.widget.Space) {
-                child.setVisibility(View.GONE);
-                continue;
-            }
-            LinearLayout.LayoutParams lp = child.getLayoutParams() instanceof LinearLayout.LayoutParams
-                ? (LinearLayout.LayoutParams) child.getLayoutParams()
-                : new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (child instanceof android.widget.Space) { child.setVisibility(View.GONE); continue; }
+            if (child instanceof android.widget.Button) buttons.add(child);
+        }
+        for (View b : buttons) layout.removeView(b);
+        for (int i = buttons.size() - 1; i >= 0; i--) {
+            View child = buttons.get(i);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
             lp.gravity = Gravity.CENTER_HORIZONTAL;
             lp.leftMargin = 0;
             lp.rightMargin = 0;
+            lp.bottomMargin = i == 0 ? 0 : dp(dialog.getContext(), 8);
             child.setLayoutParams(lp);
+            child.setMinimumHeight(dp(dialog.getContext(), 48));
+            if (child instanceof com.google.android.material.button.MaterialButton) {
+                com.google.android.material.button.MaterialButton mb = (com.google.android.material.button.MaterialButton) child;
+                mb.setCornerRadius(dp(dialog.getContext(), 24));
+                mb.setAllCaps(false);
+                mb.setInsetTop(0);
+                mb.setInsetBottom(0);
+            }
+            layout.addView(child);
         }
+    }
+
+    private static int dp(android.content.Context c, int dp) {
+        return (int) (dp * c.getResources().getDisplayMetrics().density);
     }
 
 }

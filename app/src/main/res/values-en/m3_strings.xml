@@ -1,22 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="m3_appearance_title">Apariencia (Material You)</string>
-    <string name="m3_appearance_summary">Color de acento, tema claro/oscuro y colores dinámicos</string>
-    <string name="m3_accent_title">Color de acento</string>
-    <string name="m3_accent_summary">Color base de botones, teclas, menús y superficies</string>
-    <string name="m3_mode_title">Tema de la interfaz</string>
-    <string name="m3_mode_summary">Claro, oscuro, seguir el sistema o Material You</string>
-    <string name="m3_sessions_title">Sesiones</string>
-    <string name="m3_theme_toggle">Cambiar tema</string>
+    <string name="m3_appearance_title">Appearance (Material You)</string>
+    <string name="m3_appearance_summary">Accent color, light/dark theme and dynamic colors</string>
+    <string name="m3_accent_title">Accent color</string>
+    <string name="m3_accent_summary">Base color for buttons, keys, menus and surfaces</string>
+    <string name="m3_mode_title">Interface theme</string>
+    <string name="m3_mode_summary">Light, dark, follow system or Material You</string>
+    <string name="m3_sessions_title">Sessions</string>
+    <string name="m3_theme_toggle">Toggle theme</string>
     <string-array name="m3_accent_entries">
-        <item>Uva</item>
-        <item>Azul</item>
-        <item>Verde azulado</item>
-        <item>Verde</item>
-        <item>Naranja</item>
-        <item>Rosa</item>
+        <item>Default</item>
+        <item>Purple</item>
+        <item>Blue</item>
+        <item>Teal</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Rose</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
         <item>purple</item>
         <item>blue</item>
         <item>teal</item>
@@ -25,10 +27,10 @@
         <item>rose</item>
     </string-array>
     <string-array name="m3_mode_entries">
-        <item>Claro</item>
-        <item>Oscuro</item>
-        <item>Seguir el sistema</item>
-        <item>Material You (dinámico)</item>
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Follow system</item>
+        <item>Material You (dynamic)</item>
     </string-array>
     <string-array name="m3_mode_values" translatable="false">
         <item>light</item>

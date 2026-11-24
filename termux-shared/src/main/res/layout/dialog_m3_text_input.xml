@@ -8,7 +8,7 @@
     android:paddingStart="20dp"
     android:paddingTop="8dp"
     android:paddingEnd="20dp"
-    android:paddingBottom="4dp"
+    android:paddingBottom="8dp"
     app:boxCornerRadiusBottomEnd="24dp"
     app:boxCornerRadiusBottomStart="24dp"
     app:boxCornerRadiusTopEnd="24dp"

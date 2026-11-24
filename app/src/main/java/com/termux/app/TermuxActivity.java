@@ -231,23 +231,23 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(content, (v, insets) -> {
             androidx.core.graphics.Insets sys = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars());
             androidx.core.graphics.Insets ime = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.ime());
-            int bottom = Math.max(sys.bottom, ime.bottom);
-            mNavBarHeight = bottom;
-            v.setPadding(sys.left, 0, sys.right, bottom);
+            mNavBarHeight = Math.max(sys.bottom, ime.bottom);
+            // Left/right handled per-view; bottom handled by TermuxActivityRootView bottom space + IME.
+            v.setPadding(0, 0, 0, 0);
             return insets;
         });
         View drawerLayout = findViewById(R.id.drawer_layout);
         androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(drawerLayout, (v, insets) -> {
             androidx.core.graphics.Insets sys = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars());
-            androidx.core.graphics.Insets ime = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.ime());
-            v.setPadding(0, sys.top, 0, 0);
+            v.setPadding(0, 0, 0, 0);
+            View terminalContent = findViewById(R.id.terminal_content_container);
+            if (terminalContent != null) terminalContent.setPadding(0, sys.top, 0, 0);
             View leftDrawer = findViewById(R.id.left_drawer);
             if (leftDrawer != null) {
-                int extraBottom = Math.max(sys.bottom, ime.bottom);
                 int d = (int) (12 * getResources().getDisplayMetrics().density);
                 android.view.ViewGroup.MarginLayoutParams lp = (android.view.ViewGroup.MarginLayoutParams) leftDrawer.getLayoutParams();
                 lp.topMargin = sys.top + d;
-                lp.bottomMargin = extraBottom + d;
+                lp.bottomMargin = sys.bottom + d;
                 lp.leftMargin = sys.left + d;
                 leftDrawer.setLayoutParams(lp);
             }
@@ -614,41 +614,39 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
             android.widget.LinearLayout container = new android.widget.LinearLayout(TermuxActivity.this);
             container.setOrientation(android.widget.LinearLayout.VERTICAL);
-            int pad = (int) (16 * getResources().getDisplayMetrics().density);
-            container.setPadding(pad, 0, pad, pad);
+            int pad = (int) (20 * getResources().getDisplayMetrics().density);
+            container.setPadding(pad, (int) (8 * getResources().getDisplayMetrics().density), pad, (int) (16 * getResources().getDisplayMetrics().density));
 
             com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonStyle);
             confirm.setText(R.string.action_create_named_session_confirm);
-            confirm.setAllCaps(false);
-            confirm.setOnClickListener(x -> {
-                mTermuxTerminalSessionActivityClient.addNewSession(false, input.getText().toString());
-                dialog.dismiss();
-            });
-
             com.google.android.material.button.MaterialButton cancel = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
             cancel.setText(android.R.string.cancel);
-            cancel.setAllCaps(false);
-            cancel.setOnClickListener(x -> dialog.dismiss());
-
             com.google.android.material.button.MaterialButton failsafe = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
             failsafe.setText(R.string.action_new_session_failsafe);
-            failsafe.setAllCaps(false);
-            failsafe.setOnClickListener(x -> {
-                mTermuxTerminalSessionActivityClient.addNewSession(true, input.getText().toString());
-                dialog.dismiss();
-            });
 
-            android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
-            confirm.setLayoutParams(lp);
-            cancel.setLayoutParams(new android.widget.LinearLayout.LayoutParams(lp));
-            failsafe.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
-            container.addView(confirm);
-            container.addView(cancel);
-            container.addView(failsafe);
+            com.google.android.material.button.MaterialButton[] btns = new com.google.android.material.button.MaterialButton[]{confirm, cancel, failsafe};
+            for (int i = 0; i < btns.length; i++) {
+                com.google.android.material.button.MaterialButton b = btns[i];
+                b.setAllCaps(false);
+                b.setInsetTop(0); b.setInsetBottom(0);
+                b.setCornerRadius((int) (24 * getResources().getDisplayMetrics().density));
+                b.setMinHeight((int) (48 * getResources().getDisplayMetrics().density));
+                android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+                if (i < btns.length - 1) lp.bottomMargin = (int) (10 * getResources().getDisplayMetrics().density);
+                b.setLayoutParams(lp);
+                container.addView(b);
+            }
+
+            confirm.setOnClickListener(x -> { mTermuxTerminalSessionActivityClient.addNewSession(false, input.getText().toString()); dialog.dismiss(); });
+            cancel.setOnClickListener(x -> dialog.dismiss());
+            failsafe.setOnClickListener(x -> { mTermuxTerminalSessionActivityClient.addNewSession(true, input.getText().toString()); dialog.dismiss(); });
+
             dialog.setOnShowListener(d -> {
                 android.view.ViewGroup parent = (android.view.ViewGroup) view.getParent();
-                if (parent != null) parent.addView(container);
+                if (parent != null) {
+                    int idx = parent.indexOfChild(view);
+                    parent.addView(container, idx + 1);
+                }
             });
             dialog.show();
             return true;
@@ -680,15 +678,16 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 String newMode = isChecked ? "dark" : "light";
                 androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
                     .edit().putString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, newMode).apply();
-                int desired = isChecked ? androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES : androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
-                getDelegate().setLocalNightMode(desired);
-                androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(desired);
+                com.termux.app.theme.M3ThemeHelper.applyMode(this);
+                mAppliedM3Accent = null; mAppliedM3Mode = null;
                 recreate();
             });
         }
         if (colorButton != null) {
             colorButton.setOnClickListener(v -> {
-                startActivity(new android.content.Intent(this, SettingsActivity.class));
+                android.content.Intent i = new android.content.Intent(this, SettingsActivity.class);
+                i.putExtra("m3_open_appearance", true);
+                startActivity(i);
             });
         }
     }
@@ -760,7 +759,13 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         addContextMenuItem(items, R.drawable.ic_m3_report, getString(R.string.action_report_issue), true, false, false, () -> mTermuxTerminalViewClient.reportIssueFromTranscript());
         mContextMenuDialog = new MaterialAlertDialogBuilder(this).setView(content).create();
         mContextMenuDialog.show();
-        if (mContextMenuDialog.getWindow() != null) mContextMenuDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        if (mContextMenuDialog.getWindow() != null) {
+            mContextMenuDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            int margin = (int) (8 * getResources().getDisplayMetrics().density);
+            int width = getResources().getDisplayMetrics().widthPixels - margin * 2;
+            mContextMenuDialog.getWindow().setLayout(width, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
+            mContextMenuDialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        }
     }
 
 

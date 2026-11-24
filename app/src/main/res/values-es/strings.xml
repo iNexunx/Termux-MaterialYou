@@ -51,7 +51,7 @@
     <string name="action_reset_terminal">Restablecer</string>
     <string name="msg_terminal_reset">Terminal restablecida</string>
     <string name="action_kill_process">Terminar proceso (%d)</string>
-    <string name="action_kill_process_confirm">Forzar cierre</string>
+    <string name="action_kill_process_confirm">Cerrar sesión</string>
     <string name="title_confirm_kill_process">¿Seguro que deseas terminar esta sesión?</string>
     <string name="action_style_terminal">Estilo</string>
     <string name="action_toggle_keep_screen_on">Mantener la pantalla encendida</string>

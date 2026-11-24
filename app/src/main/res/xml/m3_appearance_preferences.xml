@@ -15,6 +15,6 @@
         app:summary="@string/m3_accent_summary"
         app:entries="@array/m3_accent_entries"
         app:entryValues="@array/m3_accent_values"
-        app:defaultValue="purple" />
+        app:defaultValue="default" />
 
 </PreferenceScreen>

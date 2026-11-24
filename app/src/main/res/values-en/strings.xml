@@ -126,5 +126,5 @@
     <string name="termux_widget_preferences_summary">Preferencias de la app Termux:Widget</string>
     <string name="about_preference_title">Acerca de</string>
     <string name="donate_preference_title">Donar</string>
-    <string name="action_kill_process_confirm">Force close</string>
+    <string name="action_kill_process_confirm">Close session</string>
 </resources>

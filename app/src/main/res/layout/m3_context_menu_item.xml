@@ -25,8 +25,7 @@
         android:layout_marginStart="12dp"
         android:layout_weight="1"
         android:ellipsize="end"
-        android:maxLines="1"
-        android:singleLine="true"
+        android:maxLines="2"
         android:textColor="?attr/colorOnSurface"
         android:textSize="14sp" />
 

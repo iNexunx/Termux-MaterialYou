@@ -362,51 +362,50 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
 
         android.widget.LinearLayout container = new android.widget.LinearLayout(mActivity);
         container.setOrientation(android.widget.LinearLayout.VERTICAL);
-        int pad = (int) (16 * mActivity.getResources().getDisplayMetrics().density);
-        container.setPadding(pad, 0, pad, pad);
+        int pad = (int) (20 * mActivity.getResources().getDisplayMetrics().density);
+        container.setPadding(pad, (int) (8 * mActivity.getResources().getDisplayMetrics().density), pad, (int) (16 * mActivity.getResources().getDisplayMetrics().density));
 
         com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonStyle);
         confirm.setText(R.string.action_rename_session_confirm);
-        confirm.setAllCaps(false);
+        com.google.android.material.button.MaterialButton cancel = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+        cancel.setText(android.R.string.cancel);
+        com.google.android.material.button.MaterialButton kill = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+        kill.setText(R.string.action_kill_process_confirm);
+        int errorColor = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, 0xFFD32F2F);
+        kill.setTextColor(errorColor);
+        kill.setStrokeColor(android.content.res.ColorStateList.valueOf(errorColor));
+
+        com.google.android.material.button.MaterialButton[] btns = new com.google.android.material.button.MaterialButton[]{confirm, cancel, kill};
+        for (int i = 0; i < btns.length; i++) {
+            com.google.android.material.button.MaterialButton b = btns[i];
+            b.setAllCaps(false);
+            b.setInsetTop(0); b.setInsetBottom(0);
+            b.setCornerRadius((int) (24 * mActivity.getResources().getDisplayMetrics().density));
+            b.setMinHeight((int) (48 * mActivity.getResources().getDisplayMetrics().density));
+            android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (i < btns.length - 1) lp.bottomMargin = (int) (10 * mActivity.getResources().getDisplayMetrics().density);
+            b.setLayoutParams(lp);
+            container.addView(b);
+        }
+
         confirm.setOnClickListener(v -> {
             renameSession(sessionToRename, input.getText().toString());
             termuxSessionListNotifyUpdated();
             dialog.dismiss();
         });
-
-        com.google.android.material.button.MaterialButton cancel = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
-        cancel.setText(android.R.string.cancel);
-        cancel.setAllCaps(false);
         cancel.setOnClickListener(v -> dialog.dismiss());
-
-        com.google.android.material.button.MaterialButton kill = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
-        kill.setText(R.string.action_kill_process_confirm);
-        kill.setAllCaps(false);
-        kill.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, 0xFFD32F2F));
-        kill.setStrokeColor(android.content.res.ColorStateList.valueOf(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, 0xFFD32F2F)));
         kill.setOnClickListener(v -> {
             dialog.dismiss();
             TermuxService service = mActivity.getTermuxService();
             if (service != null) service.removeTermuxSession(sessionToRename);
         });
 
-        android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(
-            android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.bottomMargin = (int) (8 * mActivity.getResources().getDisplayMetrics().density);
-        confirm.setLayoutParams(lp);
-        android.widget.LinearLayout.LayoutParams lp2 = new android.widget.LinearLayout.LayoutParams(lp);
-        cancel.setLayoutParams(lp2);
-        android.widget.LinearLayout.LayoutParams lp3 = new android.widget.LinearLayout.LayoutParams(
-            android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-        kill.setLayoutParams(lp3);
-
-        container.addView(confirm);
-        container.addView(cancel);
-        container.addView(kill);
-        dialog.setView(view);
         dialog.setOnShowListener(d -> {
             android.view.ViewGroup parent = (android.view.ViewGroup) view.getParent();
-            if (parent != null) parent.addView(container);
+            if (parent != null) {
+                int idx = parent.indexOfChild(view);
+                parent.addView(container, idx + 1);
+            }
         });
         dialog.show();
     }

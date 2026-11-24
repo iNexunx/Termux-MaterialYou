@@ -19,8 +19,8 @@ public final class M3ThemeHelper {
     public static final String PREF_MODE = "m3_theme_mode";
     public static final String PREF_SEED_COLOR = "m3_seed_color";
 
-    private static final String[] ACCENTS = {"purple", "blue", "teal", "green", "orange", "rose"};
-    private static final int[] SEEDS = {0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E};
+    private static final String[] ACCENTS = {"default", "purple", "blue", "teal", "green", "orange", "rose"};
+    private static final int[] SEEDS = {0x6750A4, 0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E};
 
     private M3ThemeHelper() {}
 
@@ -29,7 +29,7 @@ public final class M3ThemeHelper {
         String mode = prefs.getString(PREF_MODE, "system");
         int desired = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
         if ("light".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_NO;
-        else if ("dark".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_YES;
+        else if ("dark".equals(mode) || "material_you".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_YES;
         if (AppCompatDelegate.getDefaultNightMode() != desired)
             AppCompatDelegate.setDefaultNightMode(desired);
     }
@@ -38,7 +38,7 @@ public final class M3ThemeHelper {
     public static void apply(Activity activity) {
         applyMode(activity);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        String accent = prefs.getString(PREF_ACCENT, "purple");
+        String accent = prefs.getString(PREF_ACCENT, "default");
         String mode = prefs.getString(PREF_MODE, "system");
         if ("material_you".equals(mode)) {
             String seed = prefs.getString(PREF_SEED_COLOR, null);
@@ -47,6 +47,7 @@ public final class M3ThemeHelper {
             if (argb == null) argb = getWallpaperPrimaryColor(activity);
             if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
         }
+        if ("default".equals(accent)) accent = "purple";
         activity.setTheme(getThemeResId(accent));
     }
 

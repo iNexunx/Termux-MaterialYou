@@ -9,6 +9,7 @@
     <string name="m3_sessions_title">Sesiones</string>
     <string name="m3_theme_toggle">Cambiar tema</string>
     <string-array name="m3_accent_entries">
+        <item>Predeterminado</item>
         <item>Uva</item>
         <item>Azul</item>
         <item>Verde azulado</item>
@@ -17,6 +18,7 @@
         <item>Rosa</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
         <item>purple</item>
         <item>blue</item>
         <item>teal</item>

@@ -39,10 +39,17 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
 
         setContentView(R.layout.activity_settings);
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.settings, new RootPreferencesFragment())
-                .commit();
+            if (getIntent() != null && getIntent().getBooleanExtra("m3_open_appearance", false)) {
+                getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new com.termux.app.fragments.settings.M3AppearancePreferencesFragment())
+                    .commit();
+            } else {
+                getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new RootPreferencesFragment())
+                    .commit();
+            }
         }
 
         AppCompatActivityUtils.setToolbar(this, com.termux.shared.R.id.toolbar);

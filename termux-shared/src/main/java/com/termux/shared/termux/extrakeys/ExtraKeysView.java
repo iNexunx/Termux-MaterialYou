@@ -631,14 +631,22 @@ public final class ExtraKeysView extends GridLayout {
         button.setMaxLines(1);
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        button.setPadding(dpToPx(6), 0, dpToPx(6), 0);
+        button.setPadding(dpToPx(8), 0, dpToPx(8), 0);
         button.setCornerRadius(dpToPx(16));
         button.setMinHeight(0);
         button.setMinWidth(0);
         button.setMinimumWidth(0);
         button.setMinimumHeight(0);
-        button.setWidth(width);
-        button.setHeight(height);
+        button.setWidth(Math.max(width, dpToPx(56)));
+        button.setHeight(Math.max(height, dpToPx(44)));
+        button.setAllCaps(false);
+        button.setMaxLines(1);
+        button.setSingleLine(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            button.setAutoSizeTextTypeUniformWithConfiguration(9, 12, 1, TypedValue.COMPLEX_UNIT_SP);
+        } else {
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+        }
         setButtonBackground(button, mButtonActiveBackgroundColor);
         mPopupWindow = new PopupWindow(this);
         mPopupWindow.setWidth(LayoutParams.WRAP_CONTENT);
@@ -700,13 +708,13 @@ public final class ExtraKeysView extends GridLayout {
         button.setMaxLines(1);
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        button.setPadding(dpToPx(4), 0, dpToPx(4), 0);
+        button.setPadding(dpToPx(6), 0, dpToPx(6), 0);
         button.setMinHeight(dpToPx(44));
         button.setMinimumHeight(dpToPx(44));
         if (android.os.Build.VERSION.SDK_INT >= 26) {
-            button.setAutoSizeTextTypeUniformWithConfiguration(8, 13, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
+            button.setAutoSizeTextTypeUniformWithConfiguration(9, 12, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
         } else {
-            button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 12);
+            button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11);
         }
         if (needUpdate) {
             state.buttons.add(button);

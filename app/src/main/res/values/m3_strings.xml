@@ -7,6 +7,7 @@
     <string name="m3_mode_title">Tema de la interfaz</string>
     <string name="m3_mode_summary">Claro, oscuro, seguir el sistema o Material You</string>
     <string-array name="m3_accent_entries">
+        <item>Predeterminado</item>
         <item>Uva</item>
         <item>Azul</item>
         <item>Verde azulado</item>
@@ -15,6 +16,7 @@
         <item>Rosa</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
         <item>purple</item>
         <item>blue</item>
         <item>teal</item>
