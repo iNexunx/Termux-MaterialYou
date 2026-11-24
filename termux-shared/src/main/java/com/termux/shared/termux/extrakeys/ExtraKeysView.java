@@ -719,6 +719,10 @@ public final class ExtraKeysView extends GridLayout {
     /**
      * General util function to compute the longest column length in a matrix.
      */
+    private int dpToPx(int dp) {
+        return (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
     public static int maximumLength(Object[][] matrix) {
         int m = 0;
         for (Object[] row : matrix)
