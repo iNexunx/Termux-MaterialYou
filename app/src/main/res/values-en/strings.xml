@@ -25,6 +25,8 @@
         portátil/externa/extraíble de tu dispositivo.
         \nLos binarios de arranque compilados para Termux tienen la ruta $PREFIX codificada y no pueden instalarse
         en ninguna otra ruta que no sea:\n%1$s.</string>
+    <string name="action_new_session_multiline">New
+Session</string>
     <string name="action_new_session">Nueva sesión</string>
     <string name="action_new_session_failsafe">Modo seguro</string>
     <string name="title_max_terminals_reached">Se alcanzó el máximo de terminales</string>
@@ -114,6 +116,10 @@
     <string name="termux_terminal_view_terminal_margin_adjustment_title">Ajuste del margen de la terminal</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_off">El ajuste del margen de la terminal estará deshabilitado.</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_on">El ajuste del margen de la terminal estará habilitado.
+
+    <string name="termux_terminal_view_extra_keys_floating_title">Floating extra keys bar</string>
+    <string name="termux_terminal_view_extra_keys_floating_on">Show the terminal toolbar as a floating panel.</string>
+    <string name="termux_terminal_view_extra_keys_floating_off">Show the terminal toolbar in normal mode.</string>
                     Debe habilitarse para intentar corregir el problema en el que el teclado virtual cubre parte de las teclas adicionales o de la vista de terminal.
                     Si causa parpadeos en la pantalla de tus dispositivos, deshabilítalo. (Predeterminado)</string>
     <string name="termux_api_preferences_title">Termux:API</string>

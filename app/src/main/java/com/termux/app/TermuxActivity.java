@@ -188,6 +188,11 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private static final String LOG_TAG = "TermuxActivity";
 
     @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(newBase));
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         Logger.logDebug(LOG_TAG, "onCreate");
         mIsOnResumeAfterOnCreate = true;
@@ -251,9 +256,17 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 lp.leftMargin = sys.left + d;
                 leftDrawer.setLayoutParams(lp);
             }
-            View pager = findViewById(R.id.terminal_toolbar_view_pager);
-            if (pager != null) {
-                pager.setPadding(sys.left, 0, sys.right, 0);
+            View toolbarContainer = findViewById(R.id.terminal_toolbar_container);
+            if (toolbarContainer != null) {
+                android.view.ViewGroup.MarginLayoutParams mlp = (android.view.ViewGroup.MarginLayoutParams) toolbarContainer.getLayoutParams();
+                int base = (int) (8 * getResources().getDisplayMetrics().density);
+                boolean floating = mPreferences != null && mPreferences.isExtraKeysFloating();
+                mlp.leftMargin = base + (floating ? sys.left : 0);
+                mlp.rightMargin = base + (floating ? sys.right : 0);
+                mlp.bottomMargin = base;
+                toolbarContainer.setLayoutParams(mlp);
+                if (!floating) toolbarContainer.setPadding(sys.left, 0, sys.right, 0);
+                else toolbarContainer.setPadding(0,0,0,0);
             }
             return insets;
         });
@@ -323,6 +336,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         registerTermuxActivityBroadcastReceiver();
         applyM3ThemeIfChanged(false);
+        applyExtraKeysFloatingMode();
     }
 
     @Override
@@ -539,12 +553,14 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             mTermuxTerminalViewClient, mTermuxTerminalSessionActivityClient);
 
         final ViewPager terminalToolbarViewPager = getTerminalToolbarViewPager();
-        if (mPreferences.shouldShowTerminalToolbar()) terminalToolbarViewPager.setVisibility(View.VISIBLE);
+        View toolbarContainer = findViewById(R.id.terminal_toolbar_container);
+        if (mPreferences.shouldShowTerminalToolbar() && toolbarContainer != null) toolbarContainer.setVisibility(View.VISIBLE);
 
         ViewGroup.LayoutParams layoutParams = terminalToolbarViewPager.getLayoutParams();
         mTerminalToolbarDefaultHeight = layoutParams.height;
 
         setTerminalToolbarHeight();
+        applyExtraKeysFloatingMode();
 
         String savedTextInput = null;
         if (savedInstanceState != null)
@@ -566,17 +582,36 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     public void toggleTerminalToolbar() {
-        final ViewPager terminalToolbarViewPager = getTerminalToolbarViewPager();
-        if (terminalToolbarViewPager == null) return;
+        View toolbarContainer = findViewById(R.id.terminal_toolbar_container);
+        if (toolbarContainer == null) return;
 
         final boolean showNow = mPreferences.toogleShowTerminalToolbar();
         Logger.showToast(this, (showNow ? getString(R.string.msg_enabling_terminal_toolbar) : getString(R.string.msg_disabling_terminal_toolbar)), true);
-        terminalToolbarViewPager.setVisibility(showNow ? View.VISIBLE : View.GONE);
+        toolbarContainer.setVisibility(showNow ? View.VISIBLE : View.GONE);
         if (showNow && isTerminalToolbarTextInputViewSelected()) {
-            // Focus the text input view if just revealed.
-            findViewById(R.id.terminal_toolbar_text_input).requestFocus();
+            View v = findViewById(R.id.terminal_toolbar_text_input);
+            if (v != null) v.requestFocus();
         }
     }
+
+    public void applyExtraKeysFloatingMode() {
+        View toolbarContainer = findViewById(R.id.terminal_toolbar_container);
+        final ViewPager terminalToolbarViewPager = getTerminalToolbarViewPager();
+        if (toolbarContainer == null || terminalToolbarViewPager == null || mPreferences == null) return;
+        boolean floating = mPreferences.isExtraKeysFloating();
+        com.google.android.material.card.MaterialCardView card = (com.google.android.material.card.MaterialCardView) toolbarContainer;
+        card.setRadius(floating ? dp(24) : 0);
+        card.setCardElevation(floating ? dp(6) : 0);
+        card.setStrokeWidth(floating ? dp(1) : 0);
+        android.view.ViewGroup.MarginLayoutParams mlp = (android.view.ViewGroup.MarginLayoutParams) card.getLayoutParams();
+        int base = floating ? dp(8) : 0;
+        mlp.leftMargin = base; mlp.rightMargin = base; mlp.bottomMargin = base; mlp.topMargin = 0;
+        card.setLayoutParams(mlp);
+        setTerminalToolbarHeight();
+        androidx.core.view.ViewCompat.requestApplyInsets(findViewById(R.id.drawer_layout));
+    }
+
+    private int dp(int value) { return (int) (value * getResources().getDisplayMetrics().density); }
 
     private void saveTerminalToolbarTextInput(Bundle savedInstanceState) {
         if (savedInstanceState == null) return;
@@ -775,7 +810,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         String mode = p.getString(M3ThemeHelper.PREF_MODE, "system");
         if (!forceRecreate && accent.equals(mAppliedM3Accent) && mode.equals(mAppliedM3Mode)) return;
         mAppliedM3Accent = accent; mAppliedM3Mode = mode;
-        // Recreate re-resolves theme attrs; TermuxService keeps sessions/processes alive.
+        getWindow().setWindowAnimations(0);
         recreate();
     }
 
@@ -930,11 +965,13 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     public boolean isTerminalViewSelected() {
-        return getTerminalToolbarViewPager().getCurrentItem() == 0;
+        ViewPager p = getTerminalToolbarViewPager();
+        return p == null || p.getCurrentItem() == 0;
     }
 
     public boolean isTerminalToolbarTextInputViewSelected() {
-        return getTerminalToolbarViewPager().getCurrentItem() == 1;
+        ViewPager p = getTerminalToolbarViewPager();
+        return p != null && p.getCurrentItem() == 1;
     }
 
 
@@ -1063,6 +1100,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         setMargins();
         setTerminalToolbarHeight();
+        applyExtraKeysFloatingMode();
 
         FileReceiverActivity.updateFileReceiverActivityComponentsState(this);
 

@@ -20,6 +20,7 @@ public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
 
         bindSummary("m3_theme_mode");
         bindSummary("m3_accent");
+        bindSummary("m3_language");
     }
 
     private void bindSummary(String key) {
@@ -34,13 +35,33 @@ public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
         });
 
         preference.setOnPreferenceChangeListener((p, newValue) -> {
-            if ("m3_accent".equals(key) && isAdded()) {
+            if (!isAdded()) return true;
+            String val = String.valueOf(newValue);
+            if ("m3_accent".equals(key)) {
+                String current = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(M3ThemeHelper.PREF_ACCENT, "default");
+                if (val.equals(current)) return false;
                 PreferenceManager.getDefaultSharedPreferences(requireContext())
                     .edit()
-                    .putString(M3ThemeHelper.PREF_SEED_COLOR, M3ThemeHelper.getSeedColor((String) newValue))
+                    .putString(M3ThemeHelper.PREF_ACCENT, val)
+                    .putString(M3ThemeHelper.PREF_SEED_COLOR, M3ThemeHelper.getSeedColor(val))
                     .apply();
+                applyThemeNow(val, false);
+                return false;
             }
-            if (isAdded()) applyThemeNow(String.valueOf(newValue), "m3_theme_mode".equals(key));
+            if ("m3_theme_mode".equals(key)) {
+                String current = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(M3ThemeHelper.PREF_MODE, "system");
+                if (val.equals(current)) return false;
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(M3ThemeHelper.PREF_MODE, val).apply();
+                applyThemeNow(val, true);
+                return false;
+            }
+            if ("m3_language".equals(key)) {
+                String current = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(M3ThemeHelper.PREF_LANGUAGE, "system");
+                if (val.equals(current)) return false;
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(M3ThemeHelper.PREF_LANGUAGE, val).apply();
+                if (getActivity() != null) { getActivity().getWindow().setWindowAnimations(0); getActivity().recreate(); }
+                return false;
+            }
             return true;
         });
     }
@@ -49,13 +70,10 @@ public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
         if (getActivity() == null) return;
         androidx.appcompat.app.AppCompatActivity a = (androidx.appcompat.app.AppCompatActivity) getActivity();
         if (isModeChange) {
-            int mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-            if ("light".equals(value)) mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
-            else if ("dark".equals(value)) mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
-            a.getDelegate().setLocalNightMode(mode);
+            M3ThemeHelper.applyMode(a);
         }
         M3ThemeHelper.apply(a);
-        // Activity recreate preserves TermuxService sessions; required for full attr re-resolution.
+        a.getWindow().setWindowAnimations(0);
         a.recreate();
     }
 }

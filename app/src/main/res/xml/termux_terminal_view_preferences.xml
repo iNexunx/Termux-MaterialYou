@@ -10,6 +10,13 @@
             app:summaryOn="@string/termux_terminal_view_terminal_margin_adjustment_on"
             app:title="@string/termux_terminal_view_terminal_margin_adjustment_title" />
 
+        <SwitchPreferenceCompat
+            app:key="extra_keys_floating"
+            app:defaultValue="false"
+            app:summaryOff="@string/termux_terminal_view_extra_keys_floating_off"
+            app:summaryOn="@string/termux_terminal_view_extra_keys_floating_on"
+            app:title="@string/termux_terminal_view_extra_keys_floating_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

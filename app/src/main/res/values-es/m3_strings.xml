@@ -16,6 +16,11 @@
         <item>Verde</item>
         <item>Naranja</item>
         <item>Rosa</item>
+        <item>Lavanda</item>
+        <item>Rojo</item>
+        <item>Ámbar</item>
+        <item>Cian</item>
+        <item>Índigo</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
         <item>default</item>
@@ -25,6 +30,11 @@
         <item>green</item>
         <item>orange</item>
         <item>rose</item>
+        <item>lavender</item>
+        <item>red</item>
+        <item>amber</item>
+        <item>cyan</item>
+        <item>indigo</item>
     </string-array>
     <string-array name="m3_mode_entries">
         <item>Claro</item>
@@ -37,5 +47,46 @@
         <item>dark</item>
         <item>system</item>
         <item>material_you</item>
+    </string-array>
+
+    <string name="m3_notification_subtext">Servicio de terminal activo</string>
+    <string name="m3_notification_wakelock_on">Wakelock activo</string>
+    <string name="m3_notification_wakelock_off">Wakelock inactivo</string>
+    <plurals name="m3_notification_sessions">
+        <item quantity="one">%d sesión</item>
+        <item quantity="other">%d sesiones</item>
+    </plurals>
+    <plurals name="m3_notification_tasks">
+        <item quantity="one">%d tarea</item>
+        <item quantity="other">%d tareas</item>
+    </plurals>
+
+    <string name="m3_language_title">Idioma de la app</string>
+    <string name="m3_language_summary">Selecciona el idioma de la interfaz</string>
+    <string-array name="m3_language_entries">
+        <item>Seguir el sistema</item>
+        <item>Español</item>
+        <item>English</item>
+        <item>Português</item>
+        <item>Français</item>
+        <item>Deutsch</item>
+        <item>Italiano</item>
+        <item>Русский</item>
+        <item>Türkçe</item>
+        <item>Indonesia</item>
+        <item>العربية</item>
+    </string-array>
+    <string-array name="m3_language_values" translatable="false">
+        <item>system</item>
+        <item>es</item>
+        <item>en</item>
+        <item>pt</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>tr</item>
+        <item>id</item>
+        <item>ar</item>
     </string-array>
 </resources>

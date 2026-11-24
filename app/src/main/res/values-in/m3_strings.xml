@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="m3_appearance_title">Tampilan (Material You)</string>
+    <string name="m3_appearance_summary">Warna aksen, tema terang/gelap dan warna dinamis</string>
+    <string name="m3_accent_title">Warna aksen</string>
+    <string name="m3_accent_summary">Warna dasar tombol, tombol, menu dan permukaan</string>
+    <string name="m3_mode_title">Tema antarmuka</string>
+    <string name="m3_mode_summary">Terang, gelap, sistem atau Material You</string>
+    <string name="m3_sessions_title">Sesi</string>
+    <string name="m3_theme_toggle">Ubah tema</string>
+    <string-array name="m3_accent_entries">
+        <item>Bawaan</item>
+        <item>Ungu</item>
+        <item>Biru</item>
+        <item>Hijau kebiruan</item>
+        <item>Hijau</item>
+        <item>Oranye</item>
+        <item>Mawar</item>
+        <item>Lavender</item>
+        <item>Merah</item>
+        <item>Amber</item>
+        <item>Sian</item>
+        <item>Nila</item>
+    </string-array>
+    <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
+        <item>purple</item>
+        <item>blue</item>
+        <item>teal</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>rose</item>
+        <item>lavender</item>
+        <item>red</item>
+        <item>amber</item>
+        <item>cyan</item>
+        <item>indigo</item>
+    </string-array>
+    <string-array name="m3_mode_entries">
+        <item>Terang</item>
+        <item>Gelap</item>
+        <item>Ikuti sistem</item>
+        <item>Material You (dinamis)</item>
+    </string-array>
+    <string-array name="m3_mode_values" translatable="false">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+        <item>material_you</item>
+    </string-array>
+
+    <string name="m3_notification_subtext">Layanan terminal berjalan</string>
+    <string name="m3_notification_wakelock_on">Wakelock aktif</string>
+    <string name="m3_notification_wakelock_off">Wakelock dilepas</string>
+    <plurals name="m3_notification_sessions">
+        <item quantity="one">%d sesi</item>
+        <item quantity="other">%d sesi</item>
+    </plurals>
+    <plurals name="m3_notification_tasks">
+        <item quantity="one">%d tugas</item>
+        <item quantity="other">%d tugas</item>
+    </plurals>
+
+    <string name="m3_language_title">Bahasa aplikasi</string>
+    <string name="m3_language_summary">Pilih bahasa antarmuka</string>
+    <string-array name="m3_language_entries">
+        <item>Ikuti sistem</item>
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Portuguese</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>Indonesian</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="m3_language_values" translatable="false">
+        <item>system</item>
+        <item>es</item>
+        <item>en</item>
+        <item>pt</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>tr</item>
+        <item>id</item>
+        <item>ar</item>
+    </string-array>
+</resources>

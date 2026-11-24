@@ -20,7 +20,7 @@
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/terminal_toolbar_view_pager"
+            android:layout_above="@+id/terminal_toolbar_container"
             android:layout_alignParentTop="true">
 
             <FrameLayout
@@ -202,7 +202,7 @@
                         android:minHeight="52dp"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
-                        android:text="Nueva&#10;Sesion"
+                        android:text="@string/action_new_session_multiline"
                         android:textAllCaps="false"
                         android:textSize="11sp"
                         app:cornerRadius="26dp"
@@ -215,13 +215,27 @@
 
         </androidx.drawerlayout.widget.DrawerLayout>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/terminal_toolbar_view_pager"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/terminal_toolbar_container"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="?attr/colorSurface"
-            android:visibility="gone" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="?attr/m3SurfaceContainer"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="6dp"
+            app:strokeColor="?attr/colorPrimary"
+            app:strokeWidth="1dp">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/terminal_toolbar_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent" />
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 

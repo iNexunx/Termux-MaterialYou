@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="m3_appearance_title">Внешний вид (Material You)</string>
+    <string name="m3_appearance_summary">Акцент, светлая/тёмная тема и динамические цвета</string>
+    <string name="m3_accent_title">Цвет акцента</string>
+    <string name="m3_accent_summary">Базовый цвет кнопок, клавиш, меню и поверхностей</string>
+    <string name="m3_mode_title">Тема интерфейса</string>
+    <string name="m3_mode_summary">Светлая, тёмная, система или Material You</string>
+    <string name="m3_sessions_title">Сессии</string>
+    <string name="m3_theme_toggle">Переключить тему</string>
+    <string-array name="m3_accent_entries">
+        <item>По умолчанию</item>
+        <item>Фиолетовый</item>
+        <item>Синий</item>
+        <item>Бирюзовый</item>
+        <item>Зелёный</item>
+        <item>Оранжевый</item>
+        <item>Розовый</item>
+        <item>Лавандовый</item>
+        <item>Красный</item>
+        <item>Янтарный</item>
+        <item>Голубой</item>
+        <item>Индиго</item>
+    </string-array>
+    <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
+        <item>purple</item>
+        <item>blue</item>
+        <item>teal</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>rose</item>
+        <item>lavender</item>
+        <item>red</item>
+        <item>amber</item>
+        <item>cyan</item>
+        <item>indigo</item>
+    </string-array>
+    <string-array name="m3_mode_entries">
+        <item>Светлая</item>
+        <item>Тёмная</item>
+        <item>Как в системе</item>
+        <item>Material You (динамический)</item>
+    </string-array>
+    <string-array name="m3_mode_values" translatable="false">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+        <item>material_you</item>
+    </string-array>
+
+    <string name="m3_notification_subtext">Служба терминала запущена</string>
+    <string name="m3_notification_wakelock_on">Wakelock активен</string>
+    <string name="m3_notification_wakelock_off">Wakelock снят</string>
+    <plurals name="m3_notification_sessions">
+        <item quantity="one">%d сессия</item>
+        <item quantity="other">%d сессий</item>
+    </plurals>
+    <plurals name="m3_notification_tasks">
+        <item quantity="one">%d задача</item>
+        <item quantity="other">%d задач</item>
+    </plurals>
+
+    <string name="m3_language_title">Язык приложения</string>
+    <string name="m3_language_summary">Выберите язык интерфейса</string>
+    <string-array name="m3_language_entries">
+        <item>Как в системе</item>
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Portuguese</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>Indonesian</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="m3_language_values" translatable="false">
+        <item>system</item>
+        <item>es</item>
+        <item>en</item>
+        <item>pt</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>tr</item>
+        <item>id</item>
+        <item>ar</item>
+    </string-array>
+</resources>

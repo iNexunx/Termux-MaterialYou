@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="m3_appearance_title">Aparência (Material You)</string>
+    <string name="m3_appearance_summary">Cor de destaque, tema claro/escuro e cores dinâmicas</string>
+    <string name="m3_accent_title">Cor de destaque</string>
+    <string name="m3_accent_summary">Cor base para botões, teclas, menus e superfícies</string>
+    <string name="m3_mode_title">Tema da interface</string>
+    <string name="m3_mode_summary">Claro, escuro, seguir sistema ou Material You</string>
+    <string name="m3_sessions_title">Sessões</string>
+    <string name="m3_theme_toggle">Alternar tema</string>
+    <string-array name="m3_accent_entries">
+        <item>Padrão</item>
+        <item>Roxo</item>
+        <item>Azul</item>
+        <item>Verde-azulado</item>
+        <item>Verde</item>
+        <item>Laranja</item>
+        <item>Rosa</item>
+        <item>Lavanda</item>
+        <item>Vermelho</item>
+        <item>Âmbar</item>
+        <item>Ciano</item>
+        <item>Índigo</item>
+    </string-array>
+    <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
+        <item>purple</item>
+        <item>blue</item>
+        <item>teal</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>rose</item>
+        <item>lavender</item>
+        <item>red</item>
+        <item>amber</item>
+        <item>cyan</item>
+        <item>indigo</item>
+    </string-array>
+    <string-array name="m3_mode_entries">
+        <item>Claro</item>
+        <item>Escuro</item>
+        <item>Seguir sistema</item>
+        <item>Material You (dinâmico)</item>
+    </string-array>
+    <string-array name="m3_mode_values" translatable="false">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+        <item>material_you</item>
+    </string-array>
+
+    <string name="m3_notification_subtext">Serviço de terminal em execução</string>
+    <string name="m3_notification_wakelock_on">Wakelock ativo</string>
+    <string name="m3_notification_wakelock_off">Wakelock liberado</string>
+    <plurals name="m3_notification_sessions">
+        <item quantity="one">%d sessão</item>
+        <item quantity="other">%d sessões</item>
+    </plurals>
+    <plurals name="m3_notification_tasks">
+        <item quantity="one">%d tarefa</item>
+        <item quantity="other">%d tarefas</item>
+    </plurals>
+
+    <string name="m3_language_title">Idioma do app</string>
+    <string name="m3_language_summary">Selecionar idioma da interface</string>
+    <string-array name="m3_language_entries">
+        <item>Seguir sistema</item>
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Portuguese</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>Indonesian</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="m3_language_values" translatable="false">
+        <item>system</item>
+        <item>es</item>
+        <item>en</item>
+        <item>pt</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>tr</item>
+        <item>id</item>
+        <item>ar</item>
+    </string-array>
+</resources>

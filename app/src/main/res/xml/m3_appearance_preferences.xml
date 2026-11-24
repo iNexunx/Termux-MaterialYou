@@ -2,6 +2,14 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListPreference
+        app:key="m3_language"
+        app:title="@string/m3_language_title"
+        app:summary="@string/m3_language_summary"
+        app:entries="@array/m3_language_entries"
+        app:entryValues="@array/m3_language_values"
+        app:defaultValue="system" />
+
+    <ListPreference
         app:key="m3_theme_mode"
         app:title="@string/m3_mode_title"
         app:summary="@string/m3_mode_summary"

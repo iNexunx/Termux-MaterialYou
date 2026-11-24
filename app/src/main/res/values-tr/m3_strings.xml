@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="m3_appearance_title">Görünüm (Material You)</string>
+    <string name="m3_appearance_summary">Vurgu rengi, açık/koyu tema ve dinamik renkler</string>
+    <string name="m3_accent_title">Vurgu rengi</string>
+    <string name="m3_accent_summary">Düğme, tuş, menü ve yüzeyler için temel renk</string>
+    <string name="m3_mode_title">Arayüz teması</string>
+    <string name="m3_mode_summary">Açık, koyu, sistem veya Material You</string>
+    <string name="m3_sessions_title">Oturumlar</string>
+    <string name="m3_theme_toggle">Temayı değiştir</string>
+    <string-array name="m3_accent_entries">
+        <item>Varsayılan</item>
+        <item>Mor</item>
+        <item>Mavi</item>
+        <item>Turkuaz</item>
+        <item>Yeşil</item>
+        <item>Turuncu</item>
+        <item>Gül</item>
+        <item>Lavanta</item>
+        <item>Kırmızı</item>
+        <item>Kehribar</item>
+        <item>Camgöbeği</item>
+        <item>Çivit</item>
+    </string-array>
+    <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
+        <item>purple</item>
+        <item>blue</item>
+        <item>teal</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>rose</item>
+        <item>lavender</item>
+        <item>red</item>
+        <item>amber</item>
+        <item>cyan</item>
+        <item>indigo</item>
+    </string-array>
+    <string-array name="m3_mode_entries">
+        <item>Açık</item>
+        <item>Koyu</item>
+        <item>Sistemi izle</item>
+        <item>Material You (dinamik)</item>
+    </string-array>
+    <string-array name="m3_mode_values" translatable="false">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+        <item>material_you</item>
+    </string-array>
+
+    <string name="m3_notification_subtext">Terminal servisi çalışıyor</string>
+    <string name="m3_notification_wakelock_on">Wakelock etkin</string>
+    <string name="m3_notification_wakelock_off">Wakelock serbest</string>
+    <plurals name="m3_notification_sessions">
+        <item quantity="one">%d oturum</item>
+        <item quantity="other">%d oturum</item>
+    </plurals>
+    <plurals name="m3_notification_tasks">
+        <item quantity="one">%d görev</item>
+        <item quantity="other">%d görev</item>
+    </plurals>
+
+    <string name="m3_language_title">Uygulama dili</string>
+    <string name="m3_language_summary">Arayüz dilini seçin</string>
+    <string-array name="m3_language_entries">
+        <item>Sistemi izle</item>
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Portuguese</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>Indonesian</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="m3_language_values" translatable="false">
+        <item>system</item>
+        <item>es</item>
+        <item>en</item>
+        <item>pt</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>tr</item>
+        <item>id</item>
+        <item>ar</item>
+    </string-array>
+</resources>

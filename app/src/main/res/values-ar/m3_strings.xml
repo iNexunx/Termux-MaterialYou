@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="m3_appearance_title">المظهر (Material You)</string>
+    <string name="m3_appearance_summary">لون التمييز، السمة الفاتحة/الداكنة والألوان الديناميكية</string>
+    <string name="m3_accent_title">لون التمييز</string>
+    <string name="m3_accent_summary">اللون الأساسي للأزرار والمفاتيح والقوائم والأسطح</string>
+    <string name="m3_mode_title">سمة الواجهة</string>
+    <string name="m3_mode_summary">فاتح، داكن، اتباع النظام أو Material You</string>
+    <string name="m3_sessions_title">الجلسات</string>
+    <string name="m3_theme_toggle">تبديل السمة</string>
+    <string-array name="m3_accent_entries">
+        <item>افتراضي</item>
+        <item>بنفسجي</item>
+        <item>أزرق</item>
+        <item>أخضر مزرق</item>
+        <item>أخضر</item>
+        <item>برتقالي</item>
+        <item>وردي</item>
+        <item>خزامى</item>
+        <item>أحمر</item>
+        <item>كهرماني</item>
+        <item>سماوي</item>
+        <item>نيلي</item>
+    </string-array>
+    <string-array name="m3_accent_values" translatable="false">
+        <item>default</item>
+        <item>purple</item>
+        <item>blue</item>
+        <item>teal</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>rose</item>
+        <item>lavender</item>
+        <item>red</item>
+        <item>amber</item>
+        <item>cyan</item>
+        <item>indigo</item>
+    </string-array>
+    <string-array name="m3_mode_entries">
+        <item>فاتح</item>
+        <item>داكن</item>
+        <item>اتباع النظام</item>
+        <item>Material You (ديناميكي)</item>
+    </string-array>
+    <string-array name="m3_mode_values" translatable="false">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+        <item>material_you</item>
+    </string-array>
+
+    <string name="m3_notification_subtext">خدمة الطرفية قيد التشغيل</string>
+    <string name="m3_notification_wakelock_on">قفل الاستيقاظ مفعل</string>
+    <string name="m3_notification_wakelock_off">قفل الاستيقاظ مُحرر</string>
+    <plurals name="m3_notification_sessions">
+        <item quantity="one">%d جلسة</item>
+        <item quantity="other">%d جلسات</item>
+    </plurals>
+    <plurals name="m3_notification_tasks">
+        <item quantity="one">%d مهمة</item>
+        <item quantity="other">%d مهام</item>
+    </plurals>
+
+    <string name="m3_language_title">لغة التطبيق</string>
+    <string name="m3_language_summary">اختر لغة الواجهة</string>
+    <string-array name="m3_language_entries">
+        <item>اتباع النظام</item>
+        <item>Spanish</item>
+        <item>English</item>
+        <item>Portuguese</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Russian</item>
+        <item>Turkish</item>
+        <item>Indonesian</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="m3_language_values" translatable="false">
+        <item>system</item>
+        <item>es</item>
+        <item>en</item>
+        <item>pt</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ru</item>
+        <item>tr</item>
+        <item>id</item>
+        <item>ar</item>
+    </string-array>
+</resources>

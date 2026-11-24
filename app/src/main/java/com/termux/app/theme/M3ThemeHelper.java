@@ -18,9 +18,10 @@ public final class M3ThemeHelper {
     public static final String PREF_ACCENT = "m3_accent";
     public static final String PREF_MODE = "m3_theme_mode";
     public static final String PREF_SEED_COLOR = "m3_seed_color";
+    public static final String PREF_LANGUAGE = "m3_language";
 
-    private static final String[] ACCENTS = {"default", "purple", "blue", "teal", "green", "orange", "rose"};
-    private static final int[] SEEDS = {0x6750A4, 0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E};
+    private static final String[] ACCENTS = {"default", "purple", "blue", "teal", "green", "orange", "rose", "lavender", "red", "amber", "cyan", "indigo"};
+    private static final int[] SEEDS = {0x2E7D32, 0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E, 0x7B5EA7, 0xB3261E, 0xB26A00, 0x006874, 0x3F51B5};
 
     private M3ThemeHelper() {}
 
@@ -29,9 +30,29 @@ public final class M3ThemeHelper {
         String mode = prefs.getString(PREF_MODE, "system");
         int desired = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
         if ("light".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_NO;
-        else if ("dark".equals(mode) || "material_you".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_YES;
+        else if ("dark".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_YES;
         if (AppCompatDelegate.getDefaultNightMode() != desired)
             AppCompatDelegate.setDefaultNightMode(desired);
+    }
+
+    public static void applyLanguage(Context context) {
+        // Persisted; applied via wrapContext/attachBaseContext for AppCompat 1.3 compatibility.
+    }
+
+    public static Context wrapContext(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String lang = prefs.getString(PREF_LANGUAGE, "system");
+        if (lang == null || lang.isEmpty() || "system".equals(lang)) return context;
+        java.util.Locale locale = java.util.Locale.forLanguageTag(lang);
+        java.util.Locale.setDefault(locale);
+        android.content.res.Configuration config = new android.content.res.Configuration(context.getResources().getConfiguration());
+        config.setLocale(locale);
+        config.setLayoutDirection(locale);
+        return context.createConfigurationContext(config);
+    }
+
+    public static String getLanguage(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_LANGUAGE, "system");
     }
 
     /** Must be called before {@code super.onCreate()} of the activity. */
@@ -47,7 +68,6 @@ public final class M3ThemeHelper {
             if (argb == null) argb = getWallpaperPrimaryColor(activity);
             if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
         }
-        if ("default".equals(accent)) accent = "purple";
         activity.setTheme(getThemeResId(accent));
     }
 
@@ -59,6 +79,12 @@ public final class M3ThemeHelper {
         if ("green".equals(accent)) return R.style.Theme_TermuxApp_M3_Green;
         if ("orange".equals(accent)) return R.style.Theme_TermuxApp_M3_Orange;
         if ("rose".equals(accent)) return R.style.Theme_TermuxApp_M3_Rose;
+        if ("lavender".equals(accent)) return R.style.Theme_TermuxApp_M3_Lavender;
+        if ("red".equals(accent)) return R.style.Theme_TermuxApp_M3_Red;
+        if ("amber".equals(accent)) return R.style.Theme_TermuxApp_M3_Amber;
+        if ("cyan".equals(accent)) return R.style.Theme_TermuxApp_M3_Cyan;
+        if ("indigo".equals(accent)) return R.style.Theme_TermuxApp_M3_Indigo;
+        if ("default".equals(accent)) return R.style.Theme_TermuxApp_M3_Default;
         return R.style.Theme_TermuxApp_M3_Purple;
     }
 

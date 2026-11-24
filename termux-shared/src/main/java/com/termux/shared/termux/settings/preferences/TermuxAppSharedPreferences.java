@@ -82,6 +82,14 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
         return !currentValue;
     }
 
+    public boolean isExtraKeysFloating() {
+        return SharedPreferenceUtils.getBoolean(mSharedPreferences, TERMUX_APP.KEY_EXTRA_KEYS_FLOATING, TERMUX_APP.DEFAULT_VALUE_EXTRA_KEYS_FLOATING);
+    }
+
+    public void setExtraKeysFloating(boolean value) {
+        SharedPreferenceUtils.setBoolean(mSharedPreferences, TERMUX_APP.KEY_EXTRA_KEYS_FLOATING, value, false);
+    }
+
 
 
     public boolean isTerminalMarginAdjustmentEnabled() {

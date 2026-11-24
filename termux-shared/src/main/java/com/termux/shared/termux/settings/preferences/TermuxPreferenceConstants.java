@@ -102,6 +102,10 @@ public final class TermuxPreferenceConstants {
         public static final String KEY_SHOW_TERMINAL_TOOLBAR = "show_extra_keys";
         public static final boolean DEFAULT_VALUE_SHOW_TERMINAL_TOOLBAR = true;
 
+        /** Defines key for floating extra keys toolbar mode. */
+        public static final String KEY_EXTRA_KEYS_FLOATING = "extra_keys_floating";
+        public static final boolean DEFAULT_VALUE_EXTRA_KEYS_FLOATING = false;
+
 
         /**
          * Defines the key for whether the soft keyboard will be enabled, for cases where users want

@@ -10,6 +10,11 @@ import com.termux.app.theme.M3ThemeHelper;
 public class M3ReportActivity extends com.termux.shared.activities.ReportActivity {
 
     @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         M3ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
