@@ -62,6 +62,11 @@ public class FileReceiverActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(newBase));
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 

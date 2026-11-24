@@ -40,8 +40,6 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
         M3ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
 
-        AppCompatActivityUtils.setNightMode(this, NightMode.getAppNightMode().getName(), true);
-
         setContentView(R.layout.activity_settings);
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getBooleanExtra("m3_open_appearance", false)) {

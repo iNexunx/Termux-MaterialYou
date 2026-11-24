@@ -22,6 +22,11 @@ public final class HelpActivity extends AppCompatActivity {
     WebView mWebView;
 
     @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         M3ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);

@@ -32,6 +32,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <!-- Blue -->
@@ -65,6 +66,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <!-- Teal -->
@@ -98,6 +100,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <!-- Green -->
@@ -131,6 +134,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <!-- Orange -->
@@ -164,6 +168,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <!-- Rose -->
@@ -197,6 +202,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <style name="Theme.TermuxApp.M3.Default" parent="Theme.TermuxActivity.DayNight.NoActionBar">
@@ -229,6 +235,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <style name="Theme.TermuxApp.M3.Lavender" parent="Theme.TermuxActivity.DayNight.NoActionBar">
@@ -261,6 +268,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <style name="Theme.TermuxApp.M3.Red" parent="Theme.TermuxActivity.DayNight.NoActionBar">
@@ -293,6 +301,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <style name="Theme.TermuxApp.M3.Amber" parent="Theme.TermuxActivity.DayNight.NoActionBar">
@@ -325,6 +334,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <style name="Theme.TermuxApp.M3.Cyan" parent="Theme.TermuxActivity.DayNight.NoActionBar">
@@ -357,6 +367,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
     <style name="Theme.TermuxApp.M3.Indigo" parent="Theme.TermuxActivity.DayNight.NoActionBar">
@@ -389,6 +400,7 @@
         <item name="switchStyle">@style/Widget.Termux.M3.Switch</item>
         <item name="toolbarStyle">@style/Widget.Termux.M3.Toolbar</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
     </style>
 </resources>

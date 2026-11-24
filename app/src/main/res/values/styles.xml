@@ -102,4 +102,17 @@
         <item name="titleTextColor">?attr/colorOnPrimary</item>
     </style>
 
+    <style name="PreferenceThemeOverlay.Termux.M3" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceCategoryStyle">@style/Preference.Category.Termux.M3</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Termux.M3</item>
+    </style>
+
+    <style name="Preference.Category.Termux.M3" parent="Preference.Category.Material">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Preference.SwitchPreferenceCompat.Termux.M3" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/m3_preference_switch</item>
+    </style>
+
 </resources>

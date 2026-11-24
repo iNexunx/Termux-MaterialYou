@@ -490,15 +490,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
 
     private void setActivityTheme() {
-        // Update NightMode.APP_NIGHT_MODE
-        TermuxThemeUtils.setAppNightMode(mProperties.getNightMode());
-
-        // Set activity night mode. If NightMode.SYSTEM is set, then android will automatically
-        // trigger recreation of activity when uiMode/dark mode configuration is changed so that
-        // day or night theme takes affect.
-        AppCompatActivityUtils.setNightMode(this, NightMode.getAppNightMode().getName(), true);
-
-        // Material 3: user-selected accent palette, theme mode and dynamic colours.
+        // Material 3 controls theme mode/accent; keep Termux NightMode in sync for compat.
         M3ThemeHelper.apply(this);
     }
 
@@ -748,12 +740,16 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         }
     }
 
-    /** Show a toast and dismiss the last one if still visible. */
+    /** Show M3 styled toast and dismiss the last one if still visible. */
     public void showToast(String text, boolean longDuration) {
         if (text == null || text.isEmpty()) return;
         if (mLastToast != null) mLastToast.cancel();
-        mLastToast = Toast.makeText(TermuxActivity.this, text, longDuration ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
-        mLastToast.setGravity(Gravity.TOP, 0, 0);
+        android.view.View v = getLayoutInflater().inflate(R.layout.m3_toast, null);
+        ((TextView) v.findViewById(R.id.m3_toast_text)).setText(text);
+        mLastToast = new Toast(getApplicationContext());
+        mLastToast.setDuration(longDuration ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
+        mLastToast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, dp(96));
+        mLastToast.setView(v);
         mLastToast.show();
     }
 
@@ -1094,8 +1090,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 mExtraKeysView.reload(mTermuxTerminalExtraKeys.getExtraKeysInfo(), mTerminalToolbarDefaultHeight);
             }
 
-            // Update NightMode.APP_NIGHT_MODE
-            TermuxThemeUtils.setAppNightMode(mProperties.getNightMode());
+            // M3ThemeHelper controls night mode.
         }
 
         setMargins();
