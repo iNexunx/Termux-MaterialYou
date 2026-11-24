@@ -70,6 +70,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.Arrays;
 import java.util.List;
+import com.termux.shared.termux.shell.command.runner.terminal.TermuxSession;
 
 /**
  * A terminal emulator activity.
