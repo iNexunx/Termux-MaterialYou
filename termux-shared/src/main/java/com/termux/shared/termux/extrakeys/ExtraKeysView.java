@@ -427,9 +427,16 @@ public final class ExtraKeysView extends GridLayout {
                 button.setTextColor(mButtonTextColor);
                 button.setAllCaps(mButtonTextAllCaps);
                 button.setPadding(0, 0, 0, 0);
+                button.setSingleLine(true);
+                button.setMaxLines(1);
+                button.setEllipsize(android.text.TextUtils.TruncateAt.END);
+                button.setMinWidth(0);
+                button.setMinimumWidth(0);
                 // Material 3 pill: fully rounded corners, themed container tint, no outline.
                 button.setCornerRadius(1000);
                 button.setStrokeWidth(0);
+                button.setInsetTop(0);
+                button.setInsetBottom(0);
                 button.setBackgroundTintList(ColorStateList.valueOf(mButtonBackgroundColor));
 
                 button.setOnClickListener(view -> {
@@ -495,6 +502,7 @@ public final class ExtraKeysView extends GridLayout {
                     param.height = 0;
                 }
                 param.setMargins(keyMargin, keyMargin, keyMargin, keyMargin);
+                androidx.core.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(button, 8, 14, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
                 param.columnSpec = GridLayout.spec(col, GridLayout.FILL, 1.f);
                 param.rowSpec = GridLayout.spec(row, GridLayout.FILL, 1.f);
                 button.setLayoutParams(param);

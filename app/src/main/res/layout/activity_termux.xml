@@ -82,7 +82,13 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="12sp"
                         app:icon="@drawable/ic_m3_keyboard"
+                        app:iconPadding="4dp"
+                        app:iconSize="18dp"
                         android:text="@string/action_toggle_soft_keyboard" />
 
                     <com.google.android.material.button.MaterialButton
@@ -92,7 +98,13 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="12sp"
                         app:icon="@drawable/ic_m3_new_session"
+                        app:iconPadding="4dp"
+                        app:iconSize="18dp"
                         android:text="@string/action_new_session" />
                 </LinearLayout>
             </LinearLayout>
