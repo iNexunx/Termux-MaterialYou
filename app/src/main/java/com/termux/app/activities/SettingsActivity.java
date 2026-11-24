@@ -2,6 +2,7 @@ package com.termux.app.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.os.Environment;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ import com.termux.shared.termux.TermuxUtils;
 import com.termux.shared.activity.media.AppCompatActivityUtils;
 import com.termux.shared.theme.NightMode;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper.M3ThemeAware {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,14 @@ public class SettingsActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.settings, new RootPreferencesFragment())
                 .commit();
-        }
+            @Override
+    public void onM3ThemeChanged() {
+        M3ThemeHelper.apply(this);
+        getDelegate().applyDayNight();
+        View root = findViewById(android.R.id.content);
+        if (root != null) { root.invalidate(); root.requestLayout(); }
+    }
+}
 
         AppCompatActivityUtils.setToolbar(this, com.termux.shared.R.id.toolbar);
         AppCompatActivityUtils.setShowBackButtonInActionBar(this, true);

@@ -263,7 +263,7 @@ public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
             } else if (unicodeChar == 'k'/* keyboard */) {
                 onToggleSoftKeyboardRequest();
             } else if (unicodeChar == 'm'/* menu */) {
-                mActivity.getTerminalView().showContextMenu();
+                mActivity.showTermuxContextMenu();
             } else if (unicodeChar == 'r'/* rename */) {
                 mTermuxTerminalSessionActivityClient.renameSession(currentSession);
             } else if (unicodeChar == 'c'/* create */) {
@@ -356,6 +356,12 @@ public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
     @Override
     public boolean onLongPress(MotionEvent event) {
         return false;
+    }
+
+    @Override
+    public boolean onShowContextMenu() {
+        mActivity.getTerminalView().showContextMenu();
+        return true;
     }
 
 

@@ -48,6 +48,7 @@ public interface TerminalViewClient {
 
     boolean onLongPress(MotionEvent event);
 
+    boolean onShowContextMenu();
 
 
     boolean readControlKey();

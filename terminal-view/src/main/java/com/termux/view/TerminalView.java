@@ -613,7 +613,9 @@ public final class TerminalView extends View {
             return true;
         } else if (event.isFromSource(InputDevice.SOURCE_MOUSE)) {
             if (event.isButtonPressed(MotionEvent.BUTTON_SECONDARY)) {
-                if (action == MotionEvent.ACTION_DOWN) showContextMenu();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    if (mClient == null || !mClient.onShowContextMenu()) showContextMenu();
+                }
                 return true;
             } else if (event.isButtonPressed(MotionEvent.BUTTON_TERTIARY)) {
                 ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -1396,13 +1398,7 @@ public final class TerminalView extends View {
         if (mTextSelectionCursorController != null) mTextSelectionCursorController.unsetStoredSelectedText();
     }
 
-    private ActionMode getTextSelectionActionMode() {
-        if (mTextSelectionCursorController != null) {
-            return mTextSelectionCursorController.getActionMode();
-        } else {
-            return null;
-        }
-    }
+    private ActionMode getTextSelectionActionMode() { return null; }
 
     public void startTextSelectionMode(MotionEvent event) {
         if (!requestFocus()) {

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/m3_session_pill"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <LinearLayout android:id="@+id/sel_copy" style="@style/Widget.Termux.M3.SelectionPill">
+        <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_m3_copy" app:tint="?attr/colorPrimary"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:maxLines="1" android:text="@string/copy_text" android:textColor="?attr/colorOnSurface" android:textSize="13sp"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/sel_paste" style="@style/Widget.Termux.M3.SelectionPill">
+        <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_m3_paste" app:tint="?attr/colorPrimary"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:maxLines="1" android:text="@string/paste_text" android:textColor="?attr/colorOnSurface" android:textSize="13sp"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/sel_more" style="@style/Widget.Termux.M3.SelectionPill">
+        <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_m3_more" app:tint="?attr/colorPrimary"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:maxLines="1" android:text="@string/text_selection_more" android:textColor="?attr/colorOnSurface" android:textSize="13sp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -53,6 +53,17 @@
         <item name="trackTint">@color/m3_switch_track</item>
     </style>
 
+    <style name="Widget.Termux.M3.SelectionPill">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/m3_menu_pill</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+
     <style name="TextAppearance.Termux.M3.ActionMode" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textColor">?attr/m3OnPrimaryContainer</item>
     </style>

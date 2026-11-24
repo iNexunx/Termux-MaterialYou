@@ -40,10 +40,22 @@ public class M3AppearancePreferencesFragment extends PreferenceFragmentCompat {
                     .putString(M3ThemeHelper.PREF_SEED_COLOR, M3ThemeHelper.getSeedColor((String) newValue))
                     .apply();
             }
-            if (isAdded() && getActivity() != null) {
-                getActivity().recreate();
-            }
+            if (isAdded()) applyThemeNow(String.valueOf(newValue), "m3_theme_mode".equals(key));
             return true;
         });
+    }
+
+    private void applyThemeNow(String value, boolean isModeChange) {
+        if (getActivity() == null) return;
+        androidx.appcompat.app.AppCompatActivity a = (androidx.appcompat.app.AppCompatActivity) getActivity();
+        if (isModeChange) {
+            int mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            if ("light".equals(value)) mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
+            else if ("dark".equals(value)) mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
+            a.getDelegate().setLocalNightMode(mode);
+        }
+        M3ThemeHelper.apply(a);
+        // Activity recreate preserves TermuxService sessions; required for full attr re-resolution.
+        a.recreate();
     }
 }

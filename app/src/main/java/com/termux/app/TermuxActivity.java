@@ -21,8 +21,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.termux.R;
@@ -78,7 +80,7 @@ import java.util.Arrays;
  * </ul>
  * about memory leaks.
  */
-public final class TermuxActivity extends AppCompatActivity implements ServiceConnection {
+public final class TermuxActivity extends AppCompatActivity implements ServiceConnection, M3ThemeHelper.M3ThemeAware {
 
     /**
      * The connection to the {@link TermuxService}. Requested in {@link #onCreate(Bundle)} with a call to
@@ -177,18 +179,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private float mTerminalToolbarDefaultHeight;
 
 
-    private static final int CONTEXT_MENU_SELECT_URL_ID = 0;
-    private static final int CONTEXT_MENU_SHARE_TRANSCRIPT_ID = 1;
-    private static final int CONTEXT_MENU_SHARE_SELECTED_TEXT = 10;
-    private static final int CONTEXT_MENU_AUTOFILL_USERNAME = 11;
-    private static final int CONTEXT_MENU_AUTOFILL_PASSWORD = 2;
-    private static final int CONTEXT_MENU_RESET_TERMINAL_ID = 3;
-    private static final int CONTEXT_MENU_KILL_PROCESS_ID = 4;
-    private static final int CONTEXT_MENU_STYLING_ID = 5;
-    private static final int CONTEXT_MENU_TOGGLE_KEEP_SCREEN_ON = 6;
-    private static final int CONTEXT_MENU_HELP_ID = 7;
-    private static final int CONTEXT_MENU_SETTINGS_ID = 8;
-    private static final int CONTEXT_MENU_REPORT_ID = 9;
+    private String mAppliedM3Accent;
+    private String mAppliedM3Mode;
 
     private static final String ARG_TERMINAL_TOOLBAR_TEXT_INPUT = "terminal_toolbar_text_input";
     private static final String ARG_ACTIVITY_RECREATED = "activity_recreated";
@@ -210,6 +202,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         mProperties = TermuxAppSharedProperties.getProperties();
         reloadProperties();
 
+        android.content.SharedPreferences m3p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        mAppliedM3Accent = m3p.getString(M3ThemeHelper.PREF_ACCENT, "purple");
+        mAppliedM3Mode = m3p.getString(M3ThemeHelper.PREF_MODE, "system");
         setActivityTheme();
 
         super.onCreate(savedInstanceState);
@@ -300,6 +295,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             addTermuxActivityRootViewGlobalLayoutListener();
 
         registerTermuxActivityBroadcastReceiver();
+        applyM3ThemeIfChanged(false);
     }
 
     @Override
@@ -631,100 +627,66 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
 
 
-    private MenuItem addThemedMenuItem(Menu menu, int id, int titleRes, int iconRes) {
-        return addThemedMenuItem(menu, id, getString(titleRes), iconRes);
+    private androidx.appcompat.app.AlertDialog mContextMenuDialog;
+
+    private void addContextMenuItem(LinearLayout container, int iconRes, String text, boolean enabled, boolean checkable, boolean checked, Runnable action) {
+        View item = getLayoutInflater().inflate(R.layout.m3_context_menu_item, container, false);
+        ((android.widget.ImageView) item.findViewById(R.id.menu_item_icon)).setImageResource(iconRes);
+        ((TextView) item.findViewById(R.id.menu_item_text)).setText(text);
+        com.google.android.material.switchmaterial.SwitchMaterial sw = item.findViewById(R.id.menu_item_switch);
+        if (checkable) { sw.setVisibility(View.VISIBLE); sw.setChecked(checked); sw.setClickable(false); }
+        item.setEnabled(enabled); item.setAlpha(enabled ? 1f : 0.5f);
+        item.setOnClickListener(v -> { if (mContextMenuDialog != null) mContextMenuDialog.dismiss(); action.run(); });
+        container.addView(item);
     }
 
-    private MenuItem addThemedMenuItem(Menu menu, int id, String title, int iconRes) {
-        MenuItem item = menu.add(Menu.NONE, id, Menu.NONE, title);
-        item.setIcon(iconRes);
-        return item;
+    public void showTermuxContextMenu() {
+        TerminalSession currentSession = getCurrentSession();
+        if (currentSession == null) return;
+        View content = getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
+        LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
+        boolean autoFillEnabled = mTerminalView.isAutoFillEnabled();
+        addContextMenuItem(items, R.drawable.ic_m3_link, getString(R.string.action_select_url), true, false, false, () -> mTermuxTerminalViewClient.showUrlSelection());
+        addContextMenuItem(items, R.drawable.ic_m3_share, getString(R.string.action_share_transcript), true, false, false, () -> mTermuxTerminalViewClient.shareSessionTranscript());
+        if (!DataUtils.isNullOrEmpty(mTerminalView.getStoredSelectedText()))
+            addContextMenuItem(items, R.drawable.ic_m3_share, getString(R.string.action_share_selected_text), true, false, false, () -> mTermuxTerminalViewClient.shareSelectedText());
+        if (autoFillEnabled) addContextMenuItem(items, R.drawable.ic_m3_person, getString(R.string.action_autofill_username), true, false, false, () -> mTerminalView.requestAutoFillUsername());
+        if (autoFillEnabled) addContextMenuItem(items, R.drawable.ic_m3_person, getString(R.string.action_autofill_password), true, false, false, () -> mTerminalView.requestAutoFillPassword());
+        addContextMenuItem(items, R.drawable.ic_m3_restart, getString(R.string.action_reset_terminal), true, false, false, () -> onResetTerminalSession(currentSession));
+        addContextMenuItem(items, R.drawable.ic_m3_power, getResources().getString(R.string.action_kill_process, currentSession.getPid()), currentSession.isRunning(), false, false, () -> showKillSessionDialog(currentSession));
+        addContextMenuItem(items, R.drawable.ic_m3_palette, getString(R.string.action_style_terminal), true, false, false, this::showStylingDialog);
+        addContextMenuItem(items, R.drawable.ic_m3_lightbulb, getString(R.string.action_toggle_keep_screen_on), true, true, mPreferences.shouldKeepScreenOn(), this::toggleKeepScreenOn);
+        addContextMenuItem(items, R.drawable.ic_m3_help, getString(R.string.action_open_help), true, false, false, () -> ActivityUtils.startActivity(this, new Intent(this, HelpActivity.class)));
+        addContextMenuItem(items, R.drawable.ic_m3_settings, getString(R.string.action_open_settings), true, false, false, () -> ActivityUtils.startActivity(this, new Intent(this, SettingsActivity.class)));
+        addContextMenuItem(items, R.drawable.ic_m3_report, getString(R.string.action_report_issue), true, false, false, () -> mTermuxTerminalViewClient.reportIssueFromTranscript());
+        mContextMenuDialog = new MaterialAlertDialogBuilder(this).setView(content).create();
+        mContextMenuDialog.show();
+        if (mContextMenuDialog.getWindow() != null) mContextMenuDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    }
+
+
+    private void applyM3ThemeIfChanged(boolean forceRecreate) {
+        android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        String accent = p.getString(M3ThemeHelper.PREF_ACCENT, "purple");
+        String mode = p.getString(M3ThemeHelper.PREF_MODE, "system");
+        if (!forceRecreate && accent.equals(mAppliedM3Accent) && mode.equals(mAppliedM3Mode)) return;
+        mAppliedM3Accent = accent; mAppliedM3Mode = mode;
+        // Recreate re-resolves theme attrs; TermuxService keeps sessions/processes alive.
+        recreate();
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        TerminalSession currentSession = getCurrentSession();
-        if (currentSession == null) return;
-
-        boolean autoFillEnabled = mTerminalView.isAutoFillEnabled();
-
-        addThemedMenuItem(menu, CONTEXT_MENU_SELECT_URL_ID, R.string.action_select_url, R.drawable.ic_m3_link);
-        addThemedMenuItem(menu, CONTEXT_MENU_SHARE_TRANSCRIPT_ID, R.string.action_share_transcript, R.drawable.ic_m3_share);
-        if (!DataUtils.isNullOrEmpty(mTerminalView.getStoredSelectedText()))
-            addThemedMenuItem(menu, CONTEXT_MENU_SHARE_SELECTED_TEXT, R.string.action_share_selected_text, R.drawable.ic_m3_share);
-        if (autoFillEnabled)
-            addThemedMenuItem(menu, CONTEXT_MENU_AUTOFILL_USERNAME, R.string.action_autofill_username, R.drawable.ic_m3_person);
-        if (autoFillEnabled)
-            addThemedMenuItem(menu, CONTEXT_MENU_AUTOFILL_PASSWORD, R.string.action_autofill_password, R.drawable.ic_m3_person);
-        addThemedMenuItem(menu, CONTEXT_MENU_RESET_TERMINAL_ID, R.string.action_reset_terminal, R.drawable.ic_m3_restart);
-        addThemedMenuItem(menu, CONTEXT_MENU_KILL_PROCESS_ID, getResources().getString(R.string.action_kill_process, getCurrentSession().getPid()), R.drawable.ic_m3_power)
-            .setEnabled(currentSession.isRunning());
-        addThemedMenuItem(menu, CONTEXT_MENU_STYLING_ID, R.string.action_style_terminal, R.drawable.ic_m3_palette);
-        addThemedMenuItem(menu, CONTEXT_MENU_TOGGLE_KEEP_SCREEN_ON, R.string.action_toggle_keep_screen_on, R.drawable.ic_m3_lightbulb)
-            .setCheckable(true).setChecked(mPreferences.shouldKeepScreenOn());
-        addThemedMenuItem(menu, CONTEXT_MENU_HELP_ID, R.string.action_open_help, R.drawable.ic_m3_help);
-        addThemedMenuItem(menu, CONTEXT_MENU_SETTINGS_ID, R.string.action_open_settings, R.drawable.ic_m3_settings);
-        addThemedMenuItem(menu, CONTEXT_MENU_REPORT_ID, R.string.action_report_issue, R.drawable.ic_m3_report);
-    }
-
+    public void onM3ThemeChanged() { applyM3ThemeIfChanged(false); }
     /** Hook system menu to show context menu instead. */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mTerminalView.showContextMenu();
+        showTermuxContextMenu();
         return false;
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        TerminalSession session = getCurrentSession();
-
-        switch (item.getItemId()) {
-            case CONTEXT_MENU_SELECT_URL_ID:
-                mTermuxTerminalViewClient.showUrlSelection();
-                return true;
-            case CONTEXT_MENU_SHARE_TRANSCRIPT_ID:
-                mTermuxTerminalViewClient.shareSessionTranscript();
-                return true;
-            case CONTEXT_MENU_SHARE_SELECTED_TEXT:
-                mTermuxTerminalViewClient.shareSelectedText();
-                return true;
-            case CONTEXT_MENU_AUTOFILL_USERNAME:
-                mTerminalView.requestAutoFillUsername();
-                return true;
-            case CONTEXT_MENU_AUTOFILL_PASSWORD:
-                mTerminalView.requestAutoFillPassword();
-                return true;
-            case CONTEXT_MENU_RESET_TERMINAL_ID:
-                onResetTerminalSession(session);
-                return true;
-            case CONTEXT_MENU_KILL_PROCESS_ID:
-                showKillSessionDialog(session);
-                return true;
-            case CONTEXT_MENU_STYLING_ID:
-                showStylingDialog();
-                return true;
-            case CONTEXT_MENU_TOGGLE_KEEP_SCREEN_ON:
-                toggleKeepScreenOn();
-                return true;
-            case CONTEXT_MENU_HELP_ID:
-                ActivityUtils.startActivity(this, new Intent(this, HelpActivity.class));
-                return true;
-            case CONTEXT_MENU_SETTINGS_ID:
-                ActivityUtils.startActivity(this, new Intent(this, SettingsActivity.class));
-                return true;
-            case CONTEXT_MENU_REPORT_ID:
-                mTermuxTerminalViewClient.reportIssueFromTranscript();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onContextMenuClosed(Menu menu) {
-        super.onContextMenuClosed(menu);
-        // onContextMenuClosed() is triggered twice if back button is pressed to dismiss instead of tap for some reason
-        mTerminalView.onContextMenuClosed(menu);
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        showTermuxContextMenu();
     }
 
     private void showKillSessionDialog(TerminalSession session) {

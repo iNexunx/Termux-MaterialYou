@@ -58,6 +58,11 @@ public class TermuxTerminalViewClientBase implements TerminalViewClient {
     }
 
     @Override
+    public boolean onShowContextMenu() {
+        return false;
+    }
+
+    @Override
     public boolean readControlKey() {
         return false;
     }

@@ -24,36 +24,34 @@ public final class M3ThemeHelper {
 
     private M3ThemeHelper() {}
 
+    public static void applyMode(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String mode = prefs.getString(PREF_MODE, "system");
+        int desired = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        if ("light".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_NO;
+        else if ("dark".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_YES;
+        if (AppCompatDelegate.getDefaultNightMode() != desired)
+            AppCompatDelegate.setDefaultNightMode(desired);
+    }
+
     /** Must be called before {@code super.onCreate()} of the activity. */
     public static void apply(Activity activity) {
+        applyMode(activity);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        String mode = prefs.getString(PREF_MODE, "system");
         String accent = prefs.getString(PREF_ACCENT, "purple");
-
-        if ("light".equals(mode)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else if ("dark".equals(mode)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        }
-
+        String mode = prefs.getString(PREF_MODE, "system");
         if ("material_you".equals(mode)) {
             String seed = prefs.getString(PREF_SEED_COLOR, null);
             Integer argb = null;
-            if (seed != null) {
-                try {
-                    argb = (int) Long.parseLong(seed, 16);
-                } catch (NumberFormatException ignored) {
-                    argb = null;
-                }
-            }
+            if (seed != null) { try { argb = (int) Long.parseLong(seed, 16); } catch (NumberFormatException ignored) {} }
             if (argb == null) argb = getWallpaperPrimaryColor(activity);
             if (argb != null) accent = ACCENTS[nearestAccentIndex(argb)];
         }
-
         activity.setTheme(getThemeResId(accent));
+        if (activity instanceof M3ThemeAware) ((M3ThemeAware) activity).onM3ThemeChanged();
     }
+
+    public interface M3ThemeAware { void onM3ThemeChanged(); }
 
     public static int getThemeResId(String accent) {
         if ("blue".equals(accent)) return R.style.Theme_TermuxApp_M3_Blue;

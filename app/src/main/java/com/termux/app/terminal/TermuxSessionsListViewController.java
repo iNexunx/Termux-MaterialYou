@@ -21,7 +21,6 @@ import androidx.core.content.ContextCompat;
 import com.termux.R;
 import com.termux.app.TermuxActivity;
 import com.termux.shared.termux.shell.command.runner.terminal.TermuxSession;
-import com.termux.shared.theme.NightMode;
 import com.termux.shared.theme.ThemeUtils;
 import com.termux.terminal.TerminalSession;
 
@@ -50,46 +49,44 @@ public class TermuxSessionsListViewController extends ArrayAdapter<TermuxSession
         }
 
         TextView sessionTitleView = sessionRowView.findViewById(R.id.session_title);
+        TextView sessionNumberView = sessionRowView.findViewById(R.id.session_number);
 
         TerminalSession sessionAtRow = getItem(position).getTerminalSession();
         if (sessionAtRow == null) {
             sessionTitleView.setText("null session");
+            sessionNumberView.setText("?");
             return sessionRowView;
         }
 
-        boolean shouldEnableDarkTheme = ThemeUtils.shouldEnableDarkTheme(mActivity, NightMode.getAppNightMode().getName());
-
         boolean isActiveSession = sessionAtRow == mActivity.getCurrentSession();
-        sessionTitleView.setBackground(ContextCompat.getDrawable(mActivity,
+        sessionRowView.setBackground(ContextCompat.getDrawable(mActivity,
             isActiveSession ? R.drawable.m3_session_pill_active : R.drawable.m3_session_pill));
+
+        sessionNumberView.setText(String.valueOf(position + 1));
 
         String name = sessionAtRow.mSessionName;
         String sessionTitle = sessionAtRow.getTitle();
+        String sessionNamePart = TextUtils.isEmpty(name) ? "" : name;
+        String sessionTitlePart = TextUtils.isEmpty(sessionTitle) ? "" : ((sessionNamePart.isEmpty() ? "" : " • ") + sessionTitle);
+        String fullSessionTitle = sessionNamePart + sessionTitlePart;
+        if (TextUtils.isEmpty(fullSessionTitle)) fullSessionTitle = mActivity.getString(R.string.action_new_session);
 
-        String numberPart = "[" + (position + 1) + "] ";
-        String sessionNamePart = (TextUtils.isEmpty(name) ? "" : name);
-        String sessionTitlePart = (TextUtils.isEmpty(sessionTitle) ? "" : ((sessionNamePart.isEmpty() ? "" : "\n") + sessionTitle));
-
-        String fullSessionTitle = numberPart + sessionNamePart + sessionTitlePart;
         SpannableString fullSessionTitleStyled = new SpannableString(fullSessionTitle);
-        fullSessionTitleStyled.setSpan(boldSpan, 0, numberPart.length() + sessionNamePart.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        fullSessionTitleStyled.setSpan(italicSpan, numberPart.length() + sessionNamePart.length(), fullSessionTitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        if (!sessionNamePart.isEmpty())
+            fullSessionTitleStyled.setSpan(boldSpan, 0, sessionNamePart.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (!sessionTitlePart.isEmpty())
+            fullSessionTitleStyled.setSpan(italicSpan, sessionNamePart.length(), fullSessionTitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         sessionTitleView.setText(fullSessionTitleStyled);
 
         boolean sessionRunning = sessionAtRow.isRunning();
+        sessionTitleView.setPaintFlags(sessionRunning ? (sessionTitleView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG) : (sessionTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG));
 
-        if (sessionRunning) {
-            sessionTitleView.setPaintFlags(sessionTitleView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            sessionTitleView.setPaintFlags(sessionTitleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        int fallbackColor = shouldEnableDarkTheme ? Color.WHITE : Color.BLACK;
-        int defaultColor = ThemeUtils.getSystemAttrColor(mActivity, android.R.attr.textColorPrimary, fallbackColor);
-        int activeColor = ThemeUtils.getSystemAttrColor(mActivity, R.attr.m3OnPrimaryContainer, defaultColor);
+        int onContainer = ThemeUtils.getSystemAttrColor(mActivity, R.attr.m3OnPrimaryContainer, Color.BLACK);
+        int onSurface = ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorOnSurface, Color.BLACK);
         int errorColor = ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, Color.RED);
-        int color = isActiveSession ? activeColor : (sessionRunning || sessionAtRow.getExitStatus() == 0 ? defaultColor : errorColor);
-        sessionTitleView.setTextColor(color);
+        int textColor = isActiveSession ? onContainer : (sessionRunning || sessionAtRow.getExitStatus() == 0 ? onSurface : errorColor);
+        sessionTitleView.setTextColor(textColor);
+        sessionNumberView.setTextColor(ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorOnPrimary, Color.WHITE));
         return sessionRowView;
     }
 
