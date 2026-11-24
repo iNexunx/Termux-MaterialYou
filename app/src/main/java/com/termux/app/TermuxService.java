@@ -67,6 +67,12 @@ import java.util.List;
  */
 public final class TermuxService extends Service implements AppShell.AppShellClient, TermuxSession.TermuxSessionClient {
 
+    @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(base));
+    }
+
+
     /** This service is only bound from inside the same process and never uses IPC. */
     class LocalBinder extends Binder {
         public final TermuxService service = TermuxService.this;
@@ -811,7 +817,10 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         builder.setShowWhen(false);
         builder.setSmallIcon(R.drawable.ic_service_notification);
         try {
-            int accent = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorPrimary, 0xFF2E7D32);
+            android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+            String accentPref = p.getString(com.termux.app.theme.M3ThemeHelper.PREF_ACCENT, "default");
+            android.content.Context themed = new android.view.ContextThemeWrapper(this, com.termux.app.theme.M3ThemeHelper.getThemeResId(accentPref));
+            int accent = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(themed, com.google.android.material.R.attr.colorPrimary, 0xFF2E7D32);
             builder.setColor(accent);
         } catch (Throwable ignored) { builder.setColor(0xFF2E7D32); }
         builder.setOngoing(true);

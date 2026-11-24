@@ -35,6 +35,12 @@ import com.termux.shared.shell.command.ExecutionCommand.Runner;
  */
 public class RunCommandService extends Service {
 
+    @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(base));
+    }
+
+
     private static final String LOG_TAG = "RunCommandService";
 
     class LocalBinder extends Binder {
@@ -272,7 +278,13 @@ public class RunCommandService extends Service {
         builder.setSmallIcon(R.drawable.ic_service_notification);
 
         // Set background color for small notification icon
-        builder.setColor(0xFF607D8B);
+        try {
+            android.content.Context themed = new android.view.ContextThemeWrapper(this, com.termux.app.theme.M3ThemeHelper.getThemeResId(
+                androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).getString(com.termux.app.theme.M3ThemeHelper.PREF_ACCENT, "default")));
+            int accent = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(themed, com.google.android.material.R.attr.colorPrimary, 0xFF607D8B);
+            builder.setColor(accent);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) builder.setColorized(true);
+        } catch (Throwable ignored) { builder.setColor(0xFF607D8B); }
 
         return builder.build();
     }

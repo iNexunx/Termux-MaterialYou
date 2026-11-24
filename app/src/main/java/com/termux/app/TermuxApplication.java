@@ -19,6 +19,12 @@ import com.termux.shared.termux.theme.TermuxThemeUtils;
 
 public class TermuxApplication extends Application {
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(base));
+    }
+
+
     private static final String LOG_TAG = "TermuxApplication";
 
     public void onCreate() {
@@ -43,14 +49,14 @@ public class TermuxApplication extends Application {
         // Init app wide shell manager
         TermuxShellManager shellManager = TermuxShellManager.init(context);
 
-        // Set NightMode.APP_NIGHT_MODE
-        TermuxThemeUtils.setAppNightMode(properties.getNightMode());
+        // M3 appearance controls night mode globally; keep legacy property as fallback only if no M3 pref set.
+        android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        if (!p.contains(com.termux.app.theme.M3ThemeHelper.PREF_MODE)) {
+            TermuxThemeUtils.setAppNightMode(properties.getNightMode());
+        }
         com.termux.app.theme.M3ThemeHelper.applyLanguage(this);
         com.termux.app.theme.M3ThemeHelper.applyMode(this);
-        try {
-            Class<?> dc = Class.forName("com.google.android.material.color.DynamicColors");
-            dc.getMethod("applyToActivitiesIfAvailable", Application.class).invoke(null, this);
-        } catch (Throwable ignored) {}
+        // Dynamic colors applied per-activity in M3ThemeHelper.apply() to respect explicit accent selection.
 
 
         // Check and create termux files directory. If failed to access it like in case of secondary
