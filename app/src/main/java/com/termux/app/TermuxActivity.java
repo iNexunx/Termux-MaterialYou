@@ -286,6 +286,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         setToggleKeyboardView();
 
         setDrawerThemeAndColorControls();
+        setPackageManagerButtonView();
 
         registerForContextMenu(mTerminalView);
 
@@ -337,6 +338,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         registerTermuxActivityBroadcastReceiver();
         applyM3ThemeIfChanged(false);
         applyExtraKeysFloatingMode();
+        refreshSessionStrip();
     }
 
     @Override
@@ -703,10 +705,14 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             themeSwitch.setChecked(dark);
             themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 String newMode = isChecked ? "dark" : "light";
+                String current = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                    .getString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, "system");
+                if (newMode.equals(current)) return;
                 androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
                     .edit().putString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, newMode).apply();
                 com.termux.app.theme.M3ThemeHelper.applyMode(this);
                 mAppliedM3Accent = null; mAppliedM3Mode = null;
+                getWindow().setWindowAnimations(0);
                 recreate();
             });
         }
@@ -717,6 +723,123 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 startActivity(i);
             });
         }
+    }
+
+    private void setPackageManagerButtonView() {
+        android.widget.ImageButton b = findViewById(R.id.package_manager_button);
+        if (b != null) b.setOnClickListener(v -> showPackageManagerDialog());
+    }
+
+    private void refreshSessionStrip() {
+        View container = findViewById(R.id.session_strip_container);
+        LinearLayout strip = findViewById(R.id.session_strip);
+        if (container == null || strip == null) return;
+        if (mTermuxService == null) { container.setVisibility(View.GONE); return; }
+        List<TermuxSession> sessions = mTermuxService.getTermuxSessions();
+        if (sessions == null || sessions.isEmpty()) { container.setVisibility(View.GONE); strip.removeAllViews(); return; }
+        container.setVisibility(View.VISIBLE);
+        strip.removeAllViews();
+        TerminalSession current = getCurrentSession();
+        int primary = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorPrimary, 0xFF2E7D32);
+        int onPrimary = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnPrimary, 0xFFFFFFFF);
+        int onSurface = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222);
+        int surface = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorSurface, 0xFFFFFFFF);
+        for (int i = 0; i < sessions.size(); i++) {
+            TermuxSession ts = sessions.get(i);
+            TerminalSession s = ts.getTerminalSession();
+            com.google.android.material.card.MaterialCardView chip = (com.google.android.material.card.MaterialCardView) getLayoutInflater().inflate(R.layout.m3_session_chip, strip, false);
+            TextView title = chip.findViewById(R.id.session_chip_title);
+            TextView sub = chip.findViewById(R.id.session_chip_sub);
+            String name = (s.mSessionName != null && !s.mSessionName.trim().isEmpty()) ? s.mSessionName : ("Session " + (i + 1));
+            title.setText(name);
+            String t = s.getTitle();
+            sub.setText((t == null || t.trim().isEmpty()) ? getString(R.string.m3_session_running) : t);
+            boolean active = s == current;
+            chip.setCardBackgroundColor(active ? primary : surface);
+            chip.setStrokeColor(primary);
+            title.setTextColor(active ? onPrimary : onSurface);
+            sub.setTextColor(active ? onPrimary : onSurface);
+            chip.setOnClickListener(v -> {
+                if (mTermuxTerminalSessionActivityClient != null) mTermuxTerminalSessionActivityClient.setCurrentSession(s);
+                getDrawer().closeDrawers();
+            });
+            strip.addView(chip);
+        }
+    }
+
+    private void showPackageManagerDialog() {
+        android.view.View view = getLayoutInflater().inflate(R.layout.m3_package_manager_dialog, null, false);
+        android.widget.EditText search = view.findViewById(R.id.m3_pkg_search);
+        android.widget.ProgressBar progress = view.findViewById(R.id.m3_pkg_progress);
+        android.widget.TextView status = view.findViewById(R.id.m3_pkg_status);
+        android.widget.LinearLayout list = view.findViewById(R.id.m3_pkg_list);
+        com.google.android.material.button.MaterialButton refresh = view.findViewById(R.id.m3_pkg_refresh);
+        com.google.android.material.button.MaterialButton openRepo = view.findViewById(R.id.m3_pkg_open_repo);
+
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.m3_packages_title)
+            .setView(view)
+            .setNegativeButton(android.R.string.cancel, null)
+            .create();
+        Runnable load = () -> loadPackagesIntoDialog(search, progress, status, list);
+        search.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            public void afterTextChanged(android.text.Editable s) { load.run(); }
+        });
+        refresh.setOnClickListener(v -> load.run());
+        openRepo.setOnClickListener(v -> com.termux.shared.interact.ShareUtils.openUrl(this, "https://packages.termux.dev/"));
+        dialog.show();
+        load.run();
+    }
+
+    private void loadPackagesIntoDialog(android.widget.EditText search, android.widget.ProgressBar progress, android.widget.TextView status, android.widget.LinearLayout list) {
+        String q = search.getText() == null ? "" : search.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
+        progress.setVisibility(View.VISIBLE);
+        status.setText(R.string.m3_packages_loading);
+        list.removeAllViews();
+        new Thread(() -> {
+            java.util.ArrayList<String> pkgs = new java.util.ArrayList<>();
+            java.io.File statusFile = new java.io.File(com.termux.shared.termux.TermuxConstants.TERMUX_PREFIX_DIR_PATH + "/var/lib/dpkg/status");
+            if (statusFile.isFile()) {
+                try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(statusFile))) {
+                    String line; String name = null; boolean installed = false;
+                    while ((line = br.readLine()) != null) {
+                        if (line.startsWith("Package: ")) { name = line.substring(9).trim(); installed = false; }
+                        else if (line.startsWith("Status: ") && line.contains("installed")) installed = true;
+                        else if (line.isEmpty()) { if (name != null && installed) pkgs.add(name); name = null; installed = false; }
+                    }
+                    if (name != null && installed) pkgs.add(name);
+                } catch (Exception ignored) {}
+            }
+            java.util.Collections.sort(pkgs);
+            java.util.ArrayList<String> filtered = new java.util.ArrayList<>();
+            for (String p : pkgs) if (q.isEmpty() || p.toLowerCase(java.util.Locale.ROOT).contains(q)) { filtered.add(p); if (filtered.size() >= 120) break; }
+            runOnUiThread(() -> {
+                if (isFinishing()) return;
+                progress.setVisibility(View.GONE);
+                status.setText(getString(R.string.m3_packages_installed_count, pkgs.size()));
+                if (filtered.isEmpty()) {
+                    TextView tv = new TextView(this);
+                    tv.setText(q.isEmpty() ? R.string.m3_packages_none : R.string.m3_packages_no_match);
+                    tv.setPadding(0, dp(8), 0, dp(8));
+                    list.addView(tv);
+                } else {
+                    for (String p : filtered) {
+                        TextView tv = new TextView(this);
+                        tv.setText(p);
+                        tv.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222));
+                        tv.setPadding(dp(12), dp(10), dp(12), dp(10));
+                        tv.setBackgroundResource(R.drawable.m3_menu_pill);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        lp.bottomMargin = dp(8);
+                        tv.setLayoutParams(lp);
+                        tv.setOnClickListener(v -> com.termux.shared.interact.ShareUtils.openUrl(this, "https://packages.termux.dev/search?term=" + android.net.Uri.encode(p)));
+                        list.addView(tv);
+                    }
+                }
+            });
+        }).start();
     }
 
 
@@ -973,6 +1096,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     public void termuxSessionListNotifyUpdated() {
         mTermuxSessionListViewController.notifyDataSetChanged();
+        refreshSessionStrip();
     }
 
     public boolean isVisible() {

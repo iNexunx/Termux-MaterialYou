@@ -98,4 +98,13 @@
     <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Drácula</item><item>Nord</item><item>Gruvbox</item></string-array>
     <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>dracula</item><item>nord</item><item>gruvbox</item></string-array>
 
+    <string name="m3_packages_title">Paquetes de Termux</string>
+    <string name="m3_packages_search_hint">Buscar paquetes instalados</string>
+    <string name="m3_packages_refresh">Actualizar</string>
+    <string name="m3_packages_open_repo">Repositorio</string>
+    <string name="m3_packages_loading">Cargando paquetes instalados…</string>
+    <string name="m3_packages_installed_count">Paquetes instalados: %d</string>
+    <string name="m3_packages_none">No se encontraron paquetes instalados.</string>
+    <string name="m3_packages_no_match">No hay coincidencias.</string>
+    <string name="m3_session_running">Sesión activa</string>
 </resources>
