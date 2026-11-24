@@ -84,7 +84,7 @@
                         android:elevation="6dp"
                         android:padding="10dp"
                         android:src="@drawable/ic_m3_packages"
-                        app:tint="?attr/colorOnPrimaryContainer" />
+                        app:tint="?attr/colorOnPrimary" />
                 </FrameLayout>
             </LinearLayout>
 
