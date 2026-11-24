@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.text.TextUtils;
+import android.view.ActionMode;
 import android.widget.PopupWindow;
 
 import androidx.annotation.Nullable;
@@ -30,6 +32,54 @@ public class TextSelectionCursorController implements CursorController {
 
     private PopupWindow mActionPopup;
     private View mActionView;
+
+    public TextSelectionCursorController(TerminalView terminalView) {
+        this.terminalView = terminalView;
+        mStartHandle = new TextSelectionHandleView(terminalView, this, TextSelectionHandleView.LEFT);
+        mEndHandle = new TextSelectionHandleView(terminalView, this, TextSelectionHandleView.RIGHT);
+        mHandleHeight = Math.max(mStartHandle.getHandleHeight(), mEndHandle.getHandleHeight());
+    }
+
+    @Override
+    public void show(MotionEvent event) {
+        setInitialTextSelectionPosition(event);
+        mStartHandle.positionAtCursor(mSelX1, mSelY1, true);
+        mEndHandle.positionAtCursor(mSelX2 + 1, mSelY2, true);
+        setActionModeCallBacks();
+        mShowStartTime = System.currentTimeMillis();
+        mIsSelectingText = true;
+    }
+
+    @Override
+    public boolean hide() {
+        if (!isActive()) return false;
+        if (System.currentTimeMillis() - mShowStartTime < 300) return false;
+        mStartHandle.hide();
+        mEndHandle.hide();
+        if (mActionPopup != null) { mActionPopup.dismiss(); mActionPopup = null; mActionView = null; }
+        mSelX1 = mSelY1 = mSelX2 = mSelY2 = -1;
+        mIsSelectingText = false;
+        return true;
+    }
+
+    @Override
+    public void render() {
+        if (!isActive()) return;
+        mStartHandle.positionAtCursor(mSelX1, mSelY1, false);
+        mEndHandle.positionAtCursor(mSelX2 + 1, mSelY2, false);
+        updateActionPopup();
+    }
+
+    public void setInitialTextSelectionPosition(MotionEvent event) {
+        int[] columnAndRow = terminalView.getColumnAndRow(event, true);
+        mSelX1 = mSelX2 = columnAndRow[0];
+        mSelY1 = mSelY2 = columnAndRow[1];
+        TerminalBuffer screen = terminalView.mEmulator.getScreen();
+        if (!" ".equals(screen.getSelectedText(mSelX1, mSelY1, mSelX1, mSelY1))) {
+            while (mSelX1 > 0 && !"".equals(screen.getSelectedText(mSelX1 - 1, mSelY1, mSelX1 - 1, mSelY1))) mSelX1--;
+            while (mSelX2 < terminalView.mEmulator.mColumns - 1 && !"".equals(screen.getSelectedText(mSelX2 + 1, mSelY1, mSelX2 + 1, mSelY1))) mSelX2++;
+        }
+    }
 
     private void setActionModeCallBacks() {
         Context c = terminalView.getContext();
