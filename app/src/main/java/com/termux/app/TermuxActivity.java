@@ -211,8 +211,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         reloadProperties();
 
         android.content.SharedPreferences m3p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
-        mAppliedM3Accent = m3p.getString(M3ThemeHelper.PREF_ACCENT, "purple");
+        mAppliedM3Accent = m3p.getString(M3ThemeHelper.PREF_ACCENT, "default");
         mAppliedM3Mode = m3p.getString(M3ThemeHelper.PREF_MODE, "system");
+        mAppliedM3Language = m3p.getString(M3ThemeHelper.PREF_LANGUAGE, "system");
         setActivityTheme();
 
         super.onCreate(savedInstanceState);
@@ -931,11 +932,11 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         String accent = p.getString(M3ThemeHelper.PREF_ACCENT, "default");
         String mode = p.getString(M3ThemeHelper.PREF_MODE, "system");
         String lang = p.getString(M3ThemeHelper.PREF_LANGUAGE, "system");
-        if (!forceRecreate && accent.equals(mAppliedM3Accent) && mode.equals(mAppliedM3Mode) && lang.equals(mAppliedM3Language)) return;
-        boolean langChanged = mAppliedM3Language != null && !lang.equals(mAppliedM3Language);
-        boolean themeChanged = mAppliedM3Accent == null || mAppliedM3Mode == null || !accent.equals(mAppliedM3Accent) || !mode.equals(mAppliedM3Mode);
+        boolean first = mAppliedM3Accent == null || mAppliedM3Mode == null || mAppliedM3Language == null;
+        boolean changed = !accent.equals(mAppliedM3Accent) || !mode.equals(mAppliedM3Mode) || !lang.equals(mAppliedM3Language);
+        if (!forceRecreate && !changed) return;
         mAppliedM3Accent = accent; mAppliedM3Mode = mode; mAppliedM3Language = lang;
-        if (themeChanged || langChanged) { getWindow().setWindowAnimations(0); recreate(); return; }
+        if (forceRecreate || (!first && changed)) { getWindow().setWindowAnimations(0); recreate(); return; }
         applyExtraKeysFloatingMode();
         refreshSessionStrip();
     }
