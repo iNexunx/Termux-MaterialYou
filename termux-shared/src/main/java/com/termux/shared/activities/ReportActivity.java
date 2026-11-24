@@ -99,7 +99,15 @@ public class ReportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Logger.logVerbose(LOG_TAG, "onCreate");
 
-        AppCompatActivityUtils.setNightMode(this, NightMode.getAppNightMode().getName(), true);
+        // M3ThemeHelper controls night mode globally; avoid local override that can lock dark.
+        try {
+            android.content.SharedPreferences p = getSharedPreferences(getPackageName()+"_preferences", MODE_PRIVATE);
+            String mode = p.getString("m3_theme_mode","system");
+            int nm = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            if ("light".equals(mode)) nm = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
+            else if ("dark".equals(mode)) nm = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
+            getDelegate().setLocalNightMode(nm);
+        } catch (Throwable ignored) { AppCompatActivityUtils.setNightMode(this, NightMode.getAppNightMode().getName(), true); }
 
         setContentView(R.layout.activity_report);
 

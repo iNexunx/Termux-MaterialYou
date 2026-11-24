@@ -29,10 +29,16 @@ public final class M3ThemeHelper {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String mode = prefs.getString(PREF_MODE, "system");
         int desired = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-        if ("light".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_NO;
-        else if ("dark".equals(mode)) desired = AppCompatDelegate.MODE_NIGHT_YES;
+        String nightName = "system";
+        if ("light".equals(mode)) { desired = AppCompatDelegate.MODE_NIGHT_NO; nightName = "false"; }
+        else if ("dark".equals(mode)) { desired = AppCompatDelegate.MODE_NIGHT_YES; nightName = "true"; }
+        else if ("material_you".equals(mode)) { desired = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM; nightName = "system"; }
         if (AppCompatDelegate.getDefaultNightMode() != desired)
             AppCompatDelegate.setDefaultNightMode(desired);
+        try {
+            Class<?> nm = Class.forName("com.termux.shared.theme.NightMode");
+            nm.getMethod("setAppNightMode", String.class).invoke(null, nightName);
+        } catch (Throwable ignored) {}
     }
 
     public static void applyLanguage(Context context) {
@@ -63,14 +69,18 @@ public final class M3ThemeHelper {
         String mode = prefs.getString(PREF_MODE, "system");
         boolean dynamicMode = "material_you".equals(mode);
         boolean defaultAccent = accent == null || accent.isEmpty() || "default".equals(accent);
-        if (dynamicMode || defaultAccent) {
+        if (dynamicMode) {
             if (applyDynamicColorsIfAvailable(activity)) return;
             Integer argb = getWallpaperPrimaryColor(activity);
-            if (argb != null) {
-                activity.setTheme(getThemeResId(ACCENTS[nearestAccentIndex(argb)]));
-                return;
-            }
-            if (defaultAccent) { activity.setTheme(R.style.Theme_TermuxApp_M3_Default); return; }
+            if (argb != null) { activity.setTheme(getThemeResId(ACCENTS[nearestAccentIndex(argb)])); return; }
+            activity.setTheme(R.style.Theme_TermuxApp_M3_Default);
+            return;
+        }
+        // Respect explicit accent selection; default follows system dynamic/wallpaper if available.
+        if (defaultAccent) {
+            if (applyDynamicColorsIfAvailable(activity)) return;
+            activity.setTheme(R.style.Theme_TermuxApp_M3_Default);
+            return;
         }
         activity.setTheme(getThemeResId(accent));
     }
