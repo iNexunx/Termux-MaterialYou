@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="m3_appearance_title">Apparence (Material You)</string>
-    <string name="m3_appearance_summary">Couleur d'accent, thème clair/sombre et couleurs dynamiques</string>
-    <string name="m3_accent_title">Couleur d'accent</string>
+    <string name="m3_appearance_summary">Couleur d\'accent, thème clair/sombre et couleurs dynamiques</string>
+    <string name="m3_accent_title">Couleur d\'accent</string>
     <string name="m3_accent_summary">Couleur de base des boutons, touches, menus et surfaces</string>
-    <string name="m3_mode_title">Thème de l'interface</string>
+    <string name="m3_mode_title">Thème de l\'interface</string>
     <string name="m3_mode_summary">Clair, sombre, système ou Material You</string>
     <string name="m3_sessions_title">Sessions</string>
     <string name="m3_theme_toggle">Changer de thème</string>
@@ -61,7 +61,7 @@
         <item quantity="other">%d tâches</item>
     </plurals>
 
-    <string name="m3_language_title">Langue de l'app</string>
+    <string name="m3_language_title">Langue de l\'app</string>
     <string name="m3_language_summary">Sélectionner la langue</string>
     <string-array name="m3_language_entries">
         <item>Suivre le système</item>
