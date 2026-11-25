@@ -23,33 +23,57 @@ public abstract class M3PreferenceFragment extends PreferenceFragmentCompat {
     @Override
     public void onDisplayPreferenceDialog(@NonNull Preference preference) {
         if (preference instanceof androidx.preference.ListPreference) {
-            androidx.preference.ListPreference lp = (androidx.preference.ListPreference) preference;
-            CharSequence[] entries = lp.getEntries();
-            CharSequence[] values = lp.getEntryValues();
-            int checked = lp.findIndexOfValue(lp.getValue());
-            final int[] selected = {checked};
-            androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                .setTitle(lp.getTitle())
-                .setSingleChoiceItems(entries, checked, (dlg, which) -> selected[0] = which)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok, (dlg, w) -> {
-                    if (selected[0] >= 0 && values != null && selected[0] < values.length) {
-                        String v = values[selected[0]].toString();
-                        if (lp.callChangeListener(v)) lp.setValue(v);
-                    }
-                })
-                .create();
-            d.show();
-            if (d.getWindow() != null) {
-                d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                android.view.View decor = d.getWindow().getDecorView();
-                if (decor != null) decor.setBackgroundResource(com.termux.R.drawable.m3_dialog_outer_bg);
-            }
+            showM3ListPreferenceDialog((androidx.preference.ListPreference) preference);
             return;
         }
         super.onDisplayPreferenceDialog(preference);
     }
 
+
+    private void showM3ListPreferenceDialog(androidx.preference.ListPreference lp) {
+        Context ctx = requireContext();
+        View content = LayoutInflater.from(ctx).inflate(R.layout.m3_context_menu, null, false);
+        android.widget.LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
+        // title
+        com.google.android.material.textview.MaterialTextView header = new com.google.android.material.textview.MaterialTextView(ctx);
+        header.setText(lp.getTitle());
+        header.setTextAppearance(ctx, com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6);
+        header.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(ctx, R.attr.colorOnSurface, 0xFF222222));
+        int hp = dp(4), hb = dp(12);
+        header.setPadding(hp, hp, hp, hb);
+        items.addView(header);
+
+        CharSequence[] entries = lp.getEntries();
+        CharSequence[] values = lp.getEntryValues();
+        String current = lp.getValue();
+        androidx.appcompat.app.AlertDialog[] dlg = new androidx.appcompat.app.AlertDialog[1];
+        if (entries != null && values != null) {
+            for (int i = 0; i < entries.length && i < values.length; i++) {
+                final String v = String.valueOf(values[i]);
+                View item = LayoutInflater.from(ctx).inflate(R.layout.m3_context_menu_item, items, false);
+                item.findViewById(R.id.menu_item_icon).setVisibility(View.GONE);
+                ((android.widget.TextView) item.findViewById(R.id.menu_item_text)).setText(entries[i]);
+                com.google.android.material.switchmaterial.SwitchMaterial sw = item.findViewById(R.id.menu_item_switch);
+                sw.setVisibility(View.VISIBLE);
+                boolean checked = v.equals(current);
+                sw.setChecked(checked);
+                sw.setClickable(false);
+                sw.setFocusable(false);
+                item.setOnClickListener(x -> {
+                    if (lp.callChangeListener(v)) lp.setValue(v);
+                    if (dlg[0] != null) dlg[0].dismiss();
+                });
+                items.addView(item);
+            }
+        }
+        dlg[0] = new com.google.android.material.dialog.MaterialAlertDialogBuilder(ctx).setView(content).create();
+        dlg[0].show();
+        if (dlg[0].getWindow() != null) {
+            dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            int margin = dp(8);
+            dlg[0].getWindow().setLayout(ctx.getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

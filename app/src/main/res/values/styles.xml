@@ -60,9 +60,10 @@
         <item name="cornerSize">28dp</item>
     </style>
 
-    <style name="Widget.Termux.M3.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
+    <style name="Widget.Termux.M3.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="thumbTint">@color/m3_switch_thumb</item>
         <item name="trackTint">@color/m3_switch_track</item>
+        <item name="useMaterialThemeColors">false</item>
     </style>
 
     <style name="Widget.Termux.M3" parent="@android:style/Widget" />
