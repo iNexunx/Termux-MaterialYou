@@ -367,6 +367,16 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     @Override
+    public void onConfigurationChanged(android.content.res.Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (mIsInvalidState) return;
+        syncDrawerThemeSwitch();
+        // If system mode, re-evaluate theme without forced recreation loops
+        applyM3ThemeIfChanged(false);
+        if (mTermuxTerminalViewClient != null) mTermuxTerminalViewClient.onReloadActivityStyling();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
 
@@ -697,27 +707,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     private void setDrawerThemeAndColorControls() {
-        com.google.android.material.switchmaterial.SwitchMaterial themeSwitch = findViewById(R.id.drawer_theme_switch);
+        syncDrawerThemeSwitch();
         android.widget.ImageButton colorButton = findViewById(R.id.drawer_color_button);
-        if (themeSwitch != null) {
-            String mode = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, "system");
-            boolean dark = "dark".equals(mode) || ("system".equals(mode) && (getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES);
-            themeSwitch.setOnCheckedChangeListener(null);
-            themeSwitch.setChecked(dark);
-            themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                String newMode = isChecked ? "dark" : "light";
-                String current = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
-                    .getString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, "system");
-                if (newMode.equals(current)) return;
-                androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit().putString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, newMode).apply();
-                com.termux.app.theme.M3ThemeHelper.applyMode(this);
-                mAppliedM3Accent = null; mAppliedM3Mode = null;
-                getWindow().setWindowAnimations(0);
-                recreate();
-            });
-        }
         if (colorButton != null) {
             colorButton.setOnClickListener(v -> {
                 android.content.Intent i = new android.content.Intent(this, SettingsActivity.class);
@@ -725,6 +716,31 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 startActivity(i);
             });
         }
+    }
+
+    private void syncDrawerThemeSwitch() {
+        com.google.android.material.switchmaterial.SwitchMaterial themeSwitch = findViewById(R.id.drawer_theme_switch);
+        if (themeSwitch == null) return;
+        boolean dark = isCurrentNightMode();
+        themeSwitch.setOnCheckedChangeListener(null);
+        themeSwitch.setChecked(dark);
+        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            String newMode = isChecked ? "dark" : "light";
+            String current = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, "system");
+            if (newMode.equals(current)) return;
+            androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .edit().putString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, newMode).apply();
+            com.termux.app.theme.M3ThemeHelper.applyMode(this);
+            mAppliedM3Accent = null; mAppliedM3Mode = null;
+            android.view.Window w=getWindow(); if(w!=null){w.setWindowAnimations(0); android.graphics.drawable.Drawable bg=w.getDecorView().getBackground(); if(bg!=null) w.setBackgroundDrawable(bg);} 
+            recreate(); try{overridePendingTransition(0,0);}catch(Throwable ignored){}
+        });
+    }
+
+    private boolean isCurrentNightMode() {
+        int night = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+        return night == android.content.res.Configuration.UI_MODE_NIGHT_YES;
     }
 
     private void setPackageManagerButtonView() {
