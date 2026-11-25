@@ -1,30 +1,38 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="application_name">Termux</string>
-    <string name="shared_user_label">Usuario de Termux</string>
-    <string name="permission_run_command_label">Ejecutar comandos en el entorno de Termux</string>
-    <string name="permission_run_command_description">ejecutar comandos arbitrarios dentro del entorno de Termux
-        y acceder a archivos</string>
-    <string name="bootstrap_installer_body">Instalando los paquetes de arranque…</string>
-    <string name="bootstrap_error_title">Error de arranque de Termux</string>
-    <string name="bootstrap_error_body">Termux no pudo instalar los paquetes de arranque.</string>
+    <string name="shared_user_label">Termux user</string>
+    <string name="permission_run_command_label">Run commands in Termux environment</string>
+    <string name="permission_run_command_description">execute arbitrary commands within Termux
+        environment and access files</string>
+    <string name="bootstrap_installer_body">Installing bootstrap packages…</string>
+    <string name="bootstrap_error_title">Termux Bootstrap Error</string>
+    <string name="bootstrap_error_body">Termux was unable to install the bootstrap packages.</string>
     <string name="bootstrap_error_abort">Abort</string>
-    <string name="bootstrap_error_try_again">Reintentar</string>
-    <string name="bootstrap_error_apk_bootstrap_variant_min_sdk_incompatible">La variante de arranque del APK %1$s
-        de la app Termux actualmente instalada no es compatible con la versión de Android %2$s
-        (sdk `%3$d`) del dispositivo y requiere una versión mínima de Android %4$s (sdk `%5$d`).
-        \n\nDesinstala la app Termux y reinstala la variante de compilación correcta del APK.</string>
-    <string name="bootstrap_error_apk_bootstrap_variant_max_sdk_incompatible">La variante de arranque del APK %1$s
-        de la app Termux actualmente instalada no es compatible con la versión de Android %2$s
-        (sdk `%3$d`) del dispositivo y requiere una versión máxima de Android %4$s (sdk `%5$d`).
-        \n\nDesinstala la app Termux y reinstala la variante de compilación correcta del APK.</string>
-    <string name="bootstrap_error_not_primary_user_message">Termux solo puede ejecutarse como usuario principal.
-        \nLos binarios de arranque compilados para Termux tienen la ruta $PREFIX codificada y no pueden instalarse
-        en ninguna otra ruta que no sea:\n%1$s.</string>
-    <string name="bootstrap_error_installed_on_portable_sd">Termux no puede instalarse en una tarjeta SD
-        portátil/externa/extraíble de tu dispositivo.
-        \nLos binarios de arranque compilados para Termux tienen la ruta $PREFIX codificada y no pueden instalarse
-        en ninguna otra ruta que no sea:\n%1$s.</string>
+    <string name="bootstrap_error_try_again">Try again</string>
+    <string name="bootstrap_error_apk_bootstrap_variant_min_sdk_incompatible">The APK bootstrap variant %1$s
+        of currently installed Termux app is not compatible with the Android version %2$s
+        (sdk `%3$d`) of the device and it requires minimum Android version %4$s (sdk `%5$d`).
+        
+
+Uninstall the Termux app and reinstall the correct APK build variant.</string>
+    <string name="bootstrap_error_apk_bootstrap_variant_max_sdk_incompatible">The APK bootstrap variant %1$s
+        of currently installed Termux app is not compatible with the Android version %2$s
+        (sdk `%3$d`) of the device and it requires maximum Android version %4$s (sdk `%5$d`).
+        
+
+Uninstall the Termux app and reinstall the correct APK build variant.</string>
+    <string name="bootstrap_error_not_primary_user_message">Termux can only be run as the primary user.
+        
+Bootstrap binaries compiled for Termux have hardcoded $PREFIX path and cannot be installed
+        under any path other than:
+%1$s.</string>
+    <string name="bootstrap_error_installed_on_portable_sd">Termux cannot be installed on
+        portable/external/removable sd card on your device.
+        
+Bootstrap binaries compiled for Termux have hardcoded $PREFIX path and cannot be installed
+        under any path other than:
+%1$s.</string>
     <string name="action_new_session_multiline">New
 Session</string>
     <string name="action_new_session">New session</string>
@@ -66,20 +74,22 @@ Session</string>
     <string name="notification_action_exit">Exit</string>
     <string name="notification_action_wake_lock">Acquire wakelock</string>
     <string name="notification_action_wake_unlock">Release wakelock</string>
-    <string name="error_display_over_other_apps_permission_not_granted_to_start_terminal">Termux requires "Display over other apps" permission to start terminal sessions from background on Android >= 10. Grants it from Settings -> Apps -> Termux -> Advanced</string>
-    <string name="error_termux_service_invalid_execution_command_runner">Ejecutor de comandos de ejecución inválido para TermuxService: `%1$s`</string>
-    <string name="error_termux_service_unsupported_execution_command_runner">Ejecutor de comandos de ejecución no compatible con TermuxService: `%1$s`</string>
-    <string name="error_termux_service_unsupported_execution_command_shell_create_mode">Modo de creación de shell de comandos de ejecución no compatible con TermuxService: `%1$s`</string>
-    <string name="error_termux_service_execution_command_shell_name_unset">No se estableció el nombre del shell pero se pasó el modo de creación de shell `%1$s`</string>
-    <string name="error_run_command_service_invalid_intent_action">Acción de intent inválida para RunCommandService: `%1$s`</string>
-    <string name="error_run_command_service_invalid_execution_command_runner">Ejecutor de comandos de ejecución inválido para RunCommandService: `%1$s`</string>
-    <string name="error_run_command_service_mandatory_extra_missing">Falta un extra obligatorio para RunCommandService: \"%1$s\"</string>
-    <string name="error_run_command_service_api_help">Visita %1$s para obtener más información sobre el uso del Intent RUN_COMMAND.</string>
+    <string name="error_display_over_other_apps_permission_not_granted_to_start_terminal">Termux requires
+        \"Display over other apps\" permission to start terminal sessions from background on Android &gt;= 10.
+        Grants it from Settings -&gt; Apps -&gt; Termux -&gt; Advanced</string>
+    <string name="error_termux_service_invalid_execution_command_runner">Invalid execution command runner to TermuxService: `%1$s`</string>
+    <string name="error_termux_service_unsupported_execution_command_runner">Unsupported execution command runner to TermuxService: `%1$s`</string>
+    <string name="error_termux_service_unsupported_execution_command_shell_create_mode">Unsupported execution command shell create mode to TermuxService: `%1$s`</string>
+    <string name="error_termux_service_execution_command_shell_name_unset">Shell name not set but `%1$s` shell create mode passed</string>
+    <string name="error_run_command_service_invalid_intent_action">Invalid intent action to RunCommandService: `%1$s`</string>
+    <string name="error_run_command_service_invalid_execution_command_runner">Invalid execution command runner to RunCommandService: `%1$s`</string>
+    <string name="error_run_command_service_mandatory_extra_missing">Mandatory extra missing to RunCommandService: \"%1$s\"</string>
+    <string name="error_run_command_service_api_help">Visit %1$s for more info on RUN_COMMAND Intent usage.</string>
     <string name="title_file_received">Save file in ~/downloads/</string>
-    <string name="action_file_received_edit">Editar</string>
-    <string name="action_file_received_open_directory">Abrir directorio</string>
-    <string name="error_termux_service_start_failed_general">No se pudo iniciar TermuxService. Revisa logcat para ver el mensaje de excepción.</string>
-    <string name="error_termux_service_start_failed_bg">No se pudo iniciar TermuxService mientras la app estaba en segundo plano debido a las restricciones de segundo plano de Android.</string>
+    <string name="action_file_received_edit">Edit</string>
+    <string name="action_file_received_open_directory">Open directory</string>
+    <string name="error_termux_service_start_failed_general">Failed to start TermuxService. Check logcat for exception message.</string>
+    <string name="error_termux_service_start_failed_bg">Failed to start TermuxService while app is in background due to android bg restrictions.</string>
     <string name="title_activity_termux_settings">Termux Settings</string>
     <string name="termux_preferences_title">Termux</string>
     <string name="termux_preferences_summary">Preferences for Termux app</string>
@@ -89,7 +99,8 @@ Session</string>
     <string name="termux_log_level_title">Log Level</string>
     <string name="termux_terminal_view_key_logging_enabled_title">Terminal View Key Logging</string>
     <string name="termux_terminal_view_key_logging_enabled_off">Logs will not have entries for terminal view keys. (Default)</string>
-    <string name="termux_terminal_view_key_logging_enabled_on">Logcat logs will have entries for terminal view keys. These are very verbose and should be disabled under normal circumstances or will cause performance issues.</string>
+    <string name="termux_terminal_view_key_logging_enabled_on">Logcat logs will have entries for terminal view keys.
+                    These are very verbose and should be disabled under normal circumstances or will cause performance issues.</string>
     <string name="termux_plugin_error_notifications_enabled_title">Plugin Error Notifications</string>
     <string name="termux_plugin_error_notifications_enabled_off">Disable flashes and notifications for plugin errors.</string>
     <string name="termux_plugin_error_notifications_enabled_on">Show flashes and notifications for plugin errors. (Default)</string>
@@ -102,27 +113,31 @@ Session</string>
     <string name="termux_soft_keyboard_enabled_title">Soft Keyboard Enabled</string>
     <string name="termux_soft_keyboard_enabled_off">Soft keyboard will be disabled.</string>
     <string name="termux_soft_keyboard_enabled_on">Soft keyboard will be enabled. (Default)</string>
-    <string name="termux_soft_keyboard_enabled_only_if_no_hardware_title">Soft Keyboard Enabled Only If No Hardware</string>
-    <string name="termux_soft_keyboard_enabled_only_if_no_hardware_off">Soft keyboard will be enabled even if hardware keyboard is connected. (Default)</string>
-    <string name="termux_soft_keyboard_enabled_only_if_no_hardware_on">Soft keyboard will be enabled only if no hardware keyboard is connected.</string>
+    <string name="termux_soft_keyboard_enabled_only_if_no_hardware_title">Soft Keyboard Only If No Hardware</string>
+    <string name="termux_soft_keyboard_enabled_only_if_no_hardware_off">Soft keyboard will be enabled even if
+                    hardware keyboard is connected. (Default)</string>
+    <string name="termux_soft_keyboard_enabled_only_if_no_hardware_on">Soft keyboard will be enabled only if
+                    no hardware keyboard is connected.</string>
     <string name="termux_terminal_view_preferences_title">Terminal View</string>
     <string name="termux_terminal_view_preferences_summary">Preferences for terminal view</string>
     <string name="termux_terminal_view_view_header">View</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_title">Terminal Margin Adjustment</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_off">Terminal margin adjustment will be disabled.</string>
-    <string name="termux_terminal_view_terminal_margin_adjustment_on">Terminal margin adjustment will be enabled. It should be enabled to try to fix the issue where soft keyboard covers part of extra keys/terminal view. If it causes screen flickering on your devices, then disable it. (Default)</string>
+    <string name="termux_terminal_view_terminal_margin_adjustment_on">Terminal margin adjustment will be enabled.
+                    It should be enabled to try to fix the issue where soft keyboard covers part of extra keys/terminal view.
+                    If it causes screen flickering on your devices, then disable it. (Default)</string>
 
     <string name="termux_terminal_view_extra_keys_floating_title">Floating extra keys bar</string>
     <string name="termux_terminal_view_extra_keys_floating_on">Show the terminal toolbar as a floating panel.</string>
     <string name="termux_terminal_view_extra_keys_floating_off">Show the terminal toolbar in normal mode.</string>
     <string name="termux_api_preferences_title">Termux:API</string>
-    <string name="termux_api_preferences_summary">Preferencias de la app Termux:API</string>
+    <string name="termux_api_preferences_summary">Preferences for Termux:API app</string>
     <string name="termux_float_preferences_title">Termux:Float</string>
-    <string name="termux_float_preferences_summary">Preferencias de la app Termux:Float</string>
+    <string name="termux_float_preferences_summary">Preferences for Termux:Float app</string>
     <string name="termux_tasker_preferences_title">Termux:Tasker</string>
-    <string name="termux_tasker_preferences_summary">Preferencias de la app Termux:Tasker</string>
+    <string name="termux_tasker_preferences_summary">Preferences for Termux:Tasker app</string>
     <string name="termux_widget_preferences_title">Termux:Widget</string>
-    <string name="termux_widget_preferences_summary">Preferencias de la app Termux:Widget</string>
+    <string name="termux_widget_preferences_summary">Preferences for Termux:Widget app</string>
     <string name="about_preference_title">About</string>
     <string name="donate_preference_title">Donate</string>
     <string name="action_kill_process_confirm">Close session</string>
