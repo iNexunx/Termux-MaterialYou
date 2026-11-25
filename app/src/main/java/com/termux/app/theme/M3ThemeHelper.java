@@ -20,8 +20,8 @@ public final class M3ThemeHelper {
     public static final String PREF_SEED_COLOR = "m3_seed_color";
     public static final String PREF_LANGUAGE = "m3_language";
 
-    private static final String[] ACCENTS = {"default", "purple", "blue", "teal", "green", "orange", "rose", "lavender", "red", "amber", "cyan", "indigo"};
-    private static final int[] SEEDS = {0x2E7D32, 0x6750A4, 0x0B57D0, 0x006A6A, 0x1B6C33, 0xA85000, 0xB3265E, 0x7B1FA2, 0xB3261E, 0xB26A00, 0x006874, 0x3F51B5};
+    private static final String[] ACCENTS = {"default","blue","light_blue","cyan","teal","green","yellow","amber","orange","red","pink","purple","lavender","indigo","brown","gray"};
+    private static final int[] SEEDS = {0xFF0B57D0,0xFF0B57D0,0xFF00639B,0xFF006874,0xFF006A6A,0xFF1B6C33,0xFF6D5E00,0xFF815600,0xFFA14000,0xFFB3261E,0xFFBC004B,0xFF6750A4,0xFF7D4EAC,0xFF4E5FC1,0xFF8D4E2C,0xFF5D5E62};
 
     private M3ThemeHelper() {}
 
@@ -107,16 +107,20 @@ public final class M3ThemeHelper {
 
     public static int getThemeResId(String accent) {
         if ("blue".equals(accent)) return R.style.Theme_TermuxApp_M3_Blue;
+        if ("light_blue".equals(accent)) return R.style.Theme_TermuxApp_M3_LightBlue;
+        if ("cyan".equals(accent)) return R.style.Theme_TermuxApp_M3_Cyan;
         if ("teal".equals(accent)) return R.style.Theme_TermuxApp_M3_Teal;
         if ("green".equals(accent)) return R.style.Theme_TermuxApp_M3_Green;
-        if ("orange".equals(accent)) return R.style.Theme_TermuxApp_M3_Orange;
-        if ("rose".equals(accent)) return R.style.Theme_TermuxApp_M3_Rose;
-        if ("lavender".equals(accent)) return R.style.Theme_TermuxApp_M3_Lavender;
-        if ("red".equals(accent)) return R.style.Theme_TermuxApp_M3_Red;
+        if ("yellow".equals(accent)) return R.style.Theme_TermuxApp_M3_Yellow;
         if ("amber".equals(accent)) return R.style.Theme_TermuxApp_M3_Amber;
-        if ("cyan".equals(accent)) return R.style.Theme_TermuxApp_M3_Cyan;
+        if ("orange".equals(accent)) return R.style.Theme_TermuxApp_M3_Orange;
+        if ("red".equals(accent)) return R.style.Theme_TermuxApp_M3_Red;
+        if ("pink".equals(accent) || "rose".equals(accent)) return R.style.Theme_TermuxApp_M3_Pink;
+        if ("purple".equals(accent)) return R.style.Theme_TermuxApp_M3_Purple;
+        if ("lavender".equals(accent)) return R.style.Theme_TermuxApp_M3_Lavender;
         if ("indigo".equals(accent)) return R.style.Theme_TermuxApp_M3_Indigo;
-        if ("default".equals(accent)) return R.style.Theme_TermuxApp_M3_Default;
+        if ("brown".equals(accent)) return R.style.Theme_TermuxApp_M3_Brown;
+        if ("gray".equals(accent) || "grey".equals(accent)) return R.style.Theme_TermuxApp_M3_Gray;
         return R.style.Theme_TermuxApp_M3_Default;
     }
 

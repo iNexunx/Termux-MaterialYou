@@ -9,32 +9,40 @@
     <string name="m3_sessions_title">Sitzungen</string>
     <string name="m3_theme_toggle">Design wechseln</string>
     <string-array name="m3_accent_entries">
-        <item>Standard</item>
-        <item>Lila</item>
-        <item>Blau</item>
-        <item>Türkis</item>
-        <item>Grün</item>
-        <item>Orange</item>
+        <item>Predeterminado (sistema)</item>
+        <item>Azul</item>
+        <item>Azul claro</item>
+        <item>Cian</item>
+        <item>Verde azulado</item>
+        <item>Verde</item>
+        <item>Amarillo</item>
+        <item>Ámbar</item>
+        <item>Naranja</item>
+        <item>Rojo</item>
         <item>Rosa</item>
-        <item>Lavendel</item>
-        <item>Rot</item>
-        <item>Bernstein</item>
-        <item>Cyan</item>
-        <item>Indigo</item>
+        <item>Morado</item>
+        <item>Lavanda</item>
+        <item>Índigo</item>
+        <item>Marrón</item>
+        <item>Gris</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
         <item>default</item>
-        <item>purple</item>
         <item>blue</item>
+        <item>light_blue</item>
+        <item>cyan</item>
         <item>teal</item>
         <item>green</item>
-        <item>orange</item>
-        <item>rose</item>
-        <item>lavender</item>
-        <item>red</item>
+        <item>yellow</item>
         <item>amber</item>
-        <item>cyan</item>
+        <item>orange</item>
+        <item>red</item>
+        <item>pink</item>
+        <item>purple</item>
+        <item>lavender</item>
         <item>indigo</item>
+        <item>brown</item>
+        <item>gray</item>
     </string-array>
     <string-array name="m3_mode_entries">
         <item>Hell</item>
