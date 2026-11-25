@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY TERMUX_PACKAGE_NAME "com.termux">
+    <!ENTITY TERMUX_APP_NAME "Termux">
+    <!ENTITY TERMUX_API_APP_NAME "Termux:API">
+    <!ENTITY TERMUX_BOOT_APP_NAME "Termux:Boot">
+    <!ENTITY TERMUX_FLOAT_APP_NAME "Termux:Float">
+    <!ENTITY TERMUX_STYLING_APP_NAME "Termux:Styling">
+    <!ENTITY TERMUX_TASKER_APP_NAME "Termux:Tasker">
+    <!ENTITY TERMUX_WIDGET_APP_NAME "Termux:Widget">
+    <!ENTITY TERMUX_PREFIX_DIR_PATH "/data/data/com.termux/files/usr">
+    ]>
+
+<resources>
+
+    <string name="msg_directory_absolute_path">Jalur absolut direktori %1$s: "%2$s"</string>
+
+    <string name="error_app_not_installed_or_disabled_warning">Aplikasi %1$s (%2$s) tidak terpasang atau dinonaktifkan.</string>
+
+    <string name="error_get_package_context_failed_title">Gagal mendapatkan konteks paket</string>
+
+    <string name="error_get_package_context_failed_message">Gagal mendapatkan konteks paket "%1$s". Mungkin paket tidak terpasang atau memiliki tanda tangan APK berbeda dari aplikasi saat ini.</string>
+
+    <string name="error_get_package_context_failed_help_url_message">Lihat %1$s untuk detail lebih lanjut.</string>
+
+    <string name="error_get_component_state_failed">Gagal mendapatkan status komponen %1$s/%2$s</string>
+
+    <string name="error_enable_component_failed">Gagal mengaktifkan komponen %1$s/%2$s</string>
+
+    <string name="error_disable_component_failed">Gagal menonaktifkan komponen %1$s/%2$s</string>
+
+    <string name="message_sudo_please_grant_permissions">Harap berikan izin yang diminta</string>
+
+    <string name="error_failed_to_request_permissions">Gagal meminta izin dengan kode permintaan %1$d: %2$s</string>
+
+    <string name="error_attempted_to_check_for_permissions_not_requested">Mencoba memeriksa izin yang tidak diminta di manifes aplikasi: %1$s</string>
+
+    <string name="error_attempted_to_ask_for_permissions_not_requested">Mencoba meminta izin yang tidak diminta di manifes aplikasi: %1$s</string>
+
+    <string name="error_has_not_requested_legacy_external_storage">Paket "%1$s" menargetkan targetSdkVersion %2$d dan berjalan di Android SDK %3$d tetapi belum mengatur requestLegacyExternalStorage ke true di manifes</string>
+
+    <string name="msg_requires_dump_and_package_usage_stats_permissions">Memerlukan izin `DUMP` dan `PACKAGE_USAGE_STATS`</string>
+
+    <string name="error_display_over_other_apps_permission_not_granted">%1$s memerlukan izin "Tampilkan di atas aplikasi lain" untuk memulai aktivitas dan layanan dari latar belakang di Android >= 10. Berikan dari Pengaturan Android -> Aplikasi -> %1$s -> Lanjutan -> Tampilkan di atas aplikasi lain. Lihat https://dontkillmyapp.com.</string>
+
+    <string name="error_allow_external_apps_ungranted">%1$s memerlukan properti `allow-external-apps` diatur ke `true` di file `%2$s`.</string>
+
+    <string name="title_report_text">Teks laporan</string>
+
+    <string name="msg_report_truncated">**Laporan dipotong**
+
+Laporan terlalu besar untuk ditampilkan di sini. Gunakan opsi `Simpan ke file` dari menu opsi (tiga titik kanan atas) dan buka di editor teks eksternal.
+
+##
+
+</string>
+
+    <string name="title_share_with">Bagikan dengan</string>
+
+    <string name="title_open_url_with">Buka URL dengan</string>
+
+    <string name="msg_storage_permission_not_granted">Izin penyimpanan tidak diberikan.</string>
+
+    <string name="msg_file_saved_successfully">File %1$s berhasil disimpan di "%2$s"</string>
+
+    <string name="error_sending_sigkill_to_process">Mengirim SIGKILL ke proses atas permintaan pengguna atau karena Android menghentikan layanan eksekusi</string>
+
+    <string name="error_executable_unset">Executable "%1$s" tidak disetel untuk perintah shell</string>
+
+    <string name="error_execution_cancelled">Eksekusi dibatalkan karena layanan eksekusi sedang dihentikan</string>
+
+    <string name="error_failed_to_execute_termux_session_command">Gagal menjalankan perintah sesi termux "%1$s"</string>
+
+    <string name="error_failed_to_execute_app_shell_command">Gagal menjalankan perintah shell aplikasi "%1$s"</string>
+
+    <string name="error_exception_received_while_executing_termux_session_command">Exception diterima saat menjalankan perintah sesi termux "%1$s".
+Exception: %2$s</string>
+
+    <string name="error_exception_received_while_executing_app_shell_command">Exception diterima saat menjalankan perintah shell aplikasi "%1$s".
+Exception: %2$s</string>
+
+    <string name="msg_report_issue">Jika ingin melaporkan masalah ini, salin teksnya dari menu opsi (tiga titik kanan atas) dan kirim laporan ke salah satu tautan berikut.
+
+Jika melaporkan crash Termux, sertakan detail apa yang Anda lakukan dan cara mereproduksinya.
+
+Jika memposting di GitHub, kirim ke repositori yang sesuai. Laporan dengan **tangkapan layar parsial** alih-alih teks/file **kemungkinan akan ditutup/dihapus otomatis**. Anda dapat menghapus info perangkat pribadi yang tidak relevan.
+
+Kami tidak mendukung alat/skrip hacking. Pertanyaan tentang itu **kemungkinan akan ditutup/dihapus otomatis** dan dapat menyebabkan penangguhan **sementara atau permanen**. Lihat %1$s/wiki/Hacking.</string>
+
+    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME; diperlukan oleh aplikasi %1$s untuk menjalankan perintah termux.</string>
+
+    <string name="error_termux_app_package_context_not_accessible">Aplikasi &TERMUX_APP_NAME; (konteks paket) tidak dapat diakses.</string>
+
+    <string name="error_termux_prefix_dir_path_not_accessible">Aplikasi %1$s tidak dapat mengakses direktori $PREFIX aplikasi &TERMUX_APP_NAME;. Mungkin &TERMUX_APP_NAME; belum dipasang/dikonfigurasi, tanda tangan APK berbeda, atau direktori "&TERMUX_PREFIX_DIR_PATH;" tidak ada/tidak memiliki izin.</string>
+
+    <string name="action_yes">Ya</string>
+
+    <string name="action_no">Tidak</string>
+
+    <string name="action_copy">Salin</string>
+
+    <string name="action_share">Bagikan</string>
+
+    <string name="action_cancel">Batal</string>
+
+    <string name="action_save_to_file">Simpan ke file</string>
+
+    <string name="msg_storage_permission_granted_on_request">Izin penyimpanan diberikan oleh pengguna saat diminta</string>
+
+    <string name="msg_storage_permission_not_granted_on_request">Izin penyimpanan tidak diberikan oleh pengguna saat diminta</string>
+
+    <string name="action_enable_launcher_icon">Aktifkan ikon peluncur</string>
+
+    <string name="action_disable_launcher_icon">Nonaktifkan ikon peluncur</string>
+
+    <string name="msg_enabling_launcher_icon">Mengaktifkan ikon peluncur aplikasi %1$s</string>
+
+    <string name="msg_disabling_launcher_icon">Menonaktifkan ikon peluncur aplikasi %1$s</string>
+
+    <string name="setting_launcher_icon_title">Ikon peluncur aktif</string>
+
+    <string name="setting_launcher_icon_enabled_off">Ikon peluncur akan dinonaktifkan.</string>
+
+    <string name="setting_launcher_icon_enabled_on">Ikon peluncur akan diaktifkan. (Default)</string>
+
+    <string name="log_level_title">Level log</string>
+
+    <string name="log_level_off">Mati</string>
+
+    <string name="log_level_normal">Normal</string>
+
+    <string name="log_level_debug">Debug</string>
+
+    <string name="log_level_verbose">Rinci</string>
+
+    <string name="log_level_unknown">*Tidak diketahui*</string>
+
+    <string name="log_level_value">Level log Logcat disetel ke "%1$s"</string>
+
+    <string name="title_text_io_activity">Masukan teks</string>
+
+</resources>

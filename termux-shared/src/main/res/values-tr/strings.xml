@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY TERMUX_PACKAGE_NAME "com.termux">
+    <!ENTITY TERMUX_APP_NAME "Termux">
+    <!ENTITY TERMUX_API_APP_NAME "Termux:API">
+    <!ENTITY TERMUX_BOOT_APP_NAME "Termux:Boot">
+    <!ENTITY TERMUX_FLOAT_APP_NAME "Termux:Float">
+    <!ENTITY TERMUX_STYLING_APP_NAME "Termux:Styling">
+    <!ENTITY TERMUX_TASKER_APP_NAME "Termux:Tasker">
+    <!ENTITY TERMUX_WIDGET_APP_NAME "Termux:Widget">
+    <!ENTITY TERMUX_PREFIX_DIR_PATH "/data/data/com.termux/files/usr">
+    ]>
+
+<resources>
+
+    <string name="msg_directory_absolute_path">%1$s dizininin mutlak yolu: "%2$s"</string>
+
+    <string name="error_app_not_installed_or_disabled_warning">%1$s (%2$s) uygulaması yüklü değil veya devre dışı.</string>
+
+    <string name="error_get_package_context_failed_title">Paket bağlamı alınamadı</string>
+
+    <string name="error_get_package_context_failed_message">"%1$s" paket bağlamı alınamadı. Paket yüklü olmayabilir veya mevcut uygulamadan farklı APK imzasına sahip olabilir.</string>
+
+    <string name="error_get_package_context_failed_help_url_message">Ayrıntılar için %1$s sayfasına bakın.</string>
+
+    <string name="error_get_component_state_failed">%1$s/%2$s bileşen durumu alınamadı</string>
+
+    <string name="error_enable_component_failed">%1$s/%2$s bileşeni etkinleştirilemedi</string>
+
+    <string name="error_disable_component_failed">%1$s/%2$s bileşeni devre dışı bırakılamadı</string>
+
+    <string name="message_sudo_please_grant_permissions">Lütfen istenen izinleri verin</string>
+
+    <string name="error_failed_to_request_permissions">İzinler istek kodu %1$d ile istenemedi: %2$s</string>
+
+    <string name="error_attempted_to_check_for_permissions_not_requested">Manifestte istenmeyen izinler kontrol edilmeye çalışıldı: %1$s</string>
+
+    <string name="error_attempted_to_ask_for_permissions_not_requested">Manifestte istenmeyen izinler istenmeye çalışıldı: %1$s</string>
+
+    <string name="error_has_not_requested_legacy_external_storage">"%1$s" paketi targetSdkVersion %2$d hedefliyor ve Android SDK %3$d üzerinde çalışıyor ancak manifestte requestLegacyExternalStorage true değil</string>
+
+    <string name="msg_requires_dump_and_package_usage_stats_permissions">`DUMP` ve `PACKAGE_USAGE_STATS` izinlerini gerektirir</string>
+
+    <string name="error_display_over_other_apps_permission_not_granted">%1$s, Android >= 10 üzerinde arka plandan etkinlik ve hizmet başlatmak için "Diğer uygulamaların üzerinde göster" iznini gerektirir. Android Ayarları -> Uygulamalar -> %1$s -> Gelişmiş -> Diğer uygulamaların üzerinde göster yolundan verin. Bkz. https://dontkillmyapp.com.</string>
+
+    <string name="error_allow_external_apps_ungranted">%1$s, `%2$s` dosyasında `allow-external-apps` özelliğinin `true` olmasını gerektirir.</string>
+
+    <string name="title_report_text">Rapor metni</string>
+
+    <string name="msg_report_truncated">**Rapor kırpıldı**
+
+Rapor burada görüntülenemeyecek kadar büyük. Seçenekler menüsünden `Dosyaya kaydet` seçeneğini kullanın ve harici bir metin düzenleyicide açın.
+
+##
+
+</string>
+
+    <string name="title_share_with">Şununla paylaş</string>
+
+    <string name="title_open_url_with">URL’yi şununla aç</string>
+
+    <string name="msg_storage_permission_not_granted">Depolama izni verilmedi.</string>
+
+    <string name="msg_file_saved_successfully">%1$s dosyası "%2$s" konumuna başarıyla kaydedildi</string>
+
+    <string name="error_sending_sigkill_to_process">Kullanıcı isteğiyle veya Android yürütme hizmetini durdurduğu için işleme SIGKILL gönderiliyor</string>
+
+    <string name="error_executable_unset">Shell komutu için "%1$s" yürütülebilir dosyası ayarlanmadı</string>
+
+    <string name="error_execution_cancelled">Yürütme hizmeti durdurulduğu için yürütme iptal edildi</string>
+
+    <string name="error_failed_to_execute_termux_session_command">Termux oturum komutu "%1$s" çalıştırılamadı</string>
+
+    <string name="error_failed_to_execute_app_shell_command">Uygulama shell komutu "%1$s" çalıştırılamadı</string>
+
+    <string name="error_exception_received_while_executing_termux_session_command">Termux oturum komutu "%1$s" çalıştırılırken istisna alındı.
+İstisna: %2$s</string>
+
+    <string name="error_exception_received_while_executing_app_shell_command">Uygulama shell komutu "%1$s" çalıştırılırken istisna alındı.
+İstisna: %2$s</string>
+
+    <string name="msg_report_issue">Bu sorunu bildirmek istiyorsanız, metni seçenekler menüsünden (sağ üstte üç nokta) kopyalayın ve aşağıdaki bağlantılardan birine rapor gönderin.
+
+Termux çökme raporuysa, ne yaptığınızı ve nasıl yeniden üretileceğini ekleyin.
+
+GitHub’da uygun depoya gönderin. Metin/dosya yerine **kısmi ekran görüntüsü** içeren raporlar **muhtemelen otomatik kapatılır/silinir**. İlgisiz özel cihaz bilgilerini kaldırabilirsiniz.
+
+Hack araçları/betikleri için destek vermiyoruz. Bunlarla ilgili sorular **muhtemelen otomatik kapatılır/silinir** ve **geçici veya kalıcı** yasaklamaya neden olabilir. Bkz. %1$s/wiki/Hacking.</string>
+
+    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME;, %1$s uygulamasının termux komutlarını çalıştırması için gereklidir.</string>
+
+    <string name="error_termux_app_package_context_not_accessible">&TERMUX_APP_NAME; uygulaması (paket bağlamı) erişilebilir değil.</string>
+
+    <string name="error_termux_prefix_dir_path_not_accessible">%1$s uygulaması &TERMUX_APP_NAME; $PREFIX dizinine erişemiyor. Kurulum/yapılandırma eksik, APK imzaları farklı veya "&TERMUX_PREFIX_DIR_PATH;" dizini yok/izinleri yetersiz olabilir.</string>
+
+    <string name="action_yes">Evet</string>
+
+    <string name="action_no">Hayır</string>
+
+    <string name="action_copy">Kopyala</string>
+
+    <string name="action_share">Paylaş</string>
+
+    <string name="action_cancel">İptal</string>
+
+    <string name="action_save_to_file">Dosyaya kaydet</string>
+
+    <string name="msg_storage_permission_granted_on_request">Depolama izni istendiğinde kullanıcı tarafından verildi</string>
+
+    <string name="msg_storage_permission_not_granted_on_request">Depolama izni istendiğinde kullanıcı tarafından verilmedi</string>
+
+    <string name="action_enable_launcher_icon">Başlatıcı simgesini etkinleştir</string>
+
+    <string name="action_disable_launcher_icon">Başlatıcı simgesini devre dışı bırak</string>
+
+    <string name="msg_enabling_launcher_icon">%1$s uygulamasının başlatıcı simgesi etkinleştiriliyor</string>
+
+    <string name="msg_disabling_launcher_icon">%1$s uygulamasının başlatıcı simgesi devre dışı bırakılıyor</string>
+
+    <string name="setting_launcher_icon_title">Başlatıcı simgesi etkin</string>
+
+    <string name="setting_launcher_icon_enabled_off">Başlatıcı simgesi devre dışı bırakılacak.</string>
+
+    <string name="setting_launcher_icon_enabled_on">Başlatıcı simgesi etkinleştirilecek. (Varsayılan)</string>
+
+    <string name="log_level_title">Günlük seviyesi</string>
+
+    <string name="log_level_off">Kapalı</string>
+
+    <string name="log_level_normal">Normal</string>
+
+    <string name="log_level_debug">Hata ayıklama</string>
+
+    <string name="log_level_verbose">Ayrıntılı</string>
+
+    <string name="log_level_unknown">*Bilinmiyor*</string>
+
+    <string name="log_level_value">Logcat günlük seviyesi "%1$s" olarak ayarlandı</string>
+
+    <string name="title_text_io_activity">Metin girişi</string>
+
+</resources>
