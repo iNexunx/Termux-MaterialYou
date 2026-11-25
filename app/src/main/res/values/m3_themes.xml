@@ -33,9 +33,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Blue" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#D3E3FF</item>
@@ -69,9 +69,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.LightBlue" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#CFE5FF</item>
@@ -105,9 +105,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Cyan" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#97F0FF</item>
@@ -141,9 +141,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Teal" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#9CF1F0</item>
@@ -177,9 +177,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Green" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#A6F7AD</item>
@@ -213,9 +213,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Yellow" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#F8E467</item>
@@ -249,9 +249,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Amber" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#FFDDB1</item>
@@ -285,9 +285,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Orange" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#FFDBCC</item>
@@ -321,9 +321,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Red" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#FFDAD6</item>
@@ -357,9 +357,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Pink" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#FFD9DF</item>
@@ -393,9 +393,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Purple" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#EADDFF</item>
@@ -429,9 +429,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Lavender" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#F0DBFF</item>
@@ -465,9 +465,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Indigo" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#DEE0FF</item>
@@ -501,9 +501,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Brown" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#FFDBCB</item>
@@ -537,9 +537,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
     <style name="Theme.TermuxApp.M3.Gray" parent="Theme.TermuxActivity.DayNight.NoActionBar">
         <item name="m3PrimaryContainer">#E2E2E6</item>
@@ -573,8 +573,8 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Termux.M3</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.Termux.M3.Dialog</item>
-        <item name="android:colorControlNormal">#?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">#?attr/colorOnSurface</item>
-        <item name="android:textColorSecondary">#?attr/colorOnSurface</item>
+        <item name="android:colorControlNormal">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
+        <item name="android:textColorSecondary">?attr/colorOnSurface</item>
     </style>
 </resources>
