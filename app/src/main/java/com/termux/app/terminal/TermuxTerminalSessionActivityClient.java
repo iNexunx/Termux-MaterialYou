@@ -371,11 +371,9 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         addRow(items, R.drawable.ic_m3_close, mActivity.getString(android.R.string.cancel), () -> { if(dlg[0]!=null) dlg[0].dismiss(); });
 
         dlg[0] = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setView(content).create();
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dlg[0], true); } catch (Throwable ignored) {}
         dlg[0].show();
-        if (dlg[0].getWindow() != null) {
-            dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            makeDialogMovableResizable(dlg[0], title, content);
-        }
+        makeDialogMovableResizable(dlg[0], title, content);
     }
 
     private void addRow(android.widget.LinearLayout items, int iconRes, String text, Runnable action) {
@@ -387,60 +385,9 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
     }
 
     private void makeDialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, android.view.View dragHandle, android.view.View content) {
-        if (dialog.getWindow() == null || dragHandle == null) return;
-        dialog.setCanceledOnTouchOutside(true);
-        android.view.Window window = dialog.getWindow();
-        android.view.WindowManager.LayoutParams lp = window.getAttributes();
-        int dp16=(int)(16*mActivity.getResources().getDisplayMetrics().density);
-        lp.width = mActivity.getResources().getDisplayMetrics().widthPixels - dp16;
-        lp.gravity = android.view.Gravity.CENTER;
-        window.setAttributes(lp);
-        final boolean[] resizing = new boolean[1];
-        final float[] last = new float[4];
-        dragHandle.setOnTouchListener((v, ev) -> {
-            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-            if (ev.getPointerCount() >= 2 || resizing[0]) return false;
-            switch (ev.getActionMasked()) {
-                case android.view.MotionEvent.ACTION_DOWN: last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
-                case android.view.MotionEvent.ACTION_MOVE: wlp.x=(int)(last[2]+ev.getRawX()-last[0]); wlp.y=(int)(last[3]+ev.getRawY()-last[1]); window.setAttributes(wlp); return true;
-            }
-            return false;
-        });
-        window.getDecorView().post(() -> installEdgeResize(window, window.getDecorView(), resizing));
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
+        try { com.termux.shared.view.M3DialogUtils.makeMovableResizable(dialog, dragHandle); } catch (Throwable ignored) {}
     }
-
-    private void installEdgeResize(android.view.Window window, android.view.View decor, boolean[] resizing) {
-        float d = mActivity.getResources().getDisplayMetrics().density;
-        final int edge = (int)(18*d), minW = (int)(280*d), minH = (int)(220*d);
-        decor.setOnTouchListener((v, ev) -> {
-            int action = ev.getActionMasked();
-            if (action == android.view.MotionEvent.ACTION_UP || action == android.view.MotionEvent.ACTION_CANCEL) {
-                if (resizing[0]) { resizing[0]=false; android.view.WindowManager.LayoutParams p=window.getAttributes(); p.flags &= ~android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL; window.setAttributes(p); window.setDimAmount(0.45f); }
-                return false;
-            }
-            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-            int w=wlp.width>0?wlp.width:decor.getWidth(), h=wlp.height>0?wlp.height:decor.getHeight();
-            float x=ev.getX(), y=ev.getY();
-            boolean left=x<=edge,right=x>=w-edge,top=y<=edge,bottom=y>=h-edge;
-            if (!left&&!right&&!top&&!bottom&&!resizing[0]) return false;
-            if (action == android.view.MotionEvent.ACTION_DOWN) {
-                resizing[0]=true; android.view.WindowManager.LayoutParams p=window.getAttributes(); p.flags |= android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL; window.setAttributes(p); window.setDimAmount(0.15f);
-                v.setTag(new float[]{ev.getRawX(),ev.getRawY(),w,h,wlp.x,wlp.y,left?1:0,right?1:0,top?1:0,bottom?1:0}); return true;
-            }
-            if (action == android.view.MotionEvent.ACTION_MOVE && v.getTag() instanceof float[]) {
-                float[] s=(float[])v.getTag(); float dx=ev.getRawX()-s[0], dy=ev.getRawY()-s[1];
-                int nw=(int)s[2],nh=(int)s[3],nx=(int)s[4],ny=(int)s[5], maxW=mActivity.getResources().getDisplayMetrics().widthPixels-(int)(8*d);
-                if (s[6]==1){nw=clamp((int)s[2]-(int)dx,minW,maxW); nx=(int)s[4]+((int)s[2]-nw)/2;}
-                if (s[7]==1){nw=clamp((int)s[2]+(int)dx,minW,maxW); nx=(int)s[4]-((int)s[2]-nw)/2;}
-                if (s[8]==1){nh=Math.max(minH,(int)s[3]-(int)dy); ny=(int)s[5]+((int)s[3]-nh)/2;}
-                if (s[9]==1){nh=Math.max(minH,(int)s[3]+(int)dy); ny=(int)s[5]-((int)s[3]-nh)/2;}
-                wlp.width=nw; wlp.height=nh; wlp.x=nx; wlp.y=ny; window.setAttributes(wlp); return true;
-            }
-            return resizing[0];
-        });
-    }
-
-    private int clamp(int v,int min,int max){return Math.max(min,Math.min(max,v));}
 
     private void renameSession(TerminalSession sessionToRename, String text) {
         if (sessionToRename == null) return;
@@ -462,8 +409,9 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
             ((android.widget.TextView)mv.findViewById(com.termux.shared.R.id.dialog_title)).setText(R.string.title_max_terminals_reached);
             ((android.widget.TextView)mv.findViewById(com.termux.shared.R.id.dialog_message)).setText(R.string.msg_max_terminals_reached);
             androidx.appcompat.app.AlertDialog d = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setView(mv)
-                .setPositiveButton(android.R.string.ok, null).create(); d.show();
-            if (d.getWindow()!=null) d.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                .setPositiveButton(android.R.string.ok, null).create();
+            try { com.termux.shared.view.M3DialogUtils.applyM3Window(d, true); } catch (Throwable ignored) {}
+            d.show();
         } else {
             TerminalSession currentSession = mActivity.getCurrentSession();
 

@@ -76,11 +76,8 @@ public class MessageDialogUtils {
             builder.setOnDismissListener(onDismiss);
 
         androidx.appcompat.app.AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(d -> {
-            try { com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(dialog); } catch (Throwable ignored) {}
-        });
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
         dialog.show();
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     public static void exitAppWithErrorMessage(Context context, String titleText, String messageText) {

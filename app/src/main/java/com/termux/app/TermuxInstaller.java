@@ -352,9 +352,8 @@ final class TermuxInstaller {
                         FileUtils.deleteFile("termux prefix directory", TERMUX_PREFIX_DIR_PATH, true);
                         TermuxInstaller.setupBootstrapIfNeeded(activity, whenDone);
                     }).create();
+                try { com.termux.shared.view.M3DialogUtils.applyM3Window(bd, true); } catch (Throwable ignored) {}
                 bd.show();
-                if (bd.getWindow()!=null) bd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                try { com.termux.shared.termux.interact.TextInputDialogUtils.stackDialogButtons(bd); } catch(Throwable ignored){}
             } catch (WindowManager.BadTokenException e1) {
                 // Activity already dismissed - ignore.
             }

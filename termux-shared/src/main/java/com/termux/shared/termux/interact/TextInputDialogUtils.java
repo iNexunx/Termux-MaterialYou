@@ -83,15 +83,9 @@ public final class TextInputDialogUtils {
 
         AlertDialog dialog = builder.create();
         dialogHolder[0] = dialog;
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(true);
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
         dialog.show();
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            int margin = dp(activity, 12);
-            android.view.WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-            lp.width = activity.getResources().getDisplayMetrics().widthPixels - margin * 2;
-            dialog.getWindow().setAttributes(lp);
-        }
         if (stackedButtons) stackDialogButtons(dialog);
     }
 

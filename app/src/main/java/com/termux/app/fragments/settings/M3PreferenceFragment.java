@@ -67,12 +67,8 @@ public abstract class M3PreferenceFragment extends PreferenceFragmentCompat {
             }
         }
         dlg[0] = new com.google.android.material.dialog.MaterialAlertDialogBuilder(ctx).setView(content).create();
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dlg[0], true); } catch (Throwable ignored) {}
         dlg[0].show();
-        if (dlg[0].getWindow() != null) {
-            dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            int margin = dp(8);
-            dlg[0].getWindow().setLayout(ctx.getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
-        }
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
