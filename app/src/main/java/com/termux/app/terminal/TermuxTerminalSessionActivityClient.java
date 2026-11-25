@@ -388,44 +388,59 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
 
     private void makeDialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, android.view.View dragHandle, android.view.View content) {
         if (dialog.getWindow() == null || dragHandle == null) return;
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(true);
         android.view.Window window = dialog.getWindow();
         android.view.WindowManager.LayoutParams lp = window.getAttributes();
         int dp16=(int)(16*mActivity.getResources().getDisplayMetrics().density);
         lp.width = mActivity.getResources().getDisplayMetrics().widthPixels - dp16;
         lp.gravity = android.view.Gravity.CENTER;
         window.setAttributes(lp);
+        final boolean[] resizing = new boolean[1];
         final float[] last = new float[4];
         dragHandle.setOnTouchListener((v, ev) -> {
             android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-            if (ev.getPointerCount() >= 2) return false;
+            if (ev.getPointerCount() >= 2 || resizing[0]) return false;
             switch (ev.getActionMasked()) {
                 case android.view.MotionEvent.ACTION_DOWN: last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
                 case android.view.MotionEvent.ACTION_MOVE: wlp.x=(int)(last[2]+ev.getRawX()-last[0]); wlp.y=(int)(last[3]+ev.getRawY()-last[1]); window.setAttributes(wlp); return true;
             }
             return false;
         });
-        android.view.View touchTarget = content != null ? content : dragHandle;
-        final float[] pinch = new float[3];
-        touchTarget.setOnTouchListener((v, ev) -> {
-            if (ev.getPointerCount() == 2) {
-                float dx = ev.getX(0) - ev.getX(1), dy = ev.getY(0) - ev.getY(1), dist = (float)Math.hypot(dx, dy);
-                android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-                if (ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_DOWN || pinch[0] == 0) {
-                    pinch[0]=dist; pinch[1]=wlp.width>0?wlp.width:v.getWidth(); pinch[2]=wlp.height>0?wlp.height:v.getHeight();
-                } else if (ev.getActionMasked() == android.view.MotionEvent.ACTION_MOVE) {
-                    float scale = dist / Math.max(10f, pinch[0]);
-                    int minW=(int)(280*mActivity.getResources().getDisplayMetrics().density); int minH=(int)(220*mActivity.getResources().getDisplayMetrics().density);
-                    wlp.width = Math.max(minW, Math.min(mActivity.getResources().getDisplayMetrics().widthPixels-(int)(8*mActivity.getResources().getDisplayMetrics().density), (int)(pinch[1]*scale)));
-                    wlp.height = Math.max(minH, (int)(pinch[2]*scale));
-                    window.setAttributes(wlp);
-                }
-                return true;
+        window.getDecorView().post(() -> installEdgeResize(window, window.getDecorView(), resizing));
+    }
+
+    private void installEdgeResize(android.view.Window window, android.view.View decor, boolean[] resizing) {
+        float d = mActivity.getResources().getDisplayMetrics().density;
+        final int edge = (int)(18*d), minW = (int)(280*d), minH = (int)(220*d);
+        decor.setOnTouchListener((v, ev) -> {
+            int action = ev.getActionMasked();
+            if (action == android.view.MotionEvent.ACTION_UP || action == android.view.MotionEvent.ACTION_CANCEL) {
+                if (resizing[0]) { resizing[0]=false; android.view.WindowManager.LayoutParams p=window.getAttributes(); p.flags &= ~android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL; window.setAttributes(p); window.setDimAmount(0.45f); }
+                return false;
             }
-            if (ev.getActionMasked() == android.view.MotionEvent.ACTION_UP || ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_UP) pinch[0]=0;
-            return false;
+            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            int w=wlp.width>0?wlp.width:decor.getWidth(), h=wlp.height>0?wlp.height:decor.getHeight();
+            float x=ev.getX(), y=ev.getY();
+            boolean left=x<=edge,right=x>=w-edge,top=y<=edge,bottom=y>=h-edge;
+            if (!left&&!right&&!top&&!bottom&&!resizing[0]) return false;
+            if (action == android.view.MotionEvent.ACTION_DOWN) {
+                resizing[0]=true; android.view.WindowManager.LayoutParams p=window.getAttributes(); p.flags |= android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL; window.setAttributes(p); window.setDimAmount(0.15f);
+                v.setTag(new float[]{ev.getRawX(),ev.getRawY(),w,h,wlp.x,wlp.y,left?1:0,right?1:0,top?1:0,bottom?1:0}); return true;
+            }
+            if (action == android.view.MotionEvent.ACTION_MOVE && v.getTag() instanceof float[]) {
+                float[] s=(float[])v.getTag(); float dx=ev.getRawX()-s[0], dy=ev.getRawY()-s[1];
+                int nw=(int)s[2],nh=(int)s[3],nx=(int)s[4],ny=(int)s[5], maxW=mActivity.getResources().getDisplayMetrics().widthPixels-(int)(8*d);
+                if (s[6]==1){nw=clamp((int)s[2]-(int)dx,minW,maxW); nx=(int)s[4]+((int)s[2]-nw)/2;}
+                if (s[7]==1){nw=clamp((int)s[2]+(int)dx,minW,maxW); nx=(int)s[4]-((int)s[2]-nw)/2;}
+                if (s[8]==1){nh=Math.max(minH,(int)s[3]-(int)dy); ny=(int)s[5]+((int)s[3]-nh)/2;}
+                if (s[9]==1){nh=Math.max(minH,(int)s[3]+(int)dy); ny=(int)s[5]-((int)s[3]-nh)/2;}
+                wlp.width=nw; wlp.height=nh; wlp.x=nx; wlp.y=ny; window.setAttributes(wlp); return true;
+            }
+            return resizing[0];
         });
     }
+
+    private int clamp(int v,int min,int max){return Math.max(min,Math.min(max,v));}
 
     private void renameSession(TerminalSession sessionToRename, String text) {
         if (sessionToRename == null) return;

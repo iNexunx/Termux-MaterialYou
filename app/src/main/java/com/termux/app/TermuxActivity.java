@@ -645,17 +645,17 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     private void makeM3DialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, View dragHandle, View content) {
         if (dialog.getWindow() == null || dragHandle == null) return;
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(true);
         android.view.Window window = dialog.getWindow();
         android.view.WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = getResources().getDisplayMetrics().widthPixels - dp(16);
         lp.gravity = android.view.Gravity.CENTER;
         window.setAttributes(lp);
-
+        final boolean[] resizing = new boolean[1];
         final float[] last = new float[4];
         dragHandle.setOnTouchListener((v, ev) -> {
             android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-            if (ev.getPointerCount() >= 2) return false;
+            if (ev.getPointerCount() >= 2 || resizing[0]) return false;
             switch (ev.getActionMasked()) {
                 case android.view.MotionEvent.ACTION_DOWN:
                     last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
@@ -666,30 +666,53 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             }
             return false;
         });
+        window.getDecorView().post(() -> installM3EdgeResize(window, window.getDecorView(), resizing));
+    }
 
-        View touchTarget = content != null ? content : dragHandle;
-        final float[] pinch = new float[3]; // baseDist, baseW, baseH
-        touchTarget.setOnTouchListener((v, ev) -> {
-            if (ev.getPointerCount() == 2) {
-                float dx = ev.getX(0) - ev.getX(1);
-                float dy = ev.getY(0) - ev.getY(1);
-                float dist = (float) Math.hypot(dx, dy);
-                android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-                if (ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_DOWN || pinch[0] == 0) {
-                    pinch[0] = dist; pinch[1] = wlp.width > 0 ? wlp.width : v.getWidth(); pinch[2] = wlp.height > 0 ? wlp.height : v.getHeight();
-                } else if (ev.getActionMasked() == android.view.MotionEvent.ACTION_MOVE) {
-                    float scale = dist / Math.max(10f, pinch[0]);
-                    int w = Math.max(dp(280), Math.min(getResources().getDisplayMetrics().widthPixels - dp(8), (int)(pinch[1] * scale)));
-                    int h = Math.max(dp(220), (int)(pinch[2] * scale));
-                    wlp.width = w; wlp.height = h;
-                    window.setAttributes(wlp);
-                }
+    private void installM3EdgeResize(android.view.Window window, View decor, boolean[] resizing) {
+        final int edge = dp(18), minW = dp(280), minH = dp(220);
+        decor.setOnTouchListener((v, ev) -> {
+            int action = ev.getActionMasked();
+            if (action == android.view.MotionEvent.ACTION_UP || action == android.view.MotionEvent.ACTION_CANCEL) {
+                if (resizing[0]) { resizing[0] = false; dialogSetTouchableOutside(window, true); window.setDimAmount(0.45f); }
+                return false;
+            }
+            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            int w = wlp.width > 0 ? wlp.width : decor.getWidth();
+            int h = wlp.height > 0 ? wlp.height : decor.getHeight();
+            float x = ev.getX(), y = ev.getY();
+            boolean left = x <= edge, right = x >= w - edge, top = y <= edge, bottom = y >= h - edge;
+            if (!left && !right && !top && !bottom && !resizing[0]) return false;
+            if (action == android.view.MotionEvent.ACTION_DOWN) {
+                resizing[0] = true; dialogSetTouchableOutside(window, false); window.setDimAmount(0.15f);
+                v.setTag(new float[]{ev.getRawX(), ev.getRawY(), w, h, wlp.x, wlp.y, left?1:0, right?1:0, top?1:0, bottom?1:0});
                 return true;
             }
-            if (ev.getActionMasked() == android.view.MotionEvent.ACTION_UP || ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_UP) pinch[0] = 0;
-            return false;
+            if (action == android.view.MotionEvent.ACTION_MOVE && v.getTag() instanceof float[]) {
+                float[] s = (float[]) v.getTag();
+                float dx = ev.getRawX()-s[0], dy = ev.getRawY()-s[1];
+                int nw=(int)s[2], nh=(int)s[3], nx=(int)s[4], ny=(int)s[5];
+                int maxW = getResources().getDisplayMetrics().widthPixels - dp(8);
+                if (s[6]==1) { nw = clamp((int)s[2]-(int)dx, minW, maxW); nx = (int)s[4] + ((int)s[2]-nw)/2; }
+                if (s[7]==1) { nw = clamp((int)s[2]+(int)dx, minW, maxW); nx = (int)s[4] - ((int)s[2]-nw)/2; }
+                if (s[8]==1) { nh = Math.max(minH, (int)s[3]-(int)dy); ny = (int)s[5] + ((int)s[3]-nh)/2; }
+                if (s[9]==1) { nh = Math.max(minH, (int)s[3]+(int)dy); ny = (int)s[5] - ((int)s[3]-nh)/2; }
+                wlp.width=nw; wlp.height=nh; wlp.x=nx; wlp.y=ny; window.setAttributes(wlp);
+                return true;
+            }
+            return resizing[0];
         });
     }
+
+    private void dialogSetTouchableOutside(android.view.Window window, boolean enabled) {
+        if (window == null) return;
+        android.view.WindowManager.LayoutParams p = window.getAttributes();
+        if (enabled) p.flags &= ~android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        else p.flags |= android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        window.setAttributes(p);
+    }
+
+    private int clamp(int v, int min, int max) { return Math.max(min, Math.min(max, v)); }
 
     private void showNamedSessionDialog() {
         View content = getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
@@ -961,23 +984,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     public void showSessionContextMenu(TerminalSession session) {
         if (session == null) return;
-        View content = getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
-        LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
-        boolean isCurrent = session == getCurrentSession();
-        if (!isCurrent) addContextMenuItem(items, R.drawable.ic_m3_terminal, getString(R.string.m3_session_switch), true, false, false, () -> {
-            mTermuxTerminalSessionActivityClient.setCurrentSession(session);
-            getDrawer().closeDrawers();
-        });
-        addContextMenuItem(items, R.drawable.ic_m3_edit, getString(R.string.title_rename_session), true, false, false, () -> mTermuxTerminalSessionActivityClient.renameSession(session));
-        addContextMenuItem(items, R.drawable.ic_m3_restart, getString(R.string.action_reset_terminal), true, false, false, () -> onResetTerminalSession(session));
-        addContextMenuItem(items, R.drawable.ic_m3_power, getResources().getString(R.string.action_kill_process, session.getPid()), session.isRunning(), false, false, () -> showKillSessionDialog(session));
-        mContextMenuDialog = new MaterialAlertDialogBuilder(this).setView(content).create();
-        mContextMenuDialog.show();
-        if (mContextMenuDialog.getWindow() != null) {
-            mContextMenuDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            int margin = (int) (8 * getResources().getDisplayMetrics().density);
-            mContextMenuDialog.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
-        }
+        // Open rename dialog directly as requested
+        mTermuxTerminalSessionActivityClient.renameSession(session);
     }
 
     public void showTermuxContextMenu() {

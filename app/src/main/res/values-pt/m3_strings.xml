@@ -93,10 +93,10 @@
     <string name="m3_terminal_font_summary">Aplica imediatamente ao terminal</string>
     <string name="m3_terminal_color_scheme_title">Tema do console</string>
     <string name="m3_terminal_color_scheme_summary">Aplica imediatamente ao terminal</string>
-    <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item></string-array>
-    <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item></string-array>
-    <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Drácula</item><item>Nord</item><item>Gruvbox</item></string-array>
-    <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>dracula</item><item>nord</item><item>gruvbox</item></string-array>
+    <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item><item>Casual</item><item>Cursive</item><item>Monospace Bold</item><item>Small Caps</item></string-array>
+    <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item><item>casual</item><item>cursive</item><item>monospace-bold</item><item>small-caps</item></string-array>
+    <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Solarized claro</item><item>Drácula</item><item>Nord</item><item>Gruvbox oscuro</item><item>Gruvbox claro</item><item>Monokai</item><item>One Dark</item><item>Tokyo Night</item><item>Catppuccin</item></string-array>
+    <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>solarized_light</item><item>dracula</item><item>nord</item><item>gruvbox_dark</item><item>gruvbox_light</item><item>monokai</item><item>one_dark</item><item>tokyo_night</item><item>catppuccin</item></string-array>
 
     <string name="m3_packages_title">Gerenciador de pacotes</string>
     <string name="m3_packages_search_hint">Buscar pacotes...</string>
