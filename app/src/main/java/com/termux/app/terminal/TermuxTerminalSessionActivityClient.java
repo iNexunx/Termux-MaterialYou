@@ -342,68 +342,85 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
     @SuppressLint("InflateParams")
     public void renameSession(final TerminalSession sessionToRename) {
         if (sessionToRename == null) return;
+        android.view.View content = android.view.LayoutInflater.from(mActivity).inflate(R.layout.m3_context_menu, null, false);
+        android.widget.LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
 
-        android.view.View view = android.view.LayoutInflater.from(mActivity).inflate(com.termux.shared.R.layout.dialog_m3_text_input, null, false);
-        final android.widget.EditText input = view.findViewById(com.termux.shared.R.id.dialog_text_input);
-        com.google.android.material.textfield.TextInputLayout inputLayout = view.findViewById(com.termux.shared.R.id.dialog_text_input_layout);
+        com.google.android.material.textview.MaterialTextView title = new com.google.android.material.textview.MaterialTextView(mActivity);
+        title.setText(R.string.title_rename_session);
+        title.setTextAppearance(mActivity, com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6);
+        title.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorOnSurface, 0xFF222222));
+        int dp4 = (int)(4*mActivity.getResources().getDisplayMetrics().density), dp12=(int)(12*mActivity.getResources().getDisplayMetrics().density);
+        title.setPadding(dp4, dp4, dp4, dp12);
+        items.addView(title);
+
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(mActivity, null, com.google.android.material.R.style.Widget_MaterialComponents_TextInputLayout_OutlinedBox);
         inputLayout.setHint(mActivity.getString(R.string.title_rename_session));
-        input.setSingleLine();
-        if (sessionToRename.mSessionName != null) {
-            input.setText(sessionToRename.mSessionName);
-            android.text.Selection.setSelection(input.getText(), sessionToRename.mSessionName.length());
+        int r=(int)(24*mActivity.getResources().getDisplayMetrics().density); inputLayout.setBoxCornerRadii(r,r,r,r);
+        final com.google.android.material.textfield.TextInputEditText input = new com.google.android.material.textfield.TextInputEditText(inputLayout.getContext());
+        input.setSingleLine(true);
+        if (sessionToRename.mSessionName != null) { input.setText(sessionToRename.mSessionName); android.text.Selection.setSelection(input.getText(), sessionToRename.mSessionName.length()); }
+        inputLayout.addView(input);
+        android.widget.LinearLayout.LayoutParams ilp = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        ilp.bottomMargin = (int)(8*mActivity.getResources().getDisplayMetrics().density); inputLayout.setLayoutParams(ilp);
+        items.addView(inputLayout);
+
+        final androidx.appcompat.app.AlertDialog[] dlg = new androidx.appcompat.app.AlertDialog[1];
+        java.lang.Runnable add = null;
+        addRow(items, R.drawable.ic_m3_edit, mActivity.getString(R.string.action_rename_session_confirm), () -> { renameSession(sessionToRename, String.valueOf(input.getText())); termuxSessionListNotifyUpdated(); if(dlg[0]!=null) dlg[0].dismiss(); });
+        addRow(items, R.drawable.ic_m3_power, mActivity.getString(R.string.action_kill_process_confirm), () -> { if(dlg[0]!=null) dlg[0].dismiss(); TermuxService service = mActivity.getTermuxService(); if (service != null) service.removeTermuxSession(sessionToRename); });
+        addRow(items, R.drawable.ic_m3_close, mActivity.getString(android.R.string.cancel), () -> { if(dlg[0]!=null) dlg[0].dismiss(); });
+
+        dlg[0] = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity).setView(content).create();
+        dlg[0].show();
+        if (dlg[0].getWindow() != null) {
+            dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            makeDialogMovableResizable(dlg[0], title);
         }
+    }
 
-        android.widget.TextView dlgTitle = view.findViewById(com.termux.shared.R.id.dialog_m3_title);
-        if (dlgTitle != null) dlgTitle.setText(R.string.title_rename_session);
+    private void addRow(android.widget.LinearLayout items, int iconRes, String text, Runnable action) {
+        android.view.View item = android.view.LayoutInflater.from(mActivity).inflate(R.layout.m3_context_menu_item, items, false);
+        ((android.widget.ImageView)item.findViewById(R.id.menu_item_icon)).setImageResource(iconRes);
+        ((android.widget.TextView)item.findViewById(R.id.menu_item_text)).setText(text);
+        item.setOnClickListener(v -> action.run());
+        items.addView(item);
+    }
 
-        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(mActivity)
-            .setView(view)
-            .create();
-        dialog.setCanceledOnTouchOutside(false);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        android.widget.LinearLayout container = new android.widget.LinearLayout(mActivity);
-        container.setOrientation(android.widget.LinearLayout.VERTICAL);
-        int topPad = (int) (8 * mActivity.getResources().getDisplayMetrics().density);
-        container.setPadding(0, topPad, 0, 0);
-
-        com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonStyle);
-        confirm.setText(R.string.action_rename_session_confirm);
-        com.google.android.material.button.MaterialButton cancel = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
-        cancel.setText(android.R.string.cancel);
-        com.google.android.material.button.MaterialButton kill = new com.google.android.material.button.MaterialButton(mActivity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
-        kill.setText(R.string.action_kill_process_confirm);
-        int errorColor = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(mActivity, R.attr.colorError, 0xFFD32F2F);
-        kill.setTextColor(errorColor);
-        kill.setStrokeColor(android.content.res.ColorStateList.valueOf(errorColor));
-
-        com.google.android.material.button.MaterialButton[] btns = new com.google.android.material.button.MaterialButton[]{confirm, cancel, kill};
-        for (int i = 0; i < btns.length; i++) {
-            com.google.android.material.button.MaterialButton b = btns[i];
-            b.setAllCaps(false);
-            b.setInsetTop(0); b.setInsetBottom(0);
-            b.setCornerRadius((int) (24 * mActivity.getResources().getDisplayMetrics().density));
-            b.setMinHeight((int) (48 * mActivity.getResources().getDisplayMetrics().density));
-            android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-            if (i < btns.length - 1) lp.bottomMargin = (int) (10 * mActivity.getResources().getDisplayMetrics().density);
-            b.setLayoutParams(lp);
-            container.addView(b);
-        }
-
-        confirm.setOnClickListener(v -> {
-            renameSession(sessionToRename, input.getText().toString());
-            termuxSessionListNotifyUpdated();
-            dialog.dismiss();
+    private void makeDialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, android.view.View dragHandle) {
+        if (dialog.getWindow() == null || dragHandle == null) return;
+        android.view.Window window = dialog.getWindow();
+        android.view.WindowManager.LayoutParams lp = window.getAttributes();
+        int dp16=(int)(16*mActivity.getResources().getDisplayMetrics().density);
+        lp.width = mActivity.getResources().getDisplayMetrics().widthPixels - dp16;
+        lp.gravity = android.view.Gravity.CENTER;
+        window.setAttributes(lp);
+        final float[] last = new float[4];
+        dragHandle.setOnTouchListener((v, ev) -> {
+            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            switch (ev.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN: last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
+                case android.view.MotionEvent.ACTION_MOVE: wlp.x=(int)(last[2]+ev.getRawX()-last[0]); wlp.y=(int)(last[3]+ev.getRawY()-last[1]); window.setAttributes(wlp); return true;
+            }
+            return false;
         });
-        cancel.setOnClickListener(v -> dialog.dismiss());
-        kill.setOnClickListener(v -> {
-            dialog.dismiss();
-            TermuxService service = mActivity.getTermuxService();
-            if (service != null) service.removeTermuxSession(sessionToRename);
+        android.widget.ImageView resizer = new android.widget.ImageView(mActivity);
+        resizer.setImageResource(R.drawable.ic_m3_more);
+        int sz=(int)(24*mActivity.getResources().getDisplayMetrics().density);
+        android.widget.LinearLayout.LayoutParams rlp = new android.widget.LinearLayout.LayoutParams(sz, sz);
+        rlp.gravity = android.view.Gravity.END; resizer.setLayoutParams(rlp);
+        if (dragHandle.getParent() instanceof android.widget.LinearLayout) ((android.widget.LinearLayout)dragHandle.getParent()).addView(resizer);
+        resizer.setOnTouchListener((v, ev) -> {
+            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            switch (ev.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN: last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.width; last[3]=wlp.height; return true;
+                case android.view.MotionEvent.ACTION_MOVE:
+                    int w=(int)(last[2]+ev.getRawX()-last[0]); int h=(int)(last[3]+ev.getRawY()-last[1]);
+                    int minW=(int)(280*mActivity.getResources().getDisplayMetrics().density); int minH=(int)(200*mActivity.getResources().getDisplayMetrics().density);
+                    wlp.width=Math.max(minW, Math.min(mActivity.getResources().getDisplayMetrics().widthPixels-(int)(8*mActivity.getResources().getDisplayMetrics().density), w));
+                    wlp.height=Math.max(minH,h); window.setAttributes(wlp); return true;
+            }
+            return false;
         });
-
-        if (view instanceof android.widget.LinearLayout) ((android.widget.LinearLayout) view).addView(container);
-        dialog.show();
     }
 
     private void renameSession(TerminalSession sessionToRename, String text) {

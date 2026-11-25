@@ -634,51 +634,94 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         View newSessionButton = findViewById(R.id.new_session_button);
         newSessionButton.setOnClickListener(v -> mTermuxTerminalSessionActivityClient.addNewSession(false, null));
         newSessionButton.setOnLongClickListener(v -> {
-            android.view.View view = android.view.LayoutInflater.from(TermuxActivity.this).inflate(com.termux.shared.R.layout.dialog_m3_text_input, null, false);
-            final android.widget.EditText input = view.findViewById(com.termux.shared.R.id.dialog_text_input);
-            com.google.android.material.textfield.TextInputLayout inputLayout = view.findViewById(com.termux.shared.R.id.dialog_text_input_layout);
-            inputLayout.setHint(getString(R.string.title_create_named_session));
-            input.setSingleLine();
-            android.widget.TextView dlgTitle = view.findViewById(com.termux.shared.R.id.dialog_m3_title);
-            if (dlgTitle != null) dlgTitle.setText(R.string.title_create_named_session);
-            androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(TermuxActivity.this)
-                .setView(view)
-                .create();
-            dialog.setCanceledOnTouchOutside(false);
-            if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-            android.widget.LinearLayout container = new android.widget.LinearLayout(TermuxActivity.this);
-            container.setOrientation(android.widget.LinearLayout.VERTICAL);
-            container.setPadding(0, (int) (8 * getResources().getDisplayMetrics().density), 0, 0);
-
-            com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonStyle);
-            confirm.setText(R.string.action_create_named_session_confirm);
-            com.google.android.material.button.MaterialButton cancel = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
-            cancel.setText(android.R.string.cancel);
-            com.google.android.material.button.MaterialButton failsafe = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
-            failsafe.setText(R.string.action_new_session_failsafe);
-
-            com.google.android.material.button.MaterialButton[] btns = new com.google.android.material.button.MaterialButton[]{confirm, cancel, failsafe};
-            for (int i = 0; i < btns.length; i++) {
-                com.google.android.material.button.MaterialButton b = btns[i];
-                b.setAllCaps(false);
-                b.setInsetTop(0); b.setInsetBottom(0);
-                b.setCornerRadius((int) (24 * getResources().getDisplayMetrics().density));
-                b.setMinHeight((int) (48 * getResources().getDisplayMetrics().density));
-                android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-                if (i < btns.length - 1) lp.bottomMargin = (int) (10 * getResources().getDisplayMetrics().density);
-                b.setLayoutParams(lp);
-                container.addView(b);
-            }
-
-            confirm.setOnClickListener(x -> { mTermuxTerminalSessionActivityClient.addNewSession(false, input.getText().toString()); dialog.dismiss(); });
-            cancel.setOnClickListener(x -> dialog.dismiss());
-            failsafe.setOnClickListener(x -> { mTermuxTerminalSessionActivityClient.addNewSession(true, input.getText().toString()); dialog.dismiss(); });
-
-            if (view instanceof android.widget.LinearLayout) ((android.widget.LinearLayout) view).addView(container);
-            dialog.show();
+            showNamedSessionDialog();
             return true;
         });
+    }
+
+    private void addM3DialogAction(LinearLayout items, int iconRes, String text, Runnable action) {
+        addContextMenuItem(items, iconRes, text, true, false, false, action);
+    }
+
+    private void makeM3DialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, View dragHandle) {
+        if (dialog.getWindow() == null || dragHandle == null) return;
+        android.view.Window window = dialog.getWindow();
+        android.view.WindowManager.LayoutParams lp = window.getAttributes();
+        lp.width = getResources().getDisplayMetrics().widthPixels - dp(16);
+        lp.gravity = android.view.Gravity.CENTER;
+        window.setAttributes(lp);
+
+        final float[] last = new float[4];
+        dragHandle.setOnTouchListener((v, ev) -> {
+            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            switch (ev.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
+                case android.view.MotionEvent.ACTION_MOVE:
+                    wlp.x = (int)(last[2] + ev.getRawX() - last[0]);
+                    wlp.y = (int)(last[3] + ev.getRawY() - last[1]);
+                    window.setAttributes(wlp); return true;
+            }
+            return false;
+        });
+
+        View resizer = new View(this);
+        resizer.setBackgroundResource(R.drawable.ic_m3_more);
+        int sz = dp(24);
+        LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(sz, sz);
+        rlp.gravity = android.view.Gravity.END;
+        resizer.setLayoutParams(rlp);
+        if (dragHandle.getParent() instanceof LinearLayout) ((LinearLayout) dragHandle.getParent()).addView(resizer);
+        resizer.setOnTouchListener((v, ev) -> {
+            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            switch (ev.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.width; last[3]=wlp.height; return true;
+                case android.view.MotionEvent.ACTION_MOVE:
+                    int w = (int)(last[2] + ev.getRawX() - last[0]);
+                    int h = (int)(last[3] + ev.getRawY() - last[1]);
+                    wlp.width = Math.max(dp(280), Math.min(getResources().getDisplayMetrics().widthPixels - dp(8), w));
+                    wlp.height = Math.max(dp(200), h);
+                    window.setAttributes(wlp); return true;
+            }
+            return false;
+        });
+    }
+
+    private void showNamedSessionDialog() {
+        View content = getLayoutInflater().inflate(R.layout.m3_context_menu, null, false);
+        LinearLayout items = content.findViewById(R.id.m3_context_menu_items);
+
+        com.google.android.material.textview.MaterialTextView title = new com.google.android.material.textview.MaterialTextView(this);
+        title.setText(R.string.title_create_named_session);
+        title.setTextAppearance(this, com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6);
+        title.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, R.attr.colorOnSurface, 0xFF222222));
+        int p4 = dp(4), p12 = dp(12);
+        title.setPadding(p4, p4, p4, p12);
+        items.addView(title);
+
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(this, null, com.google.android.material.R.style.Widget_MaterialComponents_TextInputLayout_OutlinedBox);
+        inputLayout.setHint(getString(R.string.title_create_named_session));
+        inputLayout.setBoxCornerRadii(dp(24),dp(24),dp(24),dp(24));
+        com.google.android.material.textfield.TextInputEditText input = new com.google.android.material.textfield.TextInputEditText(inputLayout.getContext());
+        input.setSingleLine(true);
+        inputLayout.addView(input);
+        LinearLayout.LayoutParams ilp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ilp.bottomMargin = dp(8);
+        inputLayout.setLayoutParams(ilp);
+        items.addView(inputLayout);
+
+        androidx.appcompat.app.AlertDialog[] dlg = new androidx.appcompat.app.AlertDialog[1];
+        addM3DialogAction(items, R.drawable.ic_m3_new_session, getString(R.string.action_create_named_session_confirm), () -> { mTermuxTerminalSessionActivityClient.addNewSession(false, String.valueOf(input.getText())); if (dlg[0]!=null) dlg[0].dismiss(); });
+        addM3DialogAction(items, R.drawable.ic_m3_terminal, getString(R.string.action_new_session_failsafe), () -> { mTermuxTerminalSessionActivityClient.addNewSession(true, String.valueOf(input.getText())); if (dlg[0]!=null) dlg[0].dismiss(); });
+        addM3DialogAction(items, R.drawable.ic_m3_close, getString(android.R.string.cancel), () -> { if (dlg[0]!=null) dlg[0].dismiss(); });
+
+        dlg[0] = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this).setView(content).create();
+        dlg[0].show();
+        if (dlg[0].getWindow() != null) {
+            dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            makeM3DialogMovableResizable(dlg[0], title);
+        }
     }
 
     private void setToggleKeyboardView() {
