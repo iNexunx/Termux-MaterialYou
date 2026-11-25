@@ -643,8 +643,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         addContextMenuItem(items, iconRes, text, true, false, false, action);
     }
 
-    private void makeM3DialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, View dragHandle) {
+    private void makeM3DialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, View dragHandle, View content) {
         if (dialog.getWindow() == null || dragHandle == null) return;
+        dialog.setCanceledOnTouchOutside(false);
         android.view.Window window = dialog.getWindow();
         android.view.WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = getResources().getDisplayMetrics().widthPixels - dp(16);
@@ -654,6 +655,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         final float[] last = new float[4];
         dragHandle.setOnTouchListener((v, ev) -> {
             android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            if (ev.getPointerCount() >= 2) return false;
             switch (ev.getActionMasked()) {
                 case android.view.MotionEvent.ACTION_DOWN:
                     last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
@@ -665,25 +667,26 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             return false;
         });
 
-        View resizer = new View(this);
-        resizer.setBackgroundResource(R.drawable.ic_m3_more);
-        int sz = dp(24);
-        LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(sz, sz);
-        rlp.gravity = android.view.Gravity.END;
-        resizer.setLayoutParams(rlp);
-        if (dragHandle.getParent() instanceof LinearLayout) ((LinearLayout) dragHandle.getParent()).addView(resizer);
-        resizer.setOnTouchListener((v, ev) -> {
-            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-            switch (ev.getActionMasked()) {
-                case android.view.MotionEvent.ACTION_DOWN:
-                    last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.width; last[3]=wlp.height; return true;
-                case android.view.MotionEvent.ACTION_MOVE:
-                    int w = (int)(last[2] + ev.getRawX() - last[0]);
-                    int h = (int)(last[3] + ev.getRawY() - last[1]);
-                    wlp.width = Math.max(dp(280), Math.min(getResources().getDisplayMetrics().widthPixels - dp(8), w));
-                    wlp.height = Math.max(dp(200), h);
-                    window.setAttributes(wlp); return true;
+        View touchTarget = content != null ? content : dragHandle;
+        final float[] pinch = new float[3]; // baseDist, baseW, baseH
+        touchTarget.setOnTouchListener((v, ev) -> {
+            if (ev.getPointerCount() == 2) {
+                float dx = ev.getX(0) - ev.getX(1);
+                float dy = ev.getY(0) - ev.getY(1);
+                float dist = (float) Math.hypot(dx, dy);
+                android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+                if (ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_DOWN || pinch[0] == 0) {
+                    pinch[0] = dist; pinch[1] = wlp.width > 0 ? wlp.width : v.getWidth(); pinch[2] = wlp.height > 0 ? wlp.height : v.getHeight();
+                } else if (ev.getActionMasked() == android.view.MotionEvent.ACTION_MOVE) {
+                    float scale = dist / Math.max(10f, pinch[0]);
+                    int w = Math.max(dp(280), Math.min(getResources().getDisplayMetrics().widthPixels - dp(8), (int)(pinch[1] * scale)));
+                    int h = Math.max(dp(220), (int)(pinch[2] * scale));
+                    wlp.width = w; wlp.height = h;
+                    window.setAttributes(wlp);
+                }
+                return true;
             }
+            if (ev.getActionMasked() == android.view.MotionEvent.ACTION_UP || ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_UP) pinch[0] = 0;
             return false;
         });
     }
@@ -720,7 +723,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         dlg[0].show();
         if (dlg[0].getWindow() != null) {
             dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            makeM3DialogMovableResizable(dlg[0], title);
+            makeM3DialogMovableResizable(dlg[0], title, content);
         }
     }
 

@@ -374,7 +374,7 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         dlg[0].show();
         if (dlg[0].getWindow() != null) {
             dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            makeDialogMovableResizable(dlg[0], title);
+            makeDialogMovableResizable(dlg[0], title, content);
         }
     }
 
@@ -386,8 +386,9 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         items.addView(item);
     }
 
-    private void makeDialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, android.view.View dragHandle) {
+    private void makeDialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, android.view.View dragHandle, android.view.View content) {
         if (dialog.getWindow() == null || dragHandle == null) return;
+        dialog.setCanceledOnTouchOutside(false);
         android.view.Window window = dialog.getWindow();
         android.view.WindowManager.LayoutParams lp = window.getAttributes();
         int dp16=(int)(16*mActivity.getResources().getDisplayMetrics().density);
@@ -397,28 +398,31 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         final float[] last = new float[4];
         dragHandle.setOnTouchListener((v, ev) -> {
             android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+            if (ev.getPointerCount() >= 2) return false;
             switch (ev.getActionMasked()) {
                 case android.view.MotionEvent.ACTION_DOWN: last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.x; last[3]=wlp.y; return true;
                 case android.view.MotionEvent.ACTION_MOVE: wlp.x=(int)(last[2]+ev.getRawX()-last[0]); wlp.y=(int)(last[3]+ev.getRawY()-last[1]); window.setAttributes(wlp); return true;
             }
             return false;
         });
-        android.widget.ImageView resizer = new android.widget.ImageView(mActivity);
-        resizer.setImageResource(R.drawable.ic_m3_more);
-        int sz=(int)(24*mActivity.getResources().getDisplayMetrics().density);
-        android.widget.LinearLayout.LayoutParams rlp = new android.widget.LinearLayout.LayoutParams(sz, sz);
-        rlp.gravity = android.view.Gravity.END; resizer.setLayoutParams(rlp);
-        if (dragHandle.getParent() instanceof android.widget.LinearLayout) ((android.widget.LinearLayout)dragHandle.getParent()).addView(resizer);
-        resizer.setOnTouchListener((v, ev) -> {
-            android.view.WindowManager.LayoutParams wlp = window.getAttributes();
-            switch (ev.getActionMasked()) {
-                case android.view.MotionEvent.ACTION_DOWN: last[0]=ev.getRawX(); last[1]=ev.getRawY(); last[2]=wlp.width; last[3]=wlp.height; return true;
-                case android.view.MotionEvent.ACTION_MOVE:
-                    int w=(int)(last[2]+ev.getRawX()-last[0]); int h=(int)(last[3]+ev.getRawY()-last[1]);
-                    int minW=(int)(280*mActivity.getResources().getDisplayMetrics().density); int minH=(int)(200*mActivity.getResources().getDisplayMetrics().density);
-                    wlp.width=Math.max(minW, Math.min(mActivity.getResources().getDisplayMetrics().widthPixels-(int)(8*mActivity.getResources().getDisplayMetrics().density), w));
-                    wlp.height=Math.max(minH,h); window.setAttributes(wlp); return true;
+        android.view.View touchTarget = content != null ? content : dragHandle;
+        final float[] pinch = new float[3];
+        touchTarget.setOnTouchListener((v, ev) -> {
+            if (ev.getPointerCount() == 2) {
+                float dx = ev.getX(0) - ev.getX(1), dy = ev.getY(0) - ev.getY(1), dist = (float)Math.hypot(dx, dy);
+                android.view.WindowManager.LayoutParams wlp = window.getAttributes();
+                if (ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_DOWN || pinch[0] == 0) {
+                    pinch[0]=dist; pinch[1]=wlp.width>0?wlp.width:v.getWidth(); pinch[2]=wlp.height>0?wlp.height:v.getHeight();
+                } else if (ev.getActionMasked() == android.view.MotionEvent.ACTION_MOVE) {
+                    float scale = dist / Math.max(10f, pinch[0]);
+                    int minW=(int)(280*mActivity.getResources().getDisplayMetrics().density); int minH=(int)(220*mActivity.getResources().getDisplayMetrics().density);
+                    wlp.width = Math.max(minW, Math.min(mActivity.getResources().getDisplayMetrics().widthPixels-(int)(8*mActivity.getResources().getDisplayMetrics().density), (int)(pinch[1]*scale)));
+                    wlp.height = Math.max(minH, (int)(pinch[2]*scale));
+                    window.setAttributes(wlp);
+                }
+                return true;
             }
+            if (ev.getActionMasked() == android.view.MotionEvent.ACTION_UP || ev.getActionMasked() == android.view.MotionEvent.ACTION_POINTER_UP) pinch[0]=0;
             return false;
         });
     }
@@ -598,6 +602,10 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         String font = mActivity.getPreferences().getTerminalFont();
         if ("sans-serif".equals(font)) return Typeface.SANS_SERIF;
         if ("serif".equals(font)) return Typeface.SERIF;
+        if ("casual".equals(font)) return Typeface.create("casual", Typeface.NORMAL);
+        if ("cursive".equals(font)) return Typeface.create("cursive", Typeface.NORMAL);
+        if ("monospace-bold".equals(font)) return Typeface.create(Typeface.MONOSPACE, Typeface.BOLD);
+        if ("small-caps".equals(font)) return Typeface.create("sans-serif-smallcaps", Typeface.NORMAL);
         if ("firacode".equals(font)) {
             try { return Typeface.createFromAsset(mActivity.getAssets(), "fonts/FiraCode-Regular.ttf"); } catch (Exception ignored) {}
         }
@@ -608,15 +616,19 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
     }
 
     private void applyM3TerminalColorScheme(Properties props) {
-        // User-supplied colors.properties wins; only apply M3 scheme if it has no explicit foreground/background.
         if (props.containsKey("foreground") || props.containsKey("background")) return;
         String scheme = mActivity.getPreferences().getTerminalColorScheme();
         if ("black".equals(scheme)) { props.put("background","#000000"); props.put("foreground","#FFFFFF"); props.put("cursor","#FFFFFF"); }
         else if ("solarized_dark".equals(scheme)) { props.put("background","#002B36"); props.put("foreground","#839496"); props.put("cursor","#93A1A1"); }
+        else if ("solarized_light".equals(scheme)) { props.put("background","#FDF6E3"); props.put("foreground","#657B83"); props.put("cursor","#586E75"); }
         else if ("dracula".equals(scheme)) { props.put("background","#282A36"); props.put("foreground","#F8F8F2"); props.put("cursor","#F8F8F2"); }
         else if ("nord".equals(scheme)) { props.put("background","#2E3440"); props.put("foreground","#D8DEE9"); props.put("cursor","#D8DEE9"); }
-        else if ("gruvbox".equals(scheme)) { props.put("background","#282828"); props.put("foreground","#EBDBB2"); props.put("cursor","#EBDBB2"); }
-        // "termux" default: keep Termux defaults
+        else if ("gruvbox_dark".equals(scheme) || "gruvbox".equals(scheme)) { props.put("background","#282828"); props.put("foreground","#EBDBB2"); props.put("cursor","#EBDBB2"); }
+        else if ("gruvbox_light".equals(scheme)) { props.put("background","#FBF1C7"); props.put("foreground","#3C3836"); props.put("cursor","#3C3836"); }
+        else if ("monokai".equals(scheme)) { props.put("background","#272822"); props.put("foreground","#F8F8F2"); props.put("cursor","#F8F8F0"); }
+        else if ("one_dark".equals(scheme)) { props.put("background","#282C34"); props.put("foreground","#ABB2BF"); props.put("cursor","#528BFF"); }
+        else if ("tokyo_night".equals(scheme)) { props.put("background","#1A1B26"); props.put("foreground","#C0CAF5"); props.put("cursor","#C0CAF5"); }
+        else if ("catppuccin".equals(scheme)) { props.put("background","#1E1E2E"); props.put("foreground","#CDD6F4"); props.put("cursor","#F5E0DC"); }
     }
 
     public void updateBackgroundColor() {
