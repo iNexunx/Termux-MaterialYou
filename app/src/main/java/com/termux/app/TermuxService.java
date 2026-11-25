@@ -146,9 +146,23 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         runStartForeground();
 
         SystemEventReceiver.registerPackageUpdateEvents(this);
+        try {
+            android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+            mM3PrefListener = (sp, key) -> {
+                if (com.termux.app.theme.M3ThemeHelper.PREF_LANGUAGE.equals(key) ||
+                    com.termux.app.theme.M3ThemeHelper.PREF_ACCENT.equals(key) ||
+                    com.termux.app.theme.M3ThemeHelper.PREF_MODE.equals(key)) {
+                    updateLocalizedResourcesIfNeeded();
+                    updateNotification();
+                }
+            };
+            p.registerOnSharedPreferenceChangeListener(mM3PrefListener);
+        } catch (Throwable ignored) {}
     }
 
     @SuppressLint("Wakelock")
+    private android.content.SharedPreferences.OnSharedPreferenceChangeListener mM3PrefListener;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logger.logDebug(LOG_TAG, "onStartCommand");
@@ -204,6 +218,10 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         TermuxShellManager.onAppExit(this);
 
         SystemEventReceiver.unregisterPackageUpdateEvents(this);
+        try {
+            if (mM3PrefListener != null)
+                androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(mM3PrefListener);
+        } catch (Throwable ignored) {}
 
         runStopForeground();
     }
