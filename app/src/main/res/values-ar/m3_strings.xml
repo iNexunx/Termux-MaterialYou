@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="m3_appearance_title">المظهر (Material You)</string>
     <string name="m3_appearance_summary">المظهر واللغة وخيارات طرفية Material You</string>
@@ -116,4 +116,5 @@
     <string name="m3_packages_no_match">لا توجد نتائج مطابقة.</string>
     <string name="m3_session_running">قيد التشغيل</string>
     <string name="m3_session_switch">التبديل إلى الجلسة</string>
-</resources>
+<string name="m3_packages_tab_installed">المثبتة</string><string name="m3_packages_tab_available">المتاحة</string><string name="m3_packages_count">%1$d من %2$d حزمة</string><string name="m3_packages_installed">مثبت</string><string name="m3_packages_installed_repo">مثبت · مستودع Termux</string><string name="m3_packages_repo">مستودع Termux</string><string name="m3_packages_version">الإصدار: %1$s</string><string name="m3_packages_repo_info">المستودع: مستودع حزم Termux
+pkg.termux.dev</string><string name="m3_packages_cmd_install">الأمر: pkg install %1$s</string><string name="m3_packages_cmd_uninstall">الأمر: pkg uninstall %1$s</string><string name="m3_packages_install">تثبيت</string><string name="m3_packages_reinstall">إعادة التثبيت</string><string name="m3_packages_uninstall">إلغاء التثبيت</string></resources>

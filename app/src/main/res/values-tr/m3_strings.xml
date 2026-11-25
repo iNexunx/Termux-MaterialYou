@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="m3_appearance_title">Görünüm (Material You)</string>
     <string name="m3_appearance_summary">Görünüm, dil ve Material You terminal seçenekleri</string>
@@ -116,4 +116,5 @@
     <string name="m3_packages_no_match">Eşleşme yok.</string>
     <string name="m3_session_running">Çalışıyor</string>
     <string name="m3_session_switch">Oturuma geç</string>
-</resources>
+<string name="m3_packages_tab_installed">Yüklü</string><string name="m3_packages_tab_available">Kullanılabilir</string><string name="m3_packages_count">%2$d paketin %1$d tanesi</string><string name="m3_packages_installed">Yüklü</string><string name="m3_packages_installed_repo">Yüklü · Termux deposu</string><string name="m3_packages_repo">Termux deposu</string><string name="m3_packages_version">Sürüm: %1$s</string><string name="m3_packages_repo_info">Depo: Termux Paket Deposu
+pkg.termux.dev</string><string name="m3_packages_cmd_install">Komut: pkg install %1$s</string><string name="m3_packages_cmd_uninstall">Komut: pkg uninstall %1$s</string><string name="m3_packages_install">Yükle</string><string name="m3_packages_reinstall">Yeniden yükle</string><string name="m3_packages_uninstall">Kaldır</string></resources>

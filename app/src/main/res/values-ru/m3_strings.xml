@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="m3_appearance_title">Внешний вид (Material You)</string>
     <string name="m3_appearance_summary">Внешний вид, язык и параметры терминала Material You</string>
@@ -116,4 +116,5 @@
     <string name="m3_packages_no_match">Нет совпадений.</string>
     <string name="m3_session_running">Запущено</string>
     <string name="m3_session_switch">Переключиться на сессию</string>
-</resources>
+<string name="m3_packages_tab_installed">Установленные</string><string name="m3_packages_tab_available">Доступные</string><string name="m3_packages_count">%1$d из %2$d пакетов</string><string name="m3_packages_installed">Установлен</string><string name="m3_packages_installed_repo">Установлен · Репозиторий Termux</string><string name="m3_packages_repo">Репозиторий Termux</string><string name="m3_packages_version">Версия: %1$s</string><string name="m3_packages_repo_info">Репозиторий: Репозиторий пакетов Termux
+pkg.termux.dev</string><string name="m3_packages_cmd_install">Команда: pkg install %1$s</string><string name="m3_packages_cmd_uninstall">Команда: pkg uninstall %1$s</string><string name="m3_packages_install">Установить</string><string name="m3_packages_reinstall">Переустановить</string><string name="m3_packages_uninstall">Удалить</string></resources>

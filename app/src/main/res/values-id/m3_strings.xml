@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="m3_appearance_title">Tampilan (Material You)</string>
     <string name="m3_appearance_summary">Tampilan, bahasa, dan opsi terminal Material You</string>
@@ -116,4 +116,5 @@
     <string name="m3_packages_no_match">Tidak ada hasil.</string>
     <string name="m3_session_running">Berjalan</string>
     <string name="m3_session_switch">Beralih ke sesi</string>
-</resources>
+<string name="m3_packages_tab_installed">Terpasang</string><string name="m3_packages_tab_available">Tersedia</string><string name="m3_packages_count">%1$d dari %2$d paket</string><string name="m3_packages_installed">Terpasang</string><string name="m3_packages_installed_repo">Terpasang · Repo Termux</string><string name="m3_packages_repo">Repo Termux</string><string name="m3_packages_version">Versi: %1$s</string><string name="m3_packages_repo_info">Repositori: Repositori Paket Termux
+pkg.termux.dev</string><string name="m3_packages_cmd_install">Perintah: pkg install %1$s</string><string name="m3_packages_cmd_uninstall">Perintah: pkg uninstall %1$s</string><string name="m3_packages_install">Pasang</string><string name="m3_packages_reinstall">Pasang ulang</string><string name="m3_packages_uninstall">Hapus</string></resources>

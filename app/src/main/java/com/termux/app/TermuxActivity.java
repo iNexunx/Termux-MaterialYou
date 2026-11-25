@@ -753,117 +753,214 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         if (b != null) b.setOnClickListener(v -> showPackageManagerDialog());
     }
 
-    private void refreshSessionStrip() {
+    public void refreshSessionStrip() {
         View container = findViewById(R.id.session_strip_container);
         LinearLayout strip = findViewById(R.id.session_strip);
         if (container == null || strip == null) return;
         if (mTermuxService == null) { container.setVisibility(View.GONE); return; }
-        List<TermuxSession> sessions = mTermuxService.getTermuxSessions();
-        if (sessions == null || sessions.isEmpty()) { container.setVisibility(View.GONE); strip.removeAllViews(); return; }
-        container.setVisibility(View.VISIBLE);
+        java.util.List<com.termux.shared.termux.shell.command.runner.terminal.TermuxSession> sessions = mTermuxService.getTermuxSessions();
         strip.removeAllViews();
+        if (sessions.size() <= 1) { container.setVisibility(View.GONE); return; }
+        container.setVisibility(View.VISIBLE);
         TerminalSession current = getCurrentSession();
-        int primary = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorPrimary, 0xFF2E7D32);
-        int onPrimary = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnPrimary, 0xFFFFFFFF);
-        int onSurface = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222);
-        int surface = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorSurface, 0xFFFFFFFF);
+        int pipW = dp(96), pipH = dp(64), gap = dp(4);
         for (int i = 0; i < sessions.size(); i++) {
-            TermuxSession ts = sessions.get(i);
-            TerminalSession s = ts.getTerminalSession();
-            com.google.android.material.card.MaterialCardView chip = (com.google.android.material.card.MaterialCardView) getLayoutInflater().inflate(R.layout.m3_session_chip, strip, false);
-            TextView title = chip.findViewById(R.id.session_chip_title);
-            TextView sub = chip.findViewById(R.id.session_chip_sub);
-            String name = (s.mSessionName != null && !s.mSessionName.trim().isEmpty()) ? s.mSessionName : ("Session " + (i + 1));
-            title.setText(name);
-            String t = s.getTitle();
-            sub.setText((t == null || t.trim().isEmpty()) ? getString(R.string.m3_session_running) : t);
-            boolean active = s == current;
-            chip.setCardBackgroundColor(active ? primary : surface);
-            chip.setStrokeColor(primary);
-            title.setTextColor(active ? onPrimary : onSurface);
-            sub.setTextColor(active ? onPrimary : onSurface);
-            chip.setOnClickListener(v -> {
-                if (mTermuxTerminalSessionActivityClient != null) mTermuxTerminalSessionActivityClient.setCurrentSession(s);
+            TerminalSession session = sessions.get(i).getTerminalSession();
+            LinearLayout wrapper = new LinearLayout(this);
+            wrapper.setOrientation(LinearLayout.VERTICAL);
+            wrapper.setGravity(Gravity.CENTER_HORIZONTAL);
+            LinearLayout.LayoutParams wlp = new LinearLayout.LayoutParams(pipW, LinearLayout.LayoutParams.WRAP_CONTENT);
+            wlp.setMarginEnd(dp(8));
+            wrapper.setLayoutParams(wlp);
+
+            TextView nameLabel = new TextView(this);
+            String displayName = (session.mSessionName != null && !session.mSessionName.trim().isEmpty()) ? session.mSessionName : "#" + (i + 1);
+            nameLabel.setText(displayName);
+            nameLabel.setTextSize(11f);
+            nameLabel.setMaxLines(1);
+            nameLabel.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            nameLabel.setGravity(Gravity.CENTER_HORIZONTAL);
+            nameLabel.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222));
+            LinearLayout.LayoutParams nlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            nlp.bottomMargin = gap;
+            nameLabel.setLayoutParams(nlp);
+            wrapper.addView(nameLabel);
+
+            com.termux.app.terminal.MiniTerminalPipView pip = new com.termux.app.terminal.MiniTerminalPipView(this);
+            pip.setSession(session);
+            pip.setActive(session == current);
+            pip.setLayoutParams(new LinearLayout.LayoutParams(pipW, pipH));
+            wrapper.addView(pip);
+
+            wrapper.setOnClickListener(v -> {
+                if (mTermuxTerminalSessionActivityClient != null) mTermuxTerminalSessionActivityClient.setCurrentSession(session);
                 getDrawer().closeDrawers();
+                refreshSessionStrip();
             });
-            strip.addView(chip);
+            wrapper.setOnLongClickListener(v -> { showSessionContextMenu(session); return true; });
+            strip.addView(wrapper);
+        }
+    }
+
+    public void notifyPipUpdate(TerminalSession session) {
+        LinearLayout strip = findViewById(R.id.session_strip);
+        if (strip == null) return;
+        for (int i = 0; i < strip.getChildCount(); i++) {
+            View child = strip.getChildAt(i);
+            if (!(child instanceof LinearLayout)) continue;
+            LinearLayout wrapper = (LinearLayout) child;
+            for (int j = 0; j < wrapper.getChildCount(); j++) {
+                View inner = wrapper.getChildAt(j);
+                if (inner instanceof com.termux.app.terminal.MiniTerminalPipView) {
+                    com.termux.app.terminal.MiniTerminalPipView pip = (com.termux.app.terminal.MiniTerminalPipView) inner;
+                    if (pip.getSession() == session) { pip.notifyUpdate(); return; }
+                }
+            }
         }
     }
 
     private void showPackageManagerDialog() {
         android.view.View view = getLayoutInflater().inflate(R.layout.m3_package_manager_dialog, null, false);
+        com.google.android.material.tabs.TabLayout tabs = view.findViewById(R.id.m3_pkg_tabs);
         android.widget.EditText search = view.findViewById(R.id.m3_pkg_search);
         android.widget.ProgressBar progress = view.findViewById(R.id.m3_pkg_progress);
         android.widget.TextView status = view.findViewById(R.id.m3_pkg_status);
         android.widget.LinearLayout list = view.findViewById(R.id.m3_pkg_list);
-        com.google.android.material.button.MaterialButton refresh = view.findViewById(R.id.m3_pkg_refresh);
-        com.google.android.material.button.MaterialButton openRepo = view.findViewById(R.id.m3_pkg_open_repo);
 
-        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
-            .setView(view)
-            .create();
+        tabs.addTab(tabs.newTab().setText(R.string.m3_packages_tab_installed));
+        tabs.addTab(tabs.newTab().setText(R.string.m3_packages_tab_available));
+
+        final java.util.ArrayList<String[]> installed = new java.util.ArrayList<>(); // [name,version,desc]
+        final java.util.ArrayList<String[]> available = new java.util.ArrayList<>();
+        final java.util.HashSet<String> installedNames = new java.util.HashSet<>();
+        final boolean[] loaded = {false, false};
+
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this).setView(view).create();
         if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        Runnable load = () -> loadPackagesIntoDialog(search, progress, status, list);
+
+        final Runnable[] render = new Runnable[1];
+        render[0] = () -> {
+            boolean instTab = tabs.getSelectedTabPosition() == 0;
+            java.util.ArrayList<String[]> src = instTab ? installed : available;
+            boolean ready = instTab ? loaded[0] : loaded[1];
+            String q = search.getText() == null ? "" : search.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
+            list.removeAllViews();
+            if (!ready) { progress.setVisibility(View.VISIBLE); status.setText(R.string.m3_packages_loading); return; }
+            progress.setVisibility(View.GONE);
+            java.util.ArrayList<String[]> filtered = new java.util.ArrayList<>();
+            for (String[] e : src) if (q.isEmpty() || e[0].toLowerCase(java.util.Locale.ROOT).contains(q)) { filtered.add(e); if (filtered.size() >= 200) break; }
+            status.setText(getString(R.string.m3_packages_count, filtered.size(), src.size()));
+            if (filtered.isEmpty()) {
+                TextView tv = new TextView(this);
+                tv.setText(q.isEmpty() ? R.string.m3_packages_none : R.string.m3_packages_no_match);
+                tv.setPadding(0, dp(8), 0, dp(8));
+                list.addView(tv);
+                return;
+            }
+            for (String[] e : filtered) {
+                View row = getLayoutInflater().inflate(R.layout.m3_package_row, list, false);
+                TextView name = row.findViewById(R.id.pkg_name);
+                TextView sub = row.findViewById(R.id.pkg_sub);
+                name.setText(e[0]);
+                boolean isInst = installedNames.contains(e[0]);
+                if (instTab) sub.setText(e[1] != null ? "v" + e[1] : getString(R.string.m3_packages_installed));
+                else sub.setText(isInst ? getString(R.string.m3_packages_installed_repo) : getString(R.string.m3_packages_repo));
+                row.setOnClickListener(v -> showPackageDetailDialog(e, instTab, isInst));
+                list.addView(row);
+            }
+        };
+
+        tabs.addOnTabSelectedListener(new com.google.android.material.tabs.TabLayout.OnTabSelectedListener() {
+            public void onTabSelected(com.google.android.material.tabs.TabLayout.Tab tab) { render[0].run(); }
+            public void onTabUnselected(com.google.android.material.tabs.TabLayout.Tab tab) {}
+            public void onTabReselected(com.google.android.material.tabs.TabLayout.Tab tab) {}
+        });
         search.addTextChangedListener(new android.text.TextWatcher() {
             public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
             public void onTextChanged(CharSequence s, int st, int b, int c) {}
-            public void afterTextChanged(android.text.Editable s) { load.run(); }
+            public void afterTextChanged(android.text.Editable s) { render[0].run(); }
         });
-        refresh.setOnClickListener(v -> load.run());
-        openRepo.setOnClickListener(v -> com.termux.shared.interact.ShareUtils.openUrl(this, "https://packages.termux.dev/"));
         dialog.show();
-        load.run();
-    }
+        render[0].run();
 
-    private void loadPackagesIntoDialog(android.widget.EditText search, android.widget.ProgressBar progress, android.widget.TextView status, android.widget.LinearLayout list) {
-        String q = search.getText() == null ? "" : search.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
-        progress.setVisibility(View.VISIBLE);
-        status.setText(R.string.m3_packages_loading);
-        list.removeAllViews();
         new Thread(() -> {
-            java.util.ArrayList<String> pkgs = new java.util.ArrayList<>();
-            java.io.File statusFile = new java.io.File(com.termux.shared.termux.TermuxConstants.TERMUX_PREFIX_DIR_PATH + "/var/lib/dpkg/status");
-            if (statusFile.isFile()) {
-                try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(statusFile))) {
-                    String line; String name = null; boolean installed = false;
-                    while ((line = br.readLine()) != null) {
-                        if (line.startsWith("Package: ")) { name = line.substring(9).trim(); installed = false; }
-                        else if (line.startsWith("Status: ") && line.contains("installed")) installed = true;
-                        else if (line.isEmpty()) { if (name != null && installed) pkgs.add(name); name = null; installed = false; }
-                    }
-                    if (name != null && installed) pkgs.add(name);
-                } catch (Exception ignored) {}
-            }
-            java.util.Collections.sort(pkgs);
-            java.util.ArrayList<String> filtered = new java.util.ArrayList<>();
-            for (String p : pkgs) if (q.isEmpty() || p.toLowerCase(java.util.Locale.ROOT).contains(q)) { filtered.add(p); if (filtered.size() >= 120) break; }
-            runOnUiThread(() -> {
-                if (isFinishing()) return;
-                progress.setVisibility(View.GONE);
-                status.setText(getString(R.string.m3_packages_installed_count, pkgs.size()));
-                if (filtered.isEmpty()) {
-                    TextView tv = new TextView(this);
-                    tv.setText(q.isEmpty() ? R.string.m3_packages_none : R.string.m3_packages_no_match);
-                    tv.setPadding(0, dp(8), 0, dp(8));
-                    list.addView(tv);
-                } else {
-                    for (String p : filtered) {
-                        TextView tv = new TextView(this);
-                        tv.setText(p);
-                        tv.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222));
-                        tv.setPadding(dp(12), dp(10), dp(12), dp(10));
-                        tv.setBackgroundResource(R.drawable.m3_menu_pill);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        lp.bottomMargin = dp(8);
-                        tv.setLayoutParams(lp);
-                        tv.setOnClickListener(v -> com.termux.shared.interact.ShareUtils.openUrl(this, "https://packages.termux.dev/search?term=" + android.net.Uri.encode(p)));
-                        list.addView(tv);
-                    }
-                }
-            });
+            java.util.ArrayList<String[]> inst = loadInstalledPackages();
+            java.util.ArrayList<String[]> avail = loadAvailablePackages();
+            synchronized (installed) { installed.clear(); installed.addAll(inst); installedNames.clear(); for (String[] e : inst) installedNames.add(e[0]); loaded[0]=true; }
+            synchronized (available) { available.clear(); available.addAll(avail); loaded[1]=true; }
+            runOnUiThread(render[0]);
         }).start();
     }
 
+    private void showPackageDetailDialog(String[] entry, boolean installedTab, boolean alreadyInstalled) {
+        String msg = "";
+        if (entry[1] != null && !entry[1].isEmpty()) msg += getString(R.string.m3_packages_version, entry[1]) + "
+
+";
+        if (entry[2] != null && !entry[2].isEmpty()) msg += entry[2] + "
+
+";
+        msg += getString(R.string.m3_packages_repo_info);
+        msg += "
+
+" + getString(installedTab ? R.string.m3_packages_cmd_uninstall : R.string.m3_packages_cmd_install, entry[0]);
+        com.google.android.material.dialog.MaterialAlertDialogBuilder b = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle(entry[0]).setMessage(msg)
+            .setNegativeButton(android.R.string.cancel, null);
+        if (installedTab) {
+            b.setPositiveButton(R.string.m3_packages_uninstall, (d,w)-> runPackageCommand("pkg uninstall " + entry[0] + "
+"));
+        } else {
+            b.setPositiveButton(alreadyInstalled ? R.string.m3_packages_reinstall : R.string.m3_packages_install, (d,w)-> runPackageCommand("pkg install -y " + entry[0] + "
+"));
+        }
+        androidx.appcompat.app.AlertDialog d = b.create();
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(d, true); } catch (Throwable ignored) {}
+        d.show();
+    }
+
+    private void runPackageCommand(String cmd) {
+        if (mTermuxTerminalSessionActivityClient == null) return;
+        TerminalSession session = getCurrentSession();
+        if (session != null) session.write(cmd);
+    }
+
+    private java.util.ArrayList<String[]> loadInstalledPackages() {
+        java.util.ArrayList<String[]> list = new java.util.ArrayList<>();
+        java.io.File f = new java.io.File(com.termux.shared.termux.TermuxConstants.TERMUX_PREFIX_DIR_PATH + "/var/lib/dpkg/status");
+        if (!f.exists()) return list;
+        String pkg=null, ver=null, desc=null, status=null;
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(f))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith("Package: ")) pkg = line.substring(9).trim();
+                else if (line.startsWith("Version: ")) ver = line.substring(9).trim();
+                else if (line.startsWith("Status: ")) status = line.substring(8).trim();
+                else if (line.startsWith("Description: ")) desc = line.substring(13).trim();
+                else if (line.isEmpty()) {
+                    if (pkg != null && "install ok installed".equals(status)) list.add(new String[]{pkg, ver, desc});
+                    pkg=ver=desc=status=null;
+                }
+            }
+            if (pkg != null && "install ok installed".equals(status)) list.add(new String[]{pkg, ver, desc});
+        } catch (Exception ignored) {}
+        java.util.Collections.sort(list, (a,b)-> a[0].compareToIgnoreCase(b[0]));
+        return list;
+    }
+
+    private java.util.ArrayList<String[]> loadAvailablePackages() {
+        java.util.ArrayList<String[]> list = new java.util.ArrayList<>();
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(getAssets().open("packages.txt")))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty() || line.contains("...") || line.contains(" ")) continue;
+                list.add(new String[]{line, null, null});
+            }
+        } catch (Exception ignored) {}
+        java.util.Collections.sort(list, (a,b)-> a[0].compareToIgnoreCase(b[0]));
+        return list;
+    }
 
 
 

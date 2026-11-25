@@ -14,130 +14,126 @@
 
 <resources>
 
-    <string name="msg_directory_absolute_path">%1$s dizininin mutlak yolu: "%2$s"</string>
+    <string name="msg_directory_absolute_path">Ruta absoluta del directorio %1$s: \"%2$s\"</string>
 
-    <string name="error_app_not_installed_or_disabled_warning">%1$s (%2$s) uygulaması yüklü değil veya devre dışı.</string>
 
-    <string name="error_get_package_context_failed_title">Paket bağlamı alınamadı</string>
 
-    <string name="error_get_package_context_failed_message">"%1$s" paket bağlamı alınamadı. Paket yüklü olmayabilir veya mevcut uygulamadan farklı APK imzasına sahip olabilir.</string>
+    <!-- PackageUtils -->
+    <string name="error_app_not_installed_or_disabled_warning">La app %1$s (%2$s) no está instalada o está deshabilitada.</string>
+    <string name="error_get_package_context_failed_title">No se pudo obtener el contexto del paquete</string>
+    <string name="error_get_package_context_failed_message">No se pudo obtener el contexto del paquete \"%1$s\".
+        Esto puede deberse a que el paquete de la app no está instalado o a que tiene una firma APK diferente a la de la app actual.</string>
+    <string name="error_get_package_context_failed_help_url_message">Consulta %1$s para obtener más detalles.</string>
+    <string name="error_get_component_state_failed">No se pudo obtener el estado del componente %1$s/%2$s</string>
+    <string name="error_enable_component_failed">No se pudo habilitar el componente %1$s/%2$s</string>
+    <string name="error_disable_component_failed">No se pudo habilitar el componente %1$s/%2$s</string>
 
-    <string name="error_get_package_context_failed_help_url_message">Ayrıntılar için %1$s sayfasına bakın.</string>
 
-    <string name="error_get_component_state_failed">%1$s/%2$s bileşen durumu alınamadı</string>
 
-    <string name="error_enable_component_failed">%1$s/%2$s bileşeni etkinleştirilemedi</string>
+    <!-- PermissionUtils -->
+    <string name="message_sudo_please_grant_permissions">Concede los permisos solicitados</string>
+    <string name="error_failed_to_request_permissions">No se pudieron solicitar los permisos con el código de solicitud %1$d: %2$s</string>
+    <string name="error_attempted_to_check_for_permissions_not_requested">Se intentó verificar permisos que no han sido solicitados en el manifiesto de la app: %1$s</string>
+    <string name="error_attempted_to_ask_for_permissions_not_requested">Se intentó pedir permisos que no han sido solicitados en el manifiesto de la app: %1$s</string>
+    <string name="error_has_not_requested_legacy_external_storage">El paquete \"%1$s\" tiene como objetivo targetSdkVersion %2$d y se ejecuta en android sdk %3$d, pero no ha establecido requestLegacyExternalStorage como true en el manifiesto de la app</string>
+    <string name="msg_requires_dump_and_package_usage_stats_permissions">Requiere el permiso `DUMP` y `PACKAGE_USAGE_STATS`</string>
+    <string name="error_display_over_other_apps_permission_not_granted">%1$s requiere
+        el permiso \"Mostrar sobre otras apps\" para iniciar actividades y servicios desde segundo plano en Android >= 10.
+        Concédelo desde Ajustes de Android -> Apps -> %1$s -> Avanzado -> Dibujar sobre otras apps.
+        El nombre del permiso puede variar según el dispositivo; por ejemplo, en Xiaomi se llama
+        \"Mostrar ventanas emergentes mientras se ejecuta en segundo plano\". Consulta https://dontkillmyapp.com
+        para problemas específicos de cada dispositivo.</string>
 
-    <string name="error_disable_component_failed">%1$s/%2$s bileşeni devre dışı bırakılamadı</string>
 
-    <string name="message_sudo_please_grant_permissions">Lütfen istenen izinleri verin</string>
 
-    <string name="error_failed_to_request_permissions">İzinler istek kodu %1$d ile istenemedi: %2$s</string>
+    <!-- TermuxPluginUtils -->
+    <string name="error_allow_external_apps_ungranted">%1$s requiere que la propiedad `allow-external-apps`
+        esté establecida como `true` en el archivo `%2$s`.</string>
 
-    <string name="error_attempted_to_check_for_permissions_not_requested">Manifestte istenmeyen izinler kontrol edilmeye çalışıldı: %1$s</string>
 
-    <string name="error_attempted_to_ask_for_permissions_not_requested">Manifestte istenmeyen izinler istenmeye çalışıldı: %1$s</string>
 
-    <string name="error_has_not_requested_legacy_external_storage">"%1$s" paketi targetSdkVersion %2$d hedefliyor ve Android SDK %3$d üzerinde çalışıyor ancak manifestte requestLegacyExternalStorage true değil</string>
+    <!-- ReportActivity -->
+    <string name="title_report_text">Texto del informe</string>
+    <string name="msg_report_truncated">**Informe truncado**\n\nEl informe es demasiado grande para verlo aquí.
+        Usa la opción `Guardar en archivo` del menú de opciones (los tres puntos en la esquina superior derecha) y ábrelo en una app externa de editor de texto.\n\n##\n\n</string>
 
-    <string name="msg_requires_dump_and_package_usage_stats_permissions">`DUMP` ve `PACKAGE_USAGE_STATS` izinlerini gerektirir</string>
 
-    <string name="error_display_over_other_apps_permission_not_granted">%1$s, Android >= 10 üzerinde arka plandan etkinlik ve hizmet başlatmak için "Diğer uygulamaların üzerinde göster" iznini gerektirir. Android Ayarları -> Uygulamalar -> %1$s -> Gelişmiş -> Diğer uygulamaların üzerinde göster yolundan verin. Bkz. https://dontkillmyapp.com.</string>
 
-    <string name="error_allow_external_apps_ungranted">%1$s, `%2$s` dosyasında `allow-external-apps` özelliğinin `true` olmasını gerektirir.</string>
+    <!-- ShareUtils -->
+    <string name="title_share_with">Compartir con</string>
+    <string name="title_open_url_with">Abrir URL con</string>
+    <string name="msg_storage_permission_not_granted">No se concedió el permiso de almacenamiento.</string>
+    <string name="msg_file_saved_successfully">El archivo %1$s se guardó correctamente en \"%2$s\"</string>
 
-    <string name="title_report_text">Rapor metni</string>
 
-    <string name="msg_report_truncated">**Rapor kırpıldı**
 
-Rapor burada görüntülenemeyecek kadar büyük. Seçenekler menüsünden `Dosyaya kaydet` seçeneğini kullanın ve harici bir metin düzenleyicide açın.
+    <!-- Shell -->
+    <string name="error_sending_sigkill_to_process">Enviando SIGKILL al proceso por solicitud del usuario o porque Android está cerrando el servicio de ejecución</string>
+    <string name="error_executable_unset">No se estableció el ejecutable \"%1$s\" para el comando de shell</string>
+    <string name="error_execution_cancelled">La ejecución se canceló porque el servicio de ejecución está siendo cerrado</string>
+    <string name="error_failed_to_execute_termux_session_command">No se pudo ejecutar el comando de sesión de termux \"%1$s\"</string>
+    <string name="error_failed_to_execute_app_shell_command">No se pudo ejecutar el comando de shell de la app \"%1$s\"</string>
+    <string name="error_exception_received_while_executing_termux_session_command">Se recibió una excepción al ejecutar el comando de sesión de termux \"%1$s\".\nExcepción: %2$s</string>
+    <string name="error_exception_received_while_executing_app_shell_command">Se recibió una excepción al ejecutar el comando de shell de la app \"%1$s\".\nExcepción: %2$s</string>
 
-##
 
-</string>
 
-    <string name="title_share_with">Şununla paylaş</string>
+    <!-- TermuxUtils -->
+    <string name="msg_report_issue">
+        Si deseas informar de este problema, copia su texto desde el menú de opciones (los tres puntos en la esquina superior derecha) y publica
+        un informe en uno de los siguientes enlaces.
+        \n\nSi vas a publicar un informe de fallo de la app Termux, incluye detalles sobre qué estabas haciendo cuando se produjo el fallo
+        y cómo reproducirlo, si es posible.
+        \n\nSi vas a publicar un informe en GitHub, hazlo en el repositorio al que corresponda el informe.
+        Los informes abiertos o los correos enviados con **capturas parciales** en lugar del texto copiado o de un archivo de este informe
+        **probablemente se cerrarán o eliminarán automáticamente**. Puedes eliminar opcionalmente cualquier información específica del dispositivo
+        que consideres privada, que no quieras compartir o que no sea relevante para el problema.
+        \n\nNo ofrecemos soporte para herramientas o scripts relacionados con hacking. Cualquier pregunta sobre ellos por correo electrónico,
+        en GitHub u otros foros oficiales de la comunidad de termux **probablemente se cerrará o eliminará automáticamente** y puede
+        dar lugar incluso a una suspensión **temporal o permanente**. Consulta %1$s/wiki/Hacking para obtener más detalles.</string>
 
-    <string name="title_open_url_with">URL’yi şununla aç</string>
+    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME; es requerido por la app %1$s para ejecutar comandos de termux.</string>
+    <string name="error_termux_app_package_context_not_accessible">La app &TERMUX_APP_NAME; (contexto del paquete) no está accesible.</string>
+    <string name="error_termux_prefix_dir_path_not_accessible">La app %1$s no puede acceder al directorio $PREFIX de la app &TERMUX_APP_NAME;.
+        Esto puede deberse a que no has instalado o configurado la app &TERMUX_APP_NAME;, o a que la app &TERMUX_APP_NAME; y la app %1$s
+        tienen firmas APK diferentes porque instalaste ambas apps desde fuentes distintas.
+        También puede deberse a que el directorio $PREFIX de &TERMUX_APP_NAME; \"&TERMUX_PREFIX_DIR_PATH;\" no existe o no tiene permisos
+        de lectura, escritura y ejecución.</string>
 
-    <string name="msg_storage_permission_not_granted">Depolama izni verilmedi.</string>
 
-    <string name="msg_file_saved_successfully">%1$s dosyası "%2$s" konumuna başarıyla kaydedildi</string>
 
-    <string name="error_sending_sigkill_to_process">Kullanıcı isteğiyle veya Android yürütme hizmetini durdurduğu için işleme SIGKILL gönderiliyor</string>
+    <!-- Miscellaneous -->
+    <string name="action_yes">Sí</string>
+    <string name="action_no">No</string>
+    <string name="action_copy">Copiar</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_save_to_file">Guardar en archivo</string>
 
-    <string name="error_executable_unset">Shell komutu için "%1$s" yürütülebilir dosyası ayarlanmadı</string>
+    <string name="msg_storage_permission_granted_on_request">El usuario concedió el permiso de almacenamiento cuando se le solicitó</string>
+    <string name="msg_storage_permission_not_granted_on_request">El usuario no concedió el permiso de almacenamiento cuando se le solicitó</string>
 
-    <string name="error_execution_cancelled">Yürütme hizmeti durdurulduğu için yürütme iptal edildi</string>
 
-    <string name="error_failed_to_execute_termux_session_command">Termux oturum komutu "%1$s" çalıştırılamadı</string>
 
-    <string name="error_failed_to_execute_app_shell_command">Uygulama shell komutu "%1$s" çalıştırılamadı</string>
+    <!-- Launcher Icons -->
+    <string name="action_enable_launcher_icon">Habilitar ícono de lanzador</string>
+    <string name="action_disable_launcher_icon">Deshabilitar ícono de lanzador</string>
+    <string name="msg_enabling_launcher_icon">Habilitando el ícono de lanzador de la app %1$s</string>
+    <string name="msg_disabling_launcher_icon">Deshabilitando el ícono de lanzador de la app %1$s</string>
+    <string name="setting_launcher_icon_title">Ícono de lanzador habilitado</string>
+    <string name="setting_launcher_icon_enabled_off">El ícono de lanzador estará deshabilitado.</string>
+    <string name="setting_launcher_icon_enabled_on">El ícono de lanzador estará habilitado. (Predeterminado)</string>
 
-    <string name="error_exception_received_while_executing_termux_session_command">Termux oturum komutu "%1$s" çalıştırılırken istisna alındı.
-İstisna: %2$s</string>
 
-    <string name="error_exception_received_while_executing_app_shell_command">Uygulama shell komutu "%1$s" çalıştırılırken istisna alındı.
-İstisna: %2$s</string>
 
-    <string name="msg_report_issue">Bu sorunu bildirmek istiyorsanız, metni seçenekler menüsünden (sağ üstte üç nokta) kopyalayın ve aşağıdaki bağlantılardan birine rapor gönderin.
-
-Termux çökme raporuysa, ne yaptığınızı ve nasıl yeniden üretileceğini ekleyin.
-
-GitHub’da uygun depoya gönderin. Metin/dosya yerine **kısmi ekran görüntüsü** içeren raporlar **muhtemelen otomatik kapatılır/silinir**. İlgisiz özel cihaz bilgilerini kaldırabilirsiniz.
-
-Hack araçları/betikleri için destek vermiyoruz. Bunlarla ilgili sorular **muhtemelen otomatik kapatılır/silinir** ve **geçici veya kalıcı** yasaklamaya neden olabilir. Bkz. %1$s/wiki/Hacking.</string>
-
-    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME;, %1$s uygulamasının termux komutlarını çalıştırması için gereklidir.</string>
-
-    <string name="error_termux_app_package_context_not_accessible">&TERMUX_APP_NAME; uygulaması (paket bağlamı) erişilebilir değil.</string>
-
-    <string name="error_termux_prefix_dir_path_not_accessible">%1$s uygulaması &TERMUX_APP_NAME; $PREFIX dizinine erişemiyor. Kurulum/yapılandırma eksik, APK imzaları farklı veya "&TERMUX_PREFIX_DIR_PATH;" dizini yok/izinleri yetersiz olabilir.</string>
-
-    <string name="action_yes">Evet</string>
-
-    <string name="action_no">Hayır</string>
-
-    <string name="action_copy">Kopyala</string>
-
-    <string name="action_share">Paylaş</string>
-
-    <string name="action_cancel">İptal</string>
-
-    <string name="action_save_to_file">Dosyaya kaydet</string>
-
-    <string name="msg_storage_permission_granted_on_request">Depolama izni istendiğinde kullanıcı tarafından verildi</string>
-
-    <string name="msg_storage_permission_not_granted_on_request">Depolama izni istendiğinde kullanıcı tarafından verilmedi</string>
-
-    <string name="action_enable_launcher_icon">Başlatıcı simgesini etkinleştir</string>
-
-    <string name="action_disable_launcher_icon">Başlatıcı simgesini devre dışı bırak</string>
-
-    <string name="msg_enabling_launcher_icon">%1$s uygulamasının başlatıcı simgesi etkinleştiriliyor</string>
-
-    <string name="msg_disabling_launcher_icon">%1$s uygulamasının başlatıcı simgesi devre dışı bırakılıyor</string>
-
-    <string name="setting_launcher_icon_title">Başlatıcı simgesi etkin</string>
-
-    <string name="setting_launcher_icon_enabled_off">Başlatıcı simgesi devre dışı bırakılacak.</string>
-
-    <string name="setting_launcher_icon_enabled_on">Başlatıcı simgesi etkinleştirilecek. (Varsayılan)</string>
-
-    <string name="log_level_title">Günlük seviyesi</string>
-
-    <string name="log_level_off">Kapalı</string>
-
+    <!-- Log Level -->
+    <string name="log_level_title">Nivel de registro</string>
+    <string name="log_level_off">Desactivado</string>
     <string name="log_level_normal">Normal</string>
+    <string name="log_level_debug">Depuración</string>
+    <string name="log_level_verbose">Detallado</string>
+    <string name="log_level_unknown">*Desconocido*</string>
+    <string name="log_level_value">Nivel de registro de logcat establecido en \"%1$s\"</string>
 
-    <string name="log_level_debug">Hata ayıklama</string>
-
-    <string name="log_level_verbose">Ayrıntılı</string>
-
-    <string name="log_level_unknown">*Bilinmiyor*</string>
-
-    <string name="log_level_value">Logcat günlük seviyesi "%1$s" olarak ayarlandı</string>
-
-    <string name="title_text_io_activity">Metin girişi</string>
-
+    <string name="title_text_io_activity">Entrada de texto</string>
 </resources>

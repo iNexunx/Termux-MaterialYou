@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="m3_appearance_title">Apariencia (Material You)</string>
     <string name="m3_appearance_summary">Acento, idioma, fuente y tema de consola</string>
@@ -116,4 +116,5 @@
     <string name="m3_packages_no_match">No hay coincidencias.</string>
     <string name="m3_session_running">En ejecución</string>
     <string name="m3_session_switch">Cambiar a sesión</string>
-</resources>
+<string name="m3_packages_tab_installed">Instalados</string><string name="m3_packages_tab_available">Disponibles</string><string name="m3_packages_count">%1$d de %2$d paquetes</string><string name="m3_packages_installed">Instalado</string><string name="m3_packages_installed_repo">Instalado · Repo Termux</string><string name="m3_packages_repo">Repo Termux</string><string name="m3_packages_version">Versión: %1$s</string><string name="m3_packages_repo_info">Repositorio: Repositorio de paquetes de Termux
+pkg.termux.dev</string><string name="m3_packages_cmd_install">Comando: pkg install %1$s</string><string name="m3_packages_cmd_uninstall">Comando: pkg uninstall %1$s</string><string name="m3_packages_install">Instalar</string><string name="m3_packages_reinstall">Reinstalar</string><string name="m3_packages_uninstall">Desinstalar</string></resources>
