@@ -244,8 +244,6 @@ public class SharedProperties {
                 properties.load(new InputStreamReader(in, StandardCharsets.UTF_8));
             }
         } catch (Exception e) {
-            if (context != null)
-                Toast.makeText(context, "Could not open properties file \"" + propertiesFile.getAbsolutePath() + "\": " + e.getMessage(), Toast.LENGTH_LONG).show();
             Logger.logStackTraceWithMessage(LOG_TAG, "Error loading properties file \"" + propertiesFile.getAbsolutePath() + "\"", e);
             return null;
         }

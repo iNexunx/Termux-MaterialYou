@@ -73,7 +73,11 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
                 String current = PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(M3ThemeHelper.PREF_LANGUAGE, "system");
                 if (val.equals(current)) return false;
                 PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString(M3ThemeHelper.PREF_LANGUAGE, val).apply();
-                if (getActivity() != null) { getActivity().getWindow().setWindowAnimations(0); getActivity().recreate(); }
+                if (getActivity() != null) {
+                android.view.Window w = getActivity().getWindow(); if (w!=null){w.setWindowAnimations(0); android.graphics.drawable.Drawable bg=w.getDecorView().getBackground(); if(bg!=null) w.setBackgroundDrawable(bg);} 
+                getActivity().recreate();
+                try { getActivity().overridePendingTransition(0,0);} catch(Throwable ignored){}
+            }
                 return false;
             }
             if ("terminal_font".equals(key) || "terminal_color_scheme".equals(key)) {
@@ -98,7 +102,7 @@ public class M3AppearancePreferencesFragment extends M3PreferenceFragment {
             M3ThemeHelper.applyMode(a);
         }
         M3ThemeHelper.apply(a);
-        a.getWindow().setWindowAnimations(0);
-        a.recreate();
+        android.view.Window w=a.getWindow(); if(w!=null){w.setWindowAnimations(0); android.graphics.drawable.Drawable bg=w.getDecorView().getBackground(); if(bg!=null) w.setBackgroundDrawable(bg);} 
+        a.recreate(); try{a.overridePendingTransition(0,0);}catch(Throwable ignored){}
     }
 }

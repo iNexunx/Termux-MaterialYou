@@ -960,8 +960,18 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         mAppliedM3Accent = accent; mAppliedM3Mode = mode; mAppliedM3Language = lang;
         if (forceRecreate || (!first && changed)) {
             M3ThemeHelper.applyMode(this);
-            getWindow().setWindowAnimations(0);
+            // Seamless apply: keep window background, no transition flicker.
+            try {
+                android.view.Window w = getWindow();
+                if (w != null) {
+                    w.setWindowAnimations(0);
+                    android.graphics.drawable.Drawable bg = w.getDecorView().getBackground();
+                    if (bg != null) w.setBackgroundDrawable(bg);
+                }
+                overridePendingTransition(0, 0);
+            } catch (Throwable ignored) {}
             recreate();
+            try { overridePendingTransition(0, 0); } catch (Throwable ignored) {}
             return;
         }
         applyExtraKeysFloatingMode();
