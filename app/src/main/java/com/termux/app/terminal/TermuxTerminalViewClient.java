@@ -727,15 +727,8 @@ public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
             item.setOnLongClickListener(v -> { dialog.dismiss(); ShareUtils.openUrl(mActivity, url); return true; });
             items.addView(item);
         }
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
         dialog.show();
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            int margin = (int) (8 * mActivity.getResources().getDisplayMetrics().density);
-            dialog.getWindow().setLayout(mActivity.getResources().getDisplayMetrics().widthPixels - margin * 2, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
-        }
-        return;
-
-
     }
 
     public void reportIssueFromTranscript() {
