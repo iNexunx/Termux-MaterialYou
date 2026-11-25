@@ -894,25 +894,17 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     private void showPackageDetailDialog(String[] entry, boolean installedTab, boolean alreadyInstalled) {
         String msg = "";
-        if (entry[1] != null && !entry[1].isEmpty()) msg += getString(R.string.m3_packages_version, entry[1]) + "
-
-";
-        if (entry[2] != null && !entry[2].isEmpty()) msg += entry[2] + "
-
-";
+        if (entry[1] != null && !entry[1].isEmpty()) msg += getString(R.string.m3_packages_version, entry[1]) + "\n\n";
+        if (entry[2] != null && !entry[2].isEmpty()) msg += entry[2] + "\n\n";
         msg += getString(R.string.m3_packages_repo_info);
-        msg += "
-
-" + getString(installedTab ? R.string.m3_packages_cmd_uninstall : R.string.m3_packages_cmd_install, entry[0]);
+        msg += "\n\n" + getString(installedTab ? R.string.m3_packages_cmd_uninstall : R.string.m3_packages_cmd_install, entry[0]);
         com.google.android.material.dialog.MaterialAlertDialogBuilder b = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
             .setTitle(entry[0]).setMessage(msg)
             .setNegativeButton(android.R.string.cancel, null);
         if (installedTab) {
-            b.setPositiveButton(R.string.m3_packages_uninstall, (d,w)-> runPackageCommand("pkg uninstall " + entry[0] + "
-"));
+            b.setPositiveButton(R.string.m3_packages_uninstall, (d, w) -> runPackageCommand("pkg uninstall " + entry[0] + "\n"));
         } else {
-            b.setPositiveButton(alreadyInstalled ? R.string.m3_packages_reinstall : R.string.m3_packages_install, (d,w)-> runPackageCommand("pkg install -y " + entry[0] + "
-"));
+            b.setPositiveButton(alreadyInstalled ? R.string.m3_packages_reinstall : R.string.m3_packages_install, (d, w) -> runPackageCommand("pkg install -y " + entry[0] + "\n"));
         }
         androidx.appcompat.app.AlertDialog d = b.create();
         try { com.termux.shared.view.M3DialogUtils.applyM3Window(d, true); } catch (Throwable ignored) {}
