@@ -9,22 +9,22 @@
     <string name="m3_sessions_title">Sitzungen</string>
     <string name="m3_theme_toggle">Design wechseln</string>
     <string-array name="m3_accent_entries">
-        <item>Predeterminado (sistema)</item>
-        <item>Azul</item>
-        <item>Azul claro</item>
-        <item>Cian</item>
-        <item>Verde azulado</item>
-        <item>Verde</item>
-        <item>Amarillo</item>
-        <item>Ámbar</item>
-        <item>Naranja</item>
-        <item>Rojo</item>
+        <item>Systemstandard</item>
+        <item>Blau</item>
+        <item>Hellblau</item>
+        <item>Cyan</item>
+        <item>Türkis</item>
+        <item>Grün</item>
+        <item>Gelb</item>
+        <item>Bernstein</item>
+        <item>Orange</item>
+        <item>Rot</item>
         <item>Rosa</item>
-        <item>Morado</item>
-        <item>Lavanda</item>
-        <item>Índigo</item>
-        <item>Marrón</item>
-        <item>Gris</item>
+        <item>Lila</item>
+        <item>Lavendel</item>
+        <item>Indigo</item>
+        <item>Braun</item>
+        <item>Grau</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
         <item>default</item>

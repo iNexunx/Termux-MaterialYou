@@ -9,22 +9,22 @@
     <string name="m3_sessions_title">Сессии</string>
     <string name="m3_theme_toggle">Переключить тему</string>
     <string-array name="m3_accent_entries">
-        <item>Predeterminado (sistema)</item>
-        <item>Azul</item>
-        <item>Azul claro</item>
-        <item>Cian</item>
-        <item>Verde azulado</item>
-        <item>Verde</item>
-        <item>Amarillo</item>
-        <item>Ámbar</item>
-        <item>Naranja</item>
-        <item>Rojo</item>
-        <item>Rosa</item>
-        <item>Morado</item>
-        <item>Lavanda</item>
-        <item>Índigo</item>
-        <item>Marrón</item>
-        <item>Gris</item>
+        <item>По умолчанию (система)</item>
+        <item>Синий</item>
+        <item>Голубой</item>
+        <item>Бирюзовый</item>
+        <item>Сине-зелёный</item>
+        <item>Зелёный</item>
+        <item>Жёлтый</item>
+        <item>Янтарный</item>
+        <item>Оранжевый</item>
+        <item>Красный</item>
+        <item>Розовый</item>
+        <item>Фиолетовый</item>
+        <item>Лавандовый</item>
+        <item>Индиго</item>
+        <item>Коричневый</item>
+        <item>Серый</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
         <item>default</item>

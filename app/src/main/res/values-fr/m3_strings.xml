@@ -9,21 +9,21 @@
     <string name="m3_sessions_title">Sessions</string>
     <string name="m3_theme_toggle">Changer de thème</string>
     <string-array name="m3_accent_entries">
-        <item>Predeterminado (sistema)</item>
-        <item>Azul</item>
-        <item>Azul claro</item>
-        <item>Cian</item>
-        <item>Verde azulado</item>
-        <item>Verde</item>
-        <item>Amarillo</item>
-        <item>Ámbar</item>
-        <item>Naranja</item>
-        <item>Rojo</item>
-        <item>Rosa</item>
-        <item>Morado</item>
-        <item>Lavanda</item>
-        <item>Índigo</item>
-        <item>Marrón</item>
+        <item>Par défaut (système)</item>
+        <item>Bleu</item>
+        <item>Bleu clair</item>
+        <item>Cyan</item>
+        <item>Sarcelle</item>
+        <item>Vert</item>
+        <item>Jaune</item>
+        <item>Ambre</item>
+        <item>Orange</item>
+        <item>Rouge</item>
+        <item>Rose</item>
+        <item>Violet</item>
+        <item>Lavande</item>
+        <item>Indigo</item>
+        <item>Marron</item>
         <item>Gris</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">

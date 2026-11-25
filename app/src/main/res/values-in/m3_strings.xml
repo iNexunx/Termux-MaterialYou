@@ -9,22 +9,22 @@
     <string name="m3_sessions_title">Sesi</string>
     <string name="m3_theme_toggle">Ubah tema</string>
     <string-array name="m3_accent_entries">
-        <item>Predeterminado (sistema)</item>
-        <item>Azul</item>
-        <item>Azul claro</item>
-        <item>Cian</item>
-        <item>Verde azulado</item>
-        <item>Verde</item>
-        <item>Amarillo</item>
-        <item>Ámbar</item>
-        <item>Naranja</item>
-        <item>Rojo</item>
-        <item>Rosa</item>
-        <item>Morado</item>
-        <item>Lavanda</item>
-        <item>Índigo</item>
-        <item>Marrón</item>
-        <item>Gris</item>
+        <item>Bawaan sistem</item>
+        <item>Biru</item>
+        <item>Biru muda</item>
+        <item>Sian</item>
+        <item>Teal</item>
+        <item>Hijau</item>
+        <item>Kuning</item>
+        <item>Amber</item>
+        <item>Oranye</item>
+        <item>Merah</item>
+        <item>Merah muda</item>
+        <item>Ungu</item>
+        <item>Lavender</item>
+        <item>Nila</item>
+        <item>Cokelat</item>
+        <item>Abu-abu</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
         <item>default</item>

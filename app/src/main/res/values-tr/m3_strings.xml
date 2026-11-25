@@ -9,22 +9,22 @@
     <string name="m3_sessions_title">Oturumlar</string>
     <string name="m3_theme_toggle">Temayı değiştir</string>
     <string-array name="m3_accent_entries">
-        <item>Predeterminado (sistema)</item>
-        <item>Azul</item>
-        <item>Azul claro</item>
-        <item>Cian</item>
-        <item>Verde azulado</item>
-        <item>Verde</item>
-        <item>Amarillo</item>
-        <item>Ámbar</item>
-        <item>Naranja</item>
-        <item>Rojo</item>
-        <item>Rosa</item>
-        <item>Morado</item>
-        <item>Lavanda</item>
-        <item>Índigo</item>
-        <item>Marrón</item>
-        <item>Gris</item>
+        <item>Sistem varsayılanı</item>
+        <item>Mavi</item>
+        <item>Açık mavi</item>
+        <item>Camgöbeği</item>
+        <item>Deniz mavisi</item>
+        <item>Yeşil</item>
+        <item>Sarı</item>
+        <item>Kehribar</item>
+        <item>Turuncu</item>
+        <item>Kırmızı</item>
+        <item>Pembe</item>
+        <item>Mor</item>
+        <item>Lavanta</item>
+        <item>Çivit</item>
+        <item>Kahverengi</item>
+        <item>Gri</item>
     </string-array>
     <string-array name="m3_accent_values" translatable="false">
         <item>default</item>
