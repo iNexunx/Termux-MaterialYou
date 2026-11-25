@@ -27,15 +27,15 @@
         en ninguna otra ruta que no sea:\n%1$s.</string>
     <string name="action_new_session_multiline">Nueva
 Sesion</string>
-    <string name="action_new_session">Nueva sesión</string>
-    <string name="action_new_session_failsafe">Modo seguro</string>
+    <string name="action_new_session">Yeni oturum</string>
+    <string name="action_new_session_failsafe">Güvenli mod</string>
     <string name="title_max_terminals_reached">Se alcanzó el máximo de terminales</string>
     <string name="msg_max_terminals_reached">Cierra las existentes antes de crear una nueva.</string>
-    <string name="title_rename_session">Definir nombre de sesión</string>
-    <string name="action_rename_session_confirm">Confirmar</string>
-    <string name="title_create_named_session">Nueva sesión con nombre</string>
-    <string name="action_create_named_session_confirm">Confirma</string>
-    <string name="action_toggle_soft_keyboard">Teclado</string>
+    <string name="title_rename_session">Oturum adını ayarla</string>
+    <string name="action_rename_session_confirm">Ayarla</string>
+    <string name="title_create_named_session">Adlı yeni oturum</string>
+    <string name="action_create_named_session_confirm">Oluştur</string>
+    <string name="action_toggle_soft_keyboard">Klavye</string>
     <string name="msg_enabling_terminal_toolbar">Habilitando la barra de herramientas de la terminal</string>
     <string name="msg_disabling_terminal_toolbar">Deshabilitando la barra de herramientas de la terminal</string>
     <string name="action_select_url">Seleccionar URL</string>
@@ -64,9 +64,9 @@ Sesion</string>
     <string name="msg_add_termux_debug_info">¿Agregar información de depuración de termux al informe?</string>
     <string name="error_styling_not_installed">La app complemento Termux:Styling no está instalada.</string>
     <string name="action_styling_install">Instalar</string>
-    <string name="notification_action_exit">Salir</string>
-    <string name="notification_action_wake_lock">Adquirir wakelock</string>
-    <string name="notification_action_wake_unlock">Liberar wakelock</string>
+    <string name="notification_action_exit">Çıkış</string>
+    <string name="notification_action_wake_lock">Wakelock al</string>
+    <string name="notification_action_wake_unlock">Wakelock bırak</string>
     <string name="error_display_over_other_apps_permission_not_granted_to_start_terminal">Termux requiere
         el permiso \"Mostrar sobre otras apps\" para iniciar sesiones de terminal desde segundo plano en Android &gt;= 10.
         Concédelo desde Ajustes -&gt; Apps -&gt; Termux -&gt; Avanzado</string>
@@ -83,9 +83,9 @@ Sesion</string>
     <string name="action_file_received_open_directory">Abrir directorio</string>
     <string name="error_termux_service_start_failed_general">No se pudo iniciar TermuxService. Revisa logcat para ver el mensaje de excepción.</string>
     <string name="error_termux_service_start_failed_bg">No se pudo iniciar TermuxService mientras la app estaba en segundo plano debido a las restricciones de segundo plano de Android.</string>
-    <string name="title_activity_termux_settings">Ajustes de Termux</string>
+    <string name="title_activity_termux_settings">Termux Ayarları</string>
     <string name="termux_preferences_title">Termux</string>
-    <string name="termux_preferences_summary">Preferencias de la app Termux</string>
+    <string name="termux_preferences_summary">Termux uygulama tercihleri</string>
     <string name="termux_debugging_preferences_title">Depuración</string>
     <string name="termux_debugging_preferences_summary">Preferencias de depuración</string>
     <string name="termux_logging_header">Registro</string>
@@ -111,8 +111,8 @@ Sesion</string>
                     hay un teclado físico conectado. (Predeterminado)</string>
     <string name="termux_soft_keyboard_enabled_only_if_no_hardware_on">El teclado virtual estará habilitado solo si
                     no hay un teclado físico conectado.</string>
-    <string name="termux_terminal_view_preferences_title">Vista de terminal</string>
-    <string name="termux_terminal_view_preferences_summary">Preferencias de la vista de terminal</string>
+    <string name="termux_terminal_view_preferences_title">Terminal görünümü</string>
+    <string name="termux_terminal_view_preferences_summary">Terminal görünümü tercihleri</string>
     <string name="termux_terminal_view_view_header">Vista</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_title">Ajuste del margen de la terminal</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_off">El ajuste del margen de la terminal estará deshabilitado.</string>
@@ -131,6 +131,6 @@ Sesion</string>
     <string name="termux_tasker_preferences_summary">Preferencias de la app Termux:Tasker</string>
     <string name="termux_widget_preferences_title">Termux:Widget</string>
     <string name="termux_widget_preferences_summary">Preferencias de la app Termux:Widget</string>
-    <string name="about_preference_title">Acerca de</string>
-    <string name="donate_preference_title">Donar</string>
+    <string name="about_preference_title">Hakkında</string>
+    <string name="donate_preference_title">Bağış yap</string>
 </resources>
