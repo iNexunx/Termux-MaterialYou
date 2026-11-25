@@ -353,6 +353,11 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         if (mIsInvalidState) return;
 
+        // Ensure language/accent/mode changes apply when returning from settings.
+        applyM3ThemeIfChanged(false);
+        refreshSessionStrip();
+        if (mTermuxService != null) try { mTermuxService.updateNotificationFromActivity(); } catch (Throwable ignored) {}
+
         if (mTermuxTerminalSessionActivityClient != null)
             mTermuxTerminalSessionActivityClient.onResume();
 

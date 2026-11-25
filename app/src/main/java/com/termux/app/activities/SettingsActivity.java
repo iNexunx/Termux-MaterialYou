@@ -35,10 +35,18 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
         super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(newBase));
     }
 
+    private String mAppliedM3Accent;
+    private String mAppliedM3Mode;
+    private String mAppliedM3Language;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         M3ThemeHelper.apply(this);
         super.onCreate(savedInstanceState);
+        android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        mAppliedM3Accent = p.getString(M3ThemeHelper.PREF_ACCENT, "default");
+        mAppliedM3Mode = p.getString(M3ThemeHelper.PREF_MODE, "system");
+        mAppliedM3Language = p.getString(M3ThemeHelper.PREF_LANGUAGE, "system");
 
         setContentView(R.layout.activity_settings);
         if (savedInstanceState == null) {
@@ -62,6 +70,28 @@ public class SettingsActivity extends AppCompatActivity implements M3ThemeHelper
             @Override public void onFragmentResumed(@NonNull androidx.fragment.app.FragmentManager fm, @NonNull androidx.fragment.app.Fragment f) { updateSettingsTitle(); }
         }, false);
         updateSettingsTitle();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        String accent = p.getString(M3ThemeHelper.PREF_ACCENT, "default");
+        String mode = p.getString(M3ThemeHelper.PREF_MODE, "system");
+        String lang = p.getString(M3ThemeHelper.PREF_LANGUAGE, "system");
+        boolean changed = (mAppliedM3Accent != null && !accent.equals(mAppliedM3Accent))
+            || (mAppliedM3Mode != null && !mode.equals(mAppliedM3Mode))
+            || (mAppliedM3Language != null && !lang.equals(mAppliedM3Language));
+        mAppliedM3Accent = accent; mAppliedM3Mode = mode; mAppliedM3Language = lang;
+        if (changed) {
+            try {
+                android.view.Window w = getWindow();
+                if (w != null) { w.setWindowAnimations(0); android.graphics.drawable.Drawable bg = w.getDecorView().getBackground(); if (bg != null) w.setBackgroundDrawable(bg); }
+                overridePendingTransition(0, 0);
+            } catch (Throwable ignored) {}
+            recreate();
+            try { overridePendingTransition(0, 0); } catch (Throwable ignored) {}
+        }
     }
 
     private void updateSettingsTitle() {

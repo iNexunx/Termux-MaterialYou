@@ -35,9 +35,29 @@ import com.termux.shared.shell.command.ExecutionCommand.Runner;
  */
 public class RunCommandService extends Service {
 
+    private android.content.res.Resources mLocalizedResources;
+    private android.content.res.Configuration mLocalizedConfig;
+
     @Override
     protected void attachBaseContext(android.content.Context base) {
         super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(base));
+    }
+
+    private void updateLocalizedResourcesIfNeeded() {
+        try {
+            android.content.Context lc = com.termux.app.theme.M3ThemeHelper.wrapContext(getBaseContext() != null ? getBaseContext() : this);
+            android.content.res.Configuration c = lc.getResources().getConfiguration();
+            if (mLocalizedResources == null || mLocalizedConfig == null || !mLocalizedConfig.equals(c)) {
+                mLocalizedResources = lc.getResources();
+                mLocalizedConfig = new android.content.res.Configuration(c);
+            }
+        } catch (Throwable ignored) {}
+    }
+
+    @Override
+    public android.content.res.Resources getResources() {
+        updateLocalizedResourcesIfNeeded();
+        return mLocalizedResources != null ? mLocalizedResources : super.getResources();
     }
 
 
@@ -72,14 +92,15 @@ public class RunCommandService extends Service {
         Logger.logVerboseExtended(LOG_TAG, "Intent Received:\n" + IntentUtils.getIntentString(intent));
 
         ExecutionCommand executionCommand = new ExecutionCommand();
-        executionCommand.pluginAPIHelp = this.getString(R.string.error_run_command_service_api_help, RUN_COMMAND_SERVICE.RUN_COMMAND_API_HELP_URL);
+        android.content.Context lc = com.termux.app.theme.M3ThemeHelper.wrapContext(this);
+        executionCommand.pluginAPIHelp = lc.getString(R.string.error_run_command_service_api_help, RUN_COMMAND_SERVICE.RUN_COMMAND_API_HELP_URL);
 
         Error error;
         String errmsg;
 
         // If invalid action passed, then just return
         if (!RUN_COMMAND_SERVICE.ACTION_RUN_COMMAND.equals(intent.getAction())) {
-            errmsg = this.getString(R.string.error_run_command_service_invalid_intent_action, intent.getAction());
+            errmsg = lc.getString(R.string.error_run_command_service_invalid_intent_action, intent.getAction());
             executionCommand.setStateFailed(Errno.ERRNO_FAILED.getCode(), errmsg);
             TermuxPluginUtils.processPluginExecutionCommandError(this, LOG_TAG, executionCommand, false);
             return stopService();
@@ -114,7 +135,7 @@ public class RunCommandService extends Service {
         executionCommand.runner = IntentUtils.getStringExtraIfSet(intent, RUN_COMMAND_SERVICE.EXTRA_RUNNER,
             (intent.getBooleanExtra(RUN_COMMAND_SERVICE.EXTRA_BACKGROUND, false) ? Runner.APP_SHELL.getName() : Runner.TERMINAL_SESSION.getName()));
         if (Runner.runnerOf(executionCommand.runner) == null) {
-            errmsg = this.getString(R.string.error_run_command_service_invalid_execution_command_runner, executionCommand.runner);
+            errmsg = lc.getString(R.string.error_run_command_service_invalid_execution_command_runner, executionCommand.runner);
             executionCommand.setStateFailed(Errno.ERRNO_FAILED.getCode(), errmsg);
             TermuxPluginUtils.processPluginExecutionCommandError(this, LOG_TAG, executionCommand, false);
             return stopService();
@@ -154,7 +175,7 @@ public class RunCommandService extends Service {
 
         // If executable is null or empty, then exit here instead of getting canonical path which would expand to "/"
         if (executionCommand.executable == null || executionCommand.executable.isEmpty()) {
-            errmsg  = this.getString(R.string.error_run_command_service_mandatory_extra_missing, RUN_COMMAND_SERVICE.EXTRA_COMMAND_PATH);
+            errmsg  = lc.getString(R.string.error_run_command_service_mandatory_extra_missing, RUN_COMMAND_SERVICE.EXTRA_COMMAND_PATH);
             executionCommand.setStateFailed(Errno.ERRNO_FAILED.getCode(), errmsg);
             TermuxPluginUtils.processPluginExecutionCommandError(this, LOG_TAG, executionCommand, false);
             return stopService();

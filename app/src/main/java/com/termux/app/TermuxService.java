@@ -67,9 +67,29 @@ import java.util.List;
  */
 public final class TermuxService extends Service implements AppShell.AppShellClient, TermuxSession.TermuxSessionClient {
 
+    private android.content.res.Resources mLocalizedResources;
+    private android.content.res.Configuration mLocalizedConfig;
+
     @Override
     protected void attachBaseContext(android.content.Context base) {
         super.attachBaseContext(com.termux.app.theme.M3ThemeHelper.wrapContext(base));
+    }
+
+    private void updateLocalizedResourcesIfNeeded() {
+        try {
+            android.content.Context lc = com.termux.app.theme.M3ThemeHelper.wrapContext(getBaseContext() != null ? getBaseContext() : this);
+            android.content.res.Configuration c = lc.getResources().getConfiguration();
+            if (mLocalizedResources == null || mLocalizedConfig == null || !mLocalizedConfig.equals(c)) {
+                mLocalizedResources = lc.getResources();
+                mLocalizedConfig = new android.content.res.Configuration(c);
+            }
+        } catch (Throwable ignored) {}
+    }
+
+    @Override
+    public android.content.res.Resources getResources() {
+        updateLocalizedResourcesIfNeeded();
+        return mLocalizedResources != null ? mLocalizedResources : super.getResources();
     }
 
 
@@ -377,7 +397,7 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         executionCommand.runner = IntentUtils.getStringExtraIfSet(intent, TERMUX_SERVICE.EXTRA_RUNNER,
             (intent.getBooleanExtra(TERMUX_SERVICE.EXTRA_BACKGROUND, false) ? Runner.APP_SHELL.getName() : Runner.TERMINAL_SESSION.getName()));
         if (Runner.runnerOf(executionCommand.runner) == null) {
-            String errmsg = this.getString(R.string.error_termux_service_invalid_execution_command_runner, executionCommand.runner);
+            String errmsg = com.termux.app.theme.M3ThemeHelper.wrapContext(this).getString(R.string.error_termux_service_invalid_execution_command_runner, executionCommand.runner);
             executionCommand.setStateFailed(Errno.ERRNO_FAILED.getCode(), errmsg);
             TermuxPluginUtils.processPluginExecutionCommandError(this, LOG_TAG, executionCommand, false);
             return;
@@ -424,7 +444,7 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         else if (Runner.TERMINAL_SESSION.equalsRunner(executionCommand.runner))
             executeTermuxSessionCommand(executionCommand);
         else {
-            String errmsg = getString(R.string.error_termux_service_unsupported_execution_command_runner, executionCommand.runner);
+            String errmsg = com.termux.app.theme.M3ThemeHelper.wrapContext(this).getString(R.string.error_termux_service_unsupported_execution_command_runner, executionCommand.runner);
             executionCommand.setStateFailed(Errno.ERRNO_FAILED.getCode(), errmsg);
             TermuxPluginUtils.processPluginExecutionCommandError(this, LOG_TAG, executionCommand, false);
         }
@@ -674,14 +694,14 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         else if (ShellCreateMode.NO_SHELL_WITH_NAME.equalsMode(executionCommand.shellCreateMode))
             if (DataUtils.isNullOrEmpty(executionCommand.shellName)) {
                 TermuxPluginUtils.setAndProcessPluginExecutionCommandError(this, LOG_TAG, executionCommand, false,
-                    getString(R.string.error_termux_service_execution_command_shell_name_unset, executionCommand.shellCreateMode));
+                    com.termux.app.theme.M3ThemeHelper.wrapContext(this).getString(R.string.error_termux_service_execution_command_shell_name_unset, executionCommand.shellCreateMode));
                 return null;
             } else {
                return ShellCreateMode.NO_SHELL_WITH_NAME;
             }
         else {
             TermuxPluginUtils.setAndProcessPluginExecutionCommandError(this, LOG_TAG, executionCommand, false,
-                getString(R.string.error_termux_service_unsupported_execution_command_shell_create_mode, executionCommand.shellCreateMode));
+                com.termux.app.theme.M3ThemeHelper.wrapContext(this).getString(R.string.error_termux_service_unsupported_execution_command_shell_create_mode, executionCommand.shellCreateMode));
             return null;
         }
     }
@@ -729,7 +749,7 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
             TermuxAppSharedPreferences preferences = TermuxAppSharedPreferences.build(this);
             if (preferences == null) return;
             if (preferences.arePluginErrorNotificationsEnabled(false))
-                Logger.showToast(this, this.getString(R.string.error_display_over_other_apps_permission_not_granted_to_start_terminal), true);
+                Logger.showToast(this, com.termux.app.theme.M3ThemeHelper.wrapContext(this).getString(R.string.error_display_over_other_apps_permission_not_granted_to_start_terminal), true);
         }
     }
 
@@ -786,7 +806,8 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
 
 
     private Notification buildNotification() {
-        Resources res = getResources();
+        android.content.Context lc = com.termux.app.theme.M3ThemeHelper.wrapContext(this);
+        Resources res = lc.getResources();
 
         // Set pending intent to be launched when notification is clicked
         Intent notificationIntent = TermuxActivity.newInstance(this);
@@ -802,7 +823,7 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
             notificationText += " • " + res.getQuantityString(R.plurals.m3_notification_tasks, taskCount, taskCount);
         }
         String wakeStatus = mWakeLock != null ? res.getString(R.string.m3_notification_wakelock_on) : res.getString(R.string.m3_notification_wakelock_off);
-        String contentText = notificationText + " • " + wakeStatus;
+        String contentText = notificationText + wakeStatus;
         String bigText = contentText;
 
         final boolean wakeLockHeld = mWakeLock != null;
@@ -819,7 +840,7 @@ public final class TermuxService extends Service implements AppShell.AppShellCli
         try {
             android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
             String accentPref = p.getString(com.termux.app.theme.M3ThemeHelper.PREF_ACCENT, "default");
-            android.content.Context themed = new android.view.ContextThemeWrapper(this, com.termux.app.theme.M3ThemeHelper.getThemeResId(accentPref));
+            android.content.Context themed = new android.view.ContextThemeWrapper(lc, com.termux.app.theme.M3ThemeHelper.getThemeResId(accentPref));
             int accent = com.termux.shared.theme.ThemeUtils.getSystemAttrColor(themed, com.google.android.material.R.attr.colorPrimary, 0xFF2E7D32);
             builder.setColor(accent);
         } catch (Throwable ignored) { builder.setColor(0xFF2E7D32); }
