@@ -649,8 +649,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
             android.widget.LinearLayout container = new android.widget.LinearLayout(TermuxActivity.this);
             container.setOrientation(android.widget.LinearLayout.VERTICAL);
-            int pad = (int) (20 * getResources().getDisplayMetrics().density);
-            container.setPadding(pad, (int) (8 * getResources().getDisplayMetrics().density), pad, (int) (16 * getResources().getDisplayMetrics().density));
+            container.setPadding(0, (int) (8 * getResources().getDisplayMetrics().density), 0, 0);
 
             com.google.android.material.button.MaterialButton confirm = new com.google.android.material.button.MaterialButton(TermuxActivity.this, null, com.google.android.material.R.attr.materialButtonStyle);
             confirm.setText(R.string.action_create_named_session_confirm);
@@ -677,7 +676,6 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             failsafe.setOnClickListener(x -> { mTermuxTerminalSessionActivityClient.addNewSession(true, input.getText().toString()); dialog.dismiss(); });
 
             if (view instanceof android.widget.LinearLayout) ((android.widget.LinearLayout) view).addView(container);
-            else dialog.setOnShowListener(d -> { android.view.ViewGroup parent = (android.view.ViewGroup) view.getParent(); if (parent != null) { int idx = parent.indexOfChild(view); parent.addView(container, idx + 1); } });
             dialog.show();
             return true;
         });
