@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="m3_appearance_title">Darstellung (Material You)</string>
-    <string name="m3_appearance_summary">Accent, language, font, and console theme</string>
+    <string name="m3_appearance_summary">Aussehen, Sprache und Material-You-Terminaloptionen</string>
     <string name="m3_accent_title">Akzentfarbe</string>
-    <string name="m3_accent_summary">Choose the color used across the app</string>
+    <string name="m3_accent_summary">Wähle eine Akzentfarbe oder nutze deine Systemfarbe</string>
     <string name="m3_mode_title">Oberflächendesign</string>
     <string name="m3_mode_summary">Hell, dunkel, System oder Material You</string>
     <string name="m3_sessions_title">Sitzungen</string>
@@ -57,9 +57,9 @@
         <item>material_you</item>
     </string-array>
 
-    <string name="m3_notification_subtext">Tap to open</string>
-    <string name="m3_notification_wakelock_on">Wakelock on</string>
-    <string name="m3_notification_wakelock_off">Wakelock off</string>
+    <string name="m3_notification_subtext">Tippen, um die Seitenleiste zu öffnen</string>
+    <string name="m3_notification_wakelock_on">· Wakelock an</string>
+    <string name="m3_notification_wakelock_off">· Wakelock aus</string>
     <plurals name="m3_notification_sessions">
         <item quantity="one">%d Sitzung</item>
         <item quantity="other">%d Sitzungen</item>
@@ -70,7 +70,7 @@
     </plurals>
 
     <string name="m3_language_title">Sprache</string>
-    <string name="m3_language_summary">Choose the app language</string>
+    <string name="m3_language_summary">App-Sprache auswählen</string>
     <string-array name="m3_language_entries">
         <item>System folgen</item>
         <item>Spanish</item>
@@ -97,23 +97,23 @@
         <item>id</item>
         <item>ar</item>
     </string-array>
-    <string name="m3_terminal_font_title">Terminal font</string>
-    <string name="m3_terminal_font_summary">Applies immediately to the terminal</string>
-    <string name="m3_terminal_color_scheme_title">Console theme</string>
-    <string name="m3_terminal_color_scheme_summary">Applies immediately to the terminal</string>
+    <string name="m3_terminal_font_title">Terminal-Schriftart</string>
+    <string name="m3_terminal_font_summary">Schriftart für Terminaltext wählen</string>
+    <string name="m3_terminal_color_scheme_title">Terminal-Farbschema</string>
+    <string name="m3_terminal_color_scheme_summary">Farbpalette für Terminaltext und Hintergrund wählen</string>
     <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item><item>Casual</item><item>Cursive</item><item>Monospace Bold</item><item>Small Caps</item></string-array>
     <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item><item>casual</item><item>cursive</item><item>monospace-bold</item><item>small-caps</item></string-array>
     <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Solarized claro</item><item>Drácula</item><item>Nord</item><item>Gruvbox oscuro</item><item>Gruvbox claro</item><item>Monokai</item><item>One Dark</item><item>Tokyo Night</item><item>Catppuccin</item></string-array>
     <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>solarized_light</item><item>dracula</item><item>nord</item><item>gruvbox_dark</item><item>gruvbox_light</item><item>monokai</item><item>one_dark</item><item>tokyo_night</item><item>catppuccin</item></string-array>
 
-    <string name="m3_packages_title">Package manager</string>
-    <string name="m3_packages_search_hint">Search packages...</string>
-    <string name="m3_packages_refresh">Actualizar</string>
-    <string name="m3_packages_open_repo">Repositorio</string>
-    <string name="m3_packages_loading">Loading packages...</string>
-    <string name="m3_packages_installed_count">Paquetes instalados: %d</string>
-    <string name="m3_packages_none">No packages found</string>
-    <string name="m3_packages_no_match">No hay coincidencias.</string>
-    <string name="m3_session_running">Running</string>
+    <string name="m3_packages_title">Paketmanager</string>
+    <string name="m3_packages_search_hint">Pakete suchen</string>
+    <string name="m3_packages_refresh">Aktualisieren</string>
+    <string name="m3_packages_open_repo">Repository öffnen</string>
+    <string name="m3_packages_loading">Pakete werden geladen…</string>
+    <string name="m3_packages_installed_count">%1$d installierte Pakete</string>
+    <string name="m3_packages_none">Keine Pakete gefunden.</string>
+    <string name="m3_packages_no_match">Keine Treffer.</string>
+    <string name="m3_session_running">Läuft</string>
     <string name="m3_session_switch">Zur Sitzung wechseln</string>
 </resources>

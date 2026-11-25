@@ -108,12 +108,12 @@
 
     <string name="m3_packages_title">Gerenciador de pacotes</string>
     <string name="m3_packages_search_hint">Buscar pacotes...</string>
-    <string name="m3_packages_refresh">Actualizar</string>
-    <string name="m3_packages_open_repo">Repositorio</string>
+    <string name="m3_packages_refresh">Atualizar</string>
+    <string name="m3_packages_open_repo">Abrir repositório</string>
     <string name="m3_packages_loading">Carregando pacotes...</string>
-    <string name="m3_packages_installed_count">Paquetes instalados: %d</string>
+    <string name="m3_packages_installed_count">%1$d pacotes instalados</string>
     <string name="m3_packages_none">Nenhum pacote encontrado</string>
-    <string name="m3_packages_no_match">No hay coincidencias.</string>
+    <string name="m3_packages_no_match">Sem correspondências.</string>
     <string name="m3_session_running">Em execução</string>
     <string name="m3_session_switch">Mudar para sessão</string>
 </resources>

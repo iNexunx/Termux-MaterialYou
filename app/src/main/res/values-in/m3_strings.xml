@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="m3_appearance_title">Tampilan (Material You)</string>
-    <string name="m3_appearance_summary">Accent, language, font, and console theme</string>
+    <string name="m3_appearance_summary">Tampilan, bahasa, dan opsi terminal Material You</string>
     <string name="m3_accent_title">Warna aksen</string>
-    <string name="m3_accent_summary">Choose the color used across the app</string>
+    <string name="m3_accent_summary">Pilih warna aksen manual atau gunakan warna sistem</string>
     <string name="m3_mode_title">Tema antarmuka</string>
     <string name="m3_mode_summary">Terang, gelap, sistem atau Material You</string>
     <string name="m3_sessions_title">Sesi</string>
@@ -57,9 +57,9 @@
         <item>material_you</item>
     </string-array>
 
-    <string name="m3_notification_subtext">Tap to open</string>
-    <string name="m3_notification_wakelock_on">Wakelock on</string>
-    <string name="m3_notification_wakelock_off">Wakelock off</string>
+    <string name="m3_notification_subtext">Ketuk untuk membuka laci</string>
+    <string name="m3_notification_wakelock_on">· Wakelock aktif</string>
+    <string name="m3_notification_wakelock_off">· Wakelock nonaktif</string>
     <plurals name="m3_notification_sessions">
         <item quantity="one">%d sesi</item>
         <item quantity="other">%d sesi</item>
@@ -70,7 +70,7 @@
     </plurals>
 
     <string name="m3_language_title">Bahasa</string>
-    <string name="m3_language_summary">Choose the app language</string>
+    <string name="m3_language_summary">Pilih bahasa aplikasi</string>
     <string-array name="m3_language_entries">
         <item>Ikuti sistem</item>
         <item>Spanish</item>
@@ -97,23 +97,23 @@
         <item>id</item>
         <item>ar</item>
     </string-array>
-    <string name="m3_terminal_font_title">Terminal font</string>
-    <string name="m3_terminal_font_summary">Applies immediately to the terminal</string>
-    <string name="m3_terminal_color_scheme_title">Console theme</string>
-    <string name="m3_terminal_color_scheme_summary">Applies immediately to the terminal</string>
+    <string name="m3_terminal_font_title">Font terminal</string>
+    <string name="m3_terminal_font_summary">Pilih font untuk teks terminal</string>
+    <string name="m3_terminal_color_scheme_title">Skema warna terminal</string>
+    <string name="m3_terminal_color_scheme_summary">Pilih palet warna untuk teks dan latar terminal</string>
     <string-array name="m3_terminal_font_entries"><item>Monospace</item><item>Sans Serif</item><item>Serif</item><item>Fira Code (app)</item><item>JetBrains Mono (app)</item><item>Casual</item><item>Cursive</item><item>Monospace Bold</item><item>Small Caps</item></string-array>
     <string-array name="m3_terminal_font_values" translatable="false"><item>monospace</item><item>sans-serif</item><item>serif</item><item>firacode</item><item>jetbrains</item><item>casual</item><item>cursive</item><item>monospace-bold</item><item>small-caps</item></string-array>
     <string-array name="m3_terminal_color_scheme_entries"><item>Termux (predeterminado)</item><item>Negro</item><item>Solarized oscuro</item><item>Solarized claro</item><item>Drácula</item><item>Nord</item><item>Gruvbox oscuro</item><item>Gruvbox claro</item><item>Monokai</item><item>One Dark</item><item>Tokyo Night</item><item>Catppuccin</item></string-array>
     <string-array name="m3_terminal_color_scheme_values" translatable="false"><item>termux</item><item>black</item><item>solarized_dark</item><item>solarized_light</item><item>dracula</item><item>nord</item><item>gruvbox_dark</item><item>gruvbox_light</item><item>monokai</item><item>one_dark</item><item>tokyo_night</item><item>catppuccin</item></string-array>
 
-    <string name="m3_packages_title">Package manager</string>
-    <string name="m3_packages_search_hint">Search packages...</string>
-    <string name="m3_packages_refresh">Actualizar</string>
-    <string name="m3_packages_open_repo">Repositorio</string>
-    <string name="m3_packages_loading">Loading packages...</string>
-    <string name="m3_packages_installed_count">Paquetes instalados: %d</string>
-    <string name="m3_packages_none">No packages found</string>
-    <string name="m3_packages_no_match">No hay coincidencias.</string>
-    <string name="m3_session_running">Running</string>
+    <string name="m3_packages_title">Pengelola paket</string>
+    <string name="m3_packages_search_hint">Cari paket</string>
+    <string name="m3_packages_refresh">Segarkan</string>
+    <string name="m3_packages_open_repo">Buka repositori</string>
+    <string name="m3_packages_loading">Memuat paket…</string>
+    <string name="m3_packages_installed_count">%1$d paket terpasang</string>
+    <string name="m3_packages_none">Tidak ada paket ditemukan.</string>
+    <string name="m3_packages_no_match">Tidak ada hasil.</string>
+    <string name="m3_session_running">Berjalan</string>
     <string name="m3_session_switch">Beralih ke sesi</string>
 </resources>

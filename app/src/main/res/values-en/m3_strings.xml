@@ -109,9 +109,9 @@
     <string name="m3_packages_title">Package manager</string>
     <string name="m3_packages_search_hint">Search packages...</string>
     <string name="m3_packages_refresh">Refresh</string>
-    <string name="m3_packages_open_repo">Repository</string>
+    <string name="m3_packages_open_repo">Open repository</string>
     <string name="m3_packages_loading">Loading packages...</string>
-    <string name="m3_packages_installed_count">Installed packages: %d</string>
+    <string name="m3_packages_installed_count">%1$d installed packages</string>
     <string name="m3_packages_none">No packages found</string>
     <string name="m3_packages_no_match">No matches.</string>
     <string name="m3_session_running">Running</string>
