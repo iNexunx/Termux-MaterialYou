@@ -339,6 +339,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             addTermuxActivityRootViewGlobalLayoutListener();
 
         registerTermuxActivityBroadcastReceiver();
+        if (M3ThemeHelper.syncSystemNightMode(this)) mAppliedM3Mode = null;
         applyM3ThemeIfChanged(false);
         applyExtraKeysFloatingMode();
         refreshSessionStrip();
@@ -1318,6 +1319,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
     private void registerTermuxActivityBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_NOTIFY_APP_CRASH);
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_RELOAD_STYLE);
         intentFilter.addAction(TERMUX_ACTIVITY.ACTION_REQUEST_PERMISSIONS);
@@ -1348,6 +1350,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 fixTermuxActivityBroadcastReceiverIntent(intent);
 
                 switch (intent.getAction()) {
+                    case Intent.ACTION_CONFIGURATION_CHANGED:
+                        if (M3ThemeHelper.syncSystemNightMode(context)) applyM3ThemeIfChanged(true);
+                        return;
                     case TERMUX_ACTIVITY.ACTION_NOTIFY_APP_CRASH:
                         Logger.logDebug(LOG_TAG, "Received intent to notify app crash");
                         TermuxCrashUtils.notifyAppCrashFromCrashLogFile(context, LOG_TAG);

@@ -6,6 +6,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -48,13 +49,13 @@ public final class M3ThemeHelper {
 
     /** Clear a manual light/dark override when the Android system theme changes. */
     public static boolean syncSystemNightMode(Context context) {
-        int night = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        int night = Resources.getSystem().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         String current = night == Configuration.UI_MODE_NIGHT_YES ? "yes" : "no";
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String previous = prefs.getString(PREF_LAST_SYSTEM_NIGHT, null);
+        if (previous != null && previous.equals(current)) return false;
         prefs.edit().putString(PREF_LAST_SYSTEM_NIGHT, current).apply();
-        boolean changed = previous != null && !previous.equals(current);
-        if (!changed) return false;
+        if (previous == null) return false;
         String mode = prefs.getString(PREF_MODE, "system");
         if ("light".equals(mode) || "dark".equals(mode))
             prefs.edit().putString(PREF_MODE, "system").apply();
