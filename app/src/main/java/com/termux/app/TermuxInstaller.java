@@ -1,7 +1,6 @@
 package com.termux.app;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -65,6 +64,19 @@ final class TermuxInstaller {
 
     private static final String LOG_TAG = "TermuxInstaller";
 
+    private static androidx.appcompat.app.AlertDialog showM3ProgressDialog(Activity activity) {
+        android.view.View view = activity.getLayoutInflater().inflate(R.layout.m3_progress_dialog, null, false);
+        ((com.google.android.material.textview.MaterialTextView) view.findViewById(R.id.m3_progress_message))
+            .setText(activity.getString(R.string.bootstrap_installer_body));
+        androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(activity)
+            .setView(view)
+            .setCancelable(false)
+            .create();
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, false); } catch (Throwable ignored) {}
+        dialog.show();
+        return dialog;
+    }
+
     /** Performs bootstrap setup if necessary. */
     static void setupBootstrapIfNeeded(final Activity activity, final Runnable whenDone) {
         String bootstrapErrorMessage;
@@ -124,7 +136,7 @@ final class TermuxInstaller {
             Logger.logInfo(LOG_TAG, "The termux prefix directory \"" + TERMUX_PREFIX_DIR_PATH + "\" does not exist but another file exists at its destination.");
         }
 
-        final ProgressDialog progress = ProgressDialog.show(activity, null, activity.getString(R.string.bootstrap_installer_body), true, false);
+        final androidx.appcompat.app.AlertDialog progress = showM3ProgressDialog(activity);
         new Thread() {
             @Override
             public void run() {

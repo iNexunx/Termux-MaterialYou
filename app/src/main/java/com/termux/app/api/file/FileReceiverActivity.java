@@ -67,6 +67,12 @@ public class FileReceiverActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onCreate(android.os.Bundle savedInstanceState) {
+        com.termux.app.theme.M3ThemeHelper.apply(this);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
