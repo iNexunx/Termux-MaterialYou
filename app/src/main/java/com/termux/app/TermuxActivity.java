@@ -377,7 +377,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (mIsInvalidState) return;
-        if (M3ThemeHelper.syncSystemNightMode(this, newConfig)) {
+        if (M3ThemeHelper.syncSystemNightMode(this)) {
             mAppliedM3Mode = null;
             applyM3ThemeIfChanged(true);
             return;
@@ -743,10 +743,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             if (newMode.equals(current)) return;
             androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
                 .edit().putString(com.termux.app.theme.M3ThemeHelper.PREF_MODE, newMode).apply();
-            com.termux.app.theme.M3ThemeHelper.applyMode(this);
-            mAppliedM3Accent = null; mAppliedM3Mode = null;
-            android.view.Window w=getWindow(); if(w!=null){w.setWindowAnimations(0); android.graphics.drawable.Drawable bg=w.getDecorView().getBackground(); if(bg!=null) w.setBackgroundDrawable(bg);} 
-            recreate(); try{overridePendingTransition(0,0);}catch(Throwable ignored){}
+            applyM3ThemeIfChanged(true);
         });
     }
 

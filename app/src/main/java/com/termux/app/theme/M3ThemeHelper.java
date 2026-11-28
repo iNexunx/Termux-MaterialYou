@@ -49,12 +49,7 @@ public final class M3ThemeHelper {
 
     /** Clear a manual light/dark override when the Android system theme changes. */
     public static boolean syncSystemNightMode(Context context) {
-        return syncSystemNightMode(context, Resources.getSystem().getConfiguration());
-    }
-
-    /** Variant that uses the configuration delivered to {@code onConfigurationChanged()}. */
-    public static boolean syncSystemNightMode(Context context, Configuration configuration) {
-        int night = configuration.uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        int night = Resources.getSystem().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         String current = night == Configuration.UI_MODE_NIGHT_YES ? "yes" : "no";
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String previous = prefs.getString(PREF_LAST_SYSTEM_NIGHT, null);
