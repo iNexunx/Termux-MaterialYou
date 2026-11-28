@@ -617,7 +617,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         card.setCardElevation(floating ? dp(6) : 0);
         card.setStrokeWidth(floating ? dp(1) : 0);
         android.view.ViewGroup.MarginLayoutParams mlp = (android.view.ViewGroup.MarginLayoutParams) card.getLayoutParams();
-        int base = floating ? dp(8) : 0;
+        int base = floating ? dp(6) : 0;
         mlp.leftMargin = base; mlp.rightMargin = base; mlp.bottomMargin = base; mlp.topMargin = 0;
         card.setLayoutParams(mlp);
         setTerminalToolbarHeight();

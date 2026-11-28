@@ -433,7 +433,7 @@ public final class ExtraKeysView extends GridLayout {
                 button.setEllipsize(android.text.TextUtils.TruncateAt.END);
                 button.setMinWidth(0);
                 button.setMinimumWidth(0);
-                button.setCornerRadius(dpToPx(8));
+                button.setCornerRadius(dpToPx(24));
                 button.setStrokeWidth(0);
                 button.setInsetTop(0);
                 button.setInsetBottom(0);
@@ -502,11 +502,7 @@ public final class ExtraKeysView extends GridLayout {
                     param.height = 0;
                 }
                 param.setMargins(keyMargin, keyMargin, keyMargin, keyMargin);
-                if (android.os.Build.VERSION.SDK_INT >= 26) {
-                    button.setAutoSizeTextTypeUniformWithConfiguration(7, 14, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
-                } else {
-                    button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11);
-                }
+                setLabelTextSize(button, buttonInfo.getDisplay());
                 param.columnSpec = GridLayout.spec(col, GridLayout.FILL, 1.f);
                 param.rowSpec = GridLayout.spec(row, GridLayout.FILL, 1.f);
                 button.setLayoutParams(param);
@@ -635,7 +631,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
         button.setPadding(dpToPx(6), 0, dpToPx(6), 0);
-        button.setCornerRadius(dpToPx(12));
+        button.setCornerRadius(dpToPx(20));
         button.setMinHeight(0);
         button.setMinWidth(0);
         button.setMinimumWidth(0);
@@ -646,11 +642,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setWidth(minW);
         button.setHeight(Math.max(height, dpToPx(44)));
         button.setAllCaps(mButtonTextAllCaps);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            button.setAutoSizeTextTypeUniformWithConfiguration(8, 13, 1, TypedValue.COMPLEX_UNIT_SP);
-        } else {
-            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, Math.max(9, 12 - Math.max(0, labelLen - 4)));
-        }
+        setLabelTextSize(button, extraButton.getDisplay());
         setButtonBackground(button, mButtonActiveBackgroundColor);
         mPopupWindow = new PopupWindow(this);
         mPopupWindow.setWidth(LayoutParams.WRAP_CONTENT);
@@ -708,7 +700,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setAllCaps(mButtonTextAllCaps);
         button.setInsetTop(0);
         button.setInsetBottom(0);
-        button.setCornerRadius(dpToPx(8));
+        button.setCornerRadius(dpToPx(24));
         button.setStrokeWidth(0);
         button.setMaxLines(1);
         button.setSingleLine(true);
@@ -718,11 +710,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setMinimumWidth(0);
         button.setMinHeight(0);
         button.setMinimumHeight(0);
-        if (android.os.Build.VERSION.SDK_INT >= 26) {
-            button.setAutoSizeTextTypeUniformWithConfiguration(7, 14, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
-        } else {
-            button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 10);
-        }
+        setLabelTextSize(button, buttonKey);
         if (needUpdate) {
             state.buttons.add(button);
         }
@@ -730,6 +718,16 @@ public final class ExtraKeysView extends GridLayout {
     }
 
 
+
+    private void setLabelTextSize(MaterialButton button, String label) {
+        int length = label == null ? 1 : label.length();
+        float sizeSp;
+        if (length <= 2) sizeSp = 12f;
+        else if (length == 3) sizeSp = 11f;
+        else if (length == 4) sizeSp = 10f;
+        else sizeSp = Math.max(8f, 10f - (length - 4));
+        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeSp);
+    }
 
     /**
      * General util function to compute the longest column length in a matrix.
