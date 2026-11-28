@@ -15,37 +15,25 @@
     </style>
 
     <!-- Material 3 pill-shaped button used by dialogs and the drawer actions. -->
-    <style name="Widget.Termux.M3.PillButton" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.Termux.M3.PillButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">100dp</item>
         <item name="android:minHeight">44dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="backgroundTint">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="rippleColor">?attr/colorOnPrimary</item>
-    </style>
-
-    <style name="Widget.Termux.M3.PillButton.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">100dp</item>
-        <item name="android:minHeight">44dp</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="backgroundTint">?attr/m3PrimaryContainer</item>
         <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="strokeWidth">2dp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="rippleColor">?attr/colorControlHighlight</item>
     </style>
 
-    <style name="Widget.Termux.M3.DialogButton" parent="Widget.MaterialComponents.Button">
-        <item name="cornerRadius">100dp</item>
+    <style name="Widget.Termux.M3.PillButton.Outlined" parent="Widget.Termux.M3.PillButton" />
+
+    <style name="Widget.Termux.M3.DialogButton" parent="Widget.Termux.M3.PillButton">
         <item name="android:minHeight">48dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="backgroundTint">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="Widget.Termux.M3.DialogButton.Text" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">100dp</item>
+    <style name="Widget.Termux.M3.DialogButton.Text" parent="Widget.Termux.M3.PillButton">
         <item name="android:minHeight">48dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="strokeColor">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="ThemeOverlay.Termux.M3.Dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
@@ -94,6 +82,7 @@
         <item name="boxCornerRadiusTopEnd">28dp</item>
         <item name="boxCornerRadiusBottomStart">28dp</item>
         <item name="boxCornerRadiusBottomEnd">28dp</item>
+        <item name="boxBackgroundColor">?attr/colorSurface</item>
         <item name="boxStrokeColor">?attr/colorPrimary</item>
         <item name="hintTextColor">?attr/colorPrimary</item>
     </style>

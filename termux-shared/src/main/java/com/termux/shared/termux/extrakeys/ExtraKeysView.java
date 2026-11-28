@@ -433,7 +433,7 @@ public final class ExtraKeysView extends GridLayout {
                 button.setEllipsize(android.text.TextUtils.TruncateAt.END);
                 button.setMinWidth(0);
                 button.setMinimumWidth(0);
-                applyM3Shape(button, 28);
+                applyM3Shape(button, 100);
                 button.setInsetTop(0);
                 button.setInsetBottom(0);
                 button.setBackgroundTintList(ColorStateList.valueOf(mButtonBackgroundColor));
@@ -630,7 +630,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
         button.setPadding(dpToPx(6), 0, dpToPx(6), 0);
-        applyM3Shape(button, 28);
+        applyM3Shape(button, 100);
         button.setMinHeight(0);
         button.setMinWidth(0);
         button.setMinimumWidth(0);
@@ -699,7 +699,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setAllCaps(mButtonTextAllCaps);
         button.setInsetTop(0);
         button.setInsetBottom(0);
-        applyM3Shape(button, 28);
+        applyM3Shape(button, 100);
         button.setBackgroundTintList(ColorStateList.valueOf(
             state.isActive ? mButtonActiveBackgroundColor : mButtonBackgroundColor));
         button.setMaxLines(1);
@@ -721,9 +721,9 @@ public final class ExtraKeysView extends GridLayout {
 
     private void applyM3Shape(MaterialButton button, int cornerRadiusDp) {
         button.setCornerRadius(dpToPx(cornerRadiusDp));
-        button.setStrokeWidth(dpToPx(1));
+        button.setStrokeWidth(dpToPx(2));
         button.setStrokeColor(ColorStateList.valueOf(ThemeUtils.getSystemAttrColor(
-            getContext(), com.google.android.material.R.attr.colorPrimary, mButtonActiveTextColor)));
+            getContext(), com.google.android.material.R.attr.colorPrimary, mButtonTextColor)));
     }
 
     private void setLabelTextSize(MaterialButton button, String label) {
