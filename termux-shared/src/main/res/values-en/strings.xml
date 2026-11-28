@@ -68,7 +68,7 @@
 
 
     <!-- Shell -->
-    <string name="error_sending_sigkill_to_process">Sending SIGKILL to process at the user's request or because Android is shutting down the execution service</string>
+    <string name="error_sending_sigkill_to_process">Sending SIGKILL to process at the user\'s request or because Android is shutting down the execution service</string>
     <string name="error_executable_unset">Executable \"%1$s\" was not set for the shell command</string>
     <string name="error_execution_cancelled">Execution cancelled because the execution service is being shut down</string>
     <string name="error_failed_to_execute_termux_session_command">Failed to execute termux session command \"%1$s\"</string>
