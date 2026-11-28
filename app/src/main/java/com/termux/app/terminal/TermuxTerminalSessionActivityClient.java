@@ -351,9 +351,9 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
         title.setPadding(dp4, dp4, dp4, dp12);
         items.addView(title);
 
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(mActivity, null, com.google.android.material.R.style.Widget_MaterialComponents_TextInputLayout_OutlinedBox);
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(mActivity, null, R.style.Widget_Termux_M3_TextInput);
         inputLayout.setHint(mActivity.getString(R.string.title_rename_session));
-        int r=(int)(24*mActivity.getResources().getDisplayMetrics().density); inputLayout.setBoxCornerRadii(r,r,r,r);
+        int r=(int)(28*mActivity.getResources().getDisplayMetrics().density); inputLayout.setBoxCornerRadii(r,r,r,r);
         final com.google.android.material.textfield.TextInputEditText input = new com.google.android.material.textfield.TextInputEditText(inputLayout.getContext());
         input.setSingleLine(true);
         if (sessionToRename.mSessionName != null) { input.setText(sessionToRename.mSessionName); android.text.Selection.setSelection(input.getText(), sessionToRename.mSessionName.length()); }
@@ -383,7 +383,6 @@ public class TermuxTerminalSessionActivityClient extends TermuxTerminalSessionCl
     }
 
     private void makeDialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, android.view.View dragHandle, android.view.View content) {
-        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
         try { com.termux.shared.view.M3DialogUtils.makeMovableResizable(dialog, dragHandle); } catch (Throwable ignored) {}
     }
 

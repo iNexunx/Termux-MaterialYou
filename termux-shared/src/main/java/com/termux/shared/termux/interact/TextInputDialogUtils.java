@@ -86,7 +86,6 @@ public final class TextInputDialogUtils {
         dialog.setCanceledOnTouchOutside(true);
         try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
         dialog.show();
-        if (stackedButtons) stackDialogButtons(dialog);
     }
 
     public static void stackDialogButtons(AlertDialog dialog) {

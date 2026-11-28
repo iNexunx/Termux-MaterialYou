@@ -59,6 +59,15 @@
 
 
 
+    <style name="Widget.Termux.M3.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">28dp</item>
+        <item name="boxCornerRadiusTopEnd">28dp</item>
+        <item name="boxCornerRadiusBottomStart">28dp</item>
+        <item name="boxCornerRadiusBottomEnd">28dp</item>
+        <item name="boxStrokeColor">?attr/colorPrimary</item>
+        <item name="hintTextColor">?attr/colorPrimary</item>
+    </style>
+
     <!-- ViewDivider style. -->
     <style name="ViewDivider">
         <item name="android:layout_width">match_parent</item>

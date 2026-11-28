@@ -19,13 +19,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dialog_text_input_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Termux.M3.TextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxCornerRadiusBottomEnd="24dp"
-        app:boxCornerRadiusBottomStart="24dp"
-        app:boxCornerRadiusTopEnd="24dp"
-        app:boxCornerRadiusTopStart="24dp"
         app:hintAnimationEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText

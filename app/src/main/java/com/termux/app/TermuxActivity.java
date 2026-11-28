@@ -668,7 +668,6 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     }
 
     private void makeM3DialogMovableResizable(androidx.appcompat.app.AlertDialog dialog, View dragHandle, View content) {
-        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
         try { com.termux.shared.view.M3DialogUtils.makeMovableResizable(dialog, dragHandle); } catch (Throwable ignored) {}
     }
 
@@ -684,9 +683,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         title.setPadding(p4, p4, p4, p12);
         items.addView(title);
 
-        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(this, null, com.google.android.material.R.style.Widget_MaterialComponents_TextInputLayout_OutlinedBox);
+        com.google.android.material.textfield.TextInputLayout inputLayout = new com.google.android.material.textfield.TextInputLayout(this, null, R.style.Widget_Termux_M3_TextInput);
         inputLayout.setHint(getString(R.string.title_create_named_session));
-        inputLayout.setBoxCornerRadii(dp(24),dp(24),dp(24),dp(24));
+        inputLayout.setBoxCornerRadii(dp(28),dp(28),dp(28),dp(28));
         com.google.android.material.textfield.TextInputEditText input = new com.google.android.material.textfield.TextInputEditText(inputLayout.getContext());
         input.setSingleLine(true);
         inputLayout.addView(input);
@@ -701,11 +700,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         addM3DialogAction(items, R.drawable.ic_m3_close, getString(android.R.string.cancel), () -> { if (dlg[0]!=null) dlg[0].dismiss(); });
 
         dlg[0] = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this).setView(content).create();
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dlg[0], false); } catch (Throwable ignored) {}
         dlg[0].show();
-        if (dlg[0].getWindow() != null) {
-            dlg[0].getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            makeM3DialogMovableResizable(dlg[0], title, content);
-        }
+        makeM3DialogMovableResizable(dlg[0], title, content);
     }
 
     private void setToggleKeyboardView() {
@@ -850,7 +847,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         list.setAdapter(adapter);
 
         androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this).setView(view).create();
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(dialog, true); } catch (Throwable ignored) {}
 
         final Runnable[] render = new Runnable[1];
         render[0] = () -> {
@@ -1081,7 +1078,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         ((TextView) header.findViewById(R.id.menu_item_text)).setText(title);
         header.setClickable(false); header.setFocusable(false);
         items.addView(header);
-        TextView body = new TextView(this);
+        com.google.android.material.textview.MaterialTextView body = new com.google.android.material.textview.MaterialTextView(this);
         body.setText(message);
         int pad = (int) (16 * getResources().getDisplayMetrics().density);
         body.setPadding(pad, pad/2, pad, pad);
@@ -1118,9 +1115,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         addContextMenuItem(items, R.drawable.ic_m3_settings, getString(R.string.action_open_settings), true, false, false, () -> ActivityUtils.startActivity(this, new Intent(this, SettingsActivity.class)));
         addContextMenuItem(items, R.drawable.ic_m3_report, getString(R.string.action_report_issue), true, false, false, () -> mTermuxTerminalViewClient.reportIssueFromTranscript());
         mContextMenuDialog = new MaterialAlertDialogBuilder(this).setView(content).create();
+        try { com.termux.shared.view.M3DialogUtils.applyM3Window(mContextMenuDialog, false); } catch (Throwable ignored) {}
         mContextMenuDialog.show();
         if (mContextMenuDialog.getWindow() != null) {
-            mContextMenuDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             int margin = (int) (8 * getResources().getDisplayMetrics().density);
             int width = getResources().getDisplayMetrics().widthPixels - margin * 2;
             mContextMenuDialog.getWindow().setLayout(width, android.view.WindowManager.LayoutParams.WRAP_CONTENT);
