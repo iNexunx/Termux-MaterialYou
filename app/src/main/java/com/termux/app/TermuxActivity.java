@@ -760,7 +760,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         if (mTermuxService == null) { container.setVisibility(View.GONE); return; }
         java.util.List<com.termux.shared.termux.shell.command.runner.terminal.TermuxSession> sessions = mTermuxService.getTermuxSessions();
         strip.removeAllViews();
-        if (sessions.size() <= 1) { container.setVisibility(View.GONE); return; }
+        if (sessions.isEmpty()) { container.setVisibility(View.GONE); return; }
         container.setVisibility(View.VISIBLE);
         TerminalSession current = getCurrentSession();
         int pipW = dp(96), pipH = dp(64), gap = dp(4);
@@ -795,7 +795,6 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             wrapper.setOnClickListener(v -> {
                 if (mTermuxTerminalSessionActivityClient != null) mTermuxTerminalSessionActivityClient.setCurrentSession(session);
                 getDrawer().closeDrawers();
-                refreshSessionStrip();
             });
             wrapper.setOnLongClickListener(v -> { showSessionContextMenu(session); return true; });
             strip.addView(wrapper);
@@ -1255,7 +1254,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
 
     public void termuxSessionListNotifyUpdated() {
-        mTermuxSessionListViewController.notifyDataSetChanged();
+        if (mTermuxSessionListViewController != null) mTermuxSessionListViewController.notifyDataSetChanged();
         refreshSessionStrip();
     }
 
