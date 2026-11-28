@@ -65,6 +65,8 @@ import com.termux.view.TerminalViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -828,7 +830,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         android.widget.EditText search = view.findViewById(R.id.m3_pkg_search);
         android.widget.ProgressBar progress = view.findViewById(R.id.m3_pkg_progress);
         android.widget.TextView status = view.findViewById(R.id.m3_pkg_status);
-        android.widget.LinearLayout list = view.findViewById(R.id.m3_pkg_list);
+        RecyclerView list = view.findViewById(R.id.m3_pkg_list);
+        android.widget.TextView empty = view.findViewById(R.id.m3_pkg_empty);
 
         tabs.addTab(tabs.newTab().setText(R.string.m3_packages_tab_installed));
         tabs.addTab(tabs.newTab().setText(R.string.m3_packages_tab_available));
@@ -837,6 +840,14 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         final java.util.ArrayList<String[]> available = new java.util.ArrayList<>();
         final java.util.HashSet<String> installedNames = new java.util.HashSet<>();
         final boolean[] loaded = {false, false};
+        final android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
+
+        PackageAdapter adapter = new PackageAdapter(this, (entry, installedTab, isInstalled) ->
+            showPackageDetailDialog(entry, installedTab, isInstalled));
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setHasFixedSize(true);
+        list.setItemAnimator(null);
+        list.setAdapter(adapter);
 
         androidx.appcompat.app.AlertDialog dialog = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this).setView(view).create();
         if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -847,30 +858,23 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             java.util.ArrayList<String[]> src = instTab ? installed : available;
             boolean ready = instTab ? loaded[0] : loaded[1];
             String q = search.getText() == null ? "" : search.getText().toString().trim().toLowerCase(java.util.Locale.ROOT);
-            list.removeAllViews();
-            if (!ready) { progress.setVisibility(View.VISIBLE); status.setText(R.string.m3_packages_loading); return; }
-            progress.setVisibility(View.GONE);
-            java.util.ArrayList<String[]> filtered = new java.util.ArrayList<>();
-            for (String[] e : src) if (q.isEmpty() || e[0].toLowerCase(java.util.Locale.ROOT).contains(q)) { filtered.add(e); if (filtered.size() >= 200) break; }
-            status.setText(getString(R.string.m3_packages_count, filtered.size(), src.size()));
-            if (filtered.isEmpty()) {
-                TextView tv = new TextView(this);
-                tv.setText(q.isEmpty() ? R.string.m3_packages_none : R.string.m3_packages_no_match);
-                tv.setPadding(0, dp(8), 0, dp(8));
-                list.addView(tv);
+            if (!ready) {
+                progress.setVisibility(View.VISIBLE);
+                list.setVisibility(View.GONE);
+                empty.setVisibility(View.GONE);
+                status.setText(R.string.m3_packages_loading);
                 return;
             }
-            for (String[] e : filtered) {
-                View row = getLayoutInflater().inflate(R.layout.m3_package_row, list, false);
-                TextView name = row.findViewById(R.id.pkg_name);
-                TextView sub = row.findViewById(R.id.pkg_sub);
-                name.setText(e[0]);
-                boolean isInst = installedNames.contains(e[0]);
-                if (instTab) sub.setText(e[1] != null ? "v" + e[1] : getString(R.string.m3_packages_installed));
-                else sub.setText(isInst ? getString(R.string.m3_packages_installed_repo) : getString(R.string.m3_packages_repo));
-                row.setOnClickListener(v -> showPackageDetailDialog(e, instTab, isInst));
-                list.addView(row);
-            }
+            progress.setVisibility(View.GONE);
+            java.util.ArrayList<String[]> filtered = new java.util.ArrayList<>();
+            for (String[] e : src)
+                if (q.isEmpty() || e[0].toLowerCase(java.util.Locale.ROOT).contains(q)) filtered.add(e);
+            status.setText(getString(R.string.m3_packages_count, filtered.size(), src.size()));
+            boolean noResults = filtered.isEmpty();
+            empty.setVisibility(noResults ? View.VISIBLE : View.GONE);
+            list.setVisibility(noResults ? View.GONE : View.VISIBLE);
+            if (noResults) empty.setText(q.isEmpty() ? R.string.m3_packages_none : R.string.m3_packages_no_match);
+            adapter.submit(filtered, instTab, installedNames);
         };
 
         tabs.addOnTabSelectedListener(new com.google.android.material.tabs.TabLayout.OnTabSelectedListener() {
@@ -881,8 +885,12 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         search.addTextChangedListener(new android.text.TextWatcher() {
             public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
             public void onTextChanged(CharSequence s, int st, int b, int c) {}
-            public void afterTextChanged(android.text.Editable s) { render[0].run(); }
+            public void afterTextChanged(android.text.Editable s) {
+                handler.removeCallbacks(render[0]);
+                handler.postDelayed(render[0], 120L);
+            }
         });
+        dialog.setOnDismissListener(d -> handler.removeCallbacks(render[0]));
         dialog.show();
         render[0].run();
 
@@ -901,17 +909,76 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         if (entry[2] != null && !entry[2].isEmpty()) msg += entry[2] + "\n\n";
         msg += getString(R.string.m3_packages_repo_info);
         msg += "\n\n" + getString(installedTab ? R.string.m3_packages_cmd_uninstall : R.string.m3_packages_cmd_install, entry[0]);
-        com.google.android.material.dialog.MaterialAlertDialogBuilder b = new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
-            .setTitle(entry[0]).setMessage(msg)
-            .setNegativeButton(android.R.string.cancel, null);
-        if (installedTab) {
-            b.setPositiveButton(R.string.m3_packages_uninstall, (d, w) -> runPackageCommand("pkg uninstall " + entry[0] + "\n"));
-        } else {
-            b.setPositiveButton(alreadyInstalled ? R.string.m3_packages_reinstall : R.string.m3_packages_install, (d, w) -> runPackageCommand("pkg install -y " + entry[0] + "\n"));
+        String positive = getString(installedTab ? R.string.m3_packages_uninstall
+            : (alreadyInstalled ? R.string.m3_packages_reinstall : R.string.m3_packages_install));
+        String command = installedTab ? "pkg uninstall " + entry[0] + "\n" : "pkg install -y " + entry[0] + "\n";
+        com.termux.shared.interact.MessageDialogUtils.showMessage(this, entry[0], msg,
+            positive, (d, w) -> runPackageCommand(command),
+            getString(android.R.string.cancel), null, null);
+    }
+
+    private interface PackageClickListener {
+        void onPackageClick(String[] entry, boolean installedTab, boolean installed);
+    }
+
+    private static class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageViewHolder> {
+        private final java.util.List<String[]> mItems = new java.util.ArrayList<>();
+        private final android.view.LayoutInflater mInflater;
+        private final android.content.Context mContext;
+        private final PackageClickListener mListener;
+        private boolean mInstalledTab;
+        private java.util.Set<String> mInstalledNames = java.util.Collections.emptySet();
+
+        PackageAdapter(android.content.Context context, PackageClickListener listener) {
+            mContext = context;
+            mInflater = android.view.LayoutInflater.from(context);
+            mListener = listener;
         }
-        androidx.appcompat.app.AlertDialog d = b.create();
-        try { com.termux.shared.view.M3DialogUtils.applyM3Window(d, true); } catch (Throwable ignored) {}
-        d.show();
+
+        void submit(java.util.List<String[]> items, boolean installedTab, java.util.Set<String> installedNames) {
+            mItems.clear();
+            mItems.addAll(items);
+            mInstalledTab = installedTab;
+            mInstalledNames = installedNames;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public PackageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new PackageViewHolder(mInflater.inflate(R.layout.m3_package_row, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(PackageViewHolder holder, int position) {
+            final String[] entry = mItems.get(position);
+            holder.name.setText(entry[0]);
+            boolean installed = mInstalledNames.contains(entry[0]);
+            if (mInstalledTab) {
+                holder.sub.setText(entry[1] != null && !entry[1].isEmpty()
+                    ? "v" + entry[1] : mContext.getString(R.string.m3_packages_installed));
+            } else {
+                holder.sub.setText(installed
+                    ? mContext.getString(R.string.m3_packages_installed_repo)
+                    : mContext.getString(R.string.m3_packages_repo));
+            }
+            holder.itemView.setOnClickListener(v -> mListener.onPackageClick(entry, mInstalledTab, installed));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mItems.size();
+        }
+
+        static class PackageViewHolder extends RecyclerView.ViewHolder {
+            final TextView name;
+            final TextView sub;
+
+            PackageViewHolder(View itemView) {
+                super(itemView);
+                name = itemView.findViewById(R.id.pkg_name);
+                sub = itemView.findViewById(R.id.pkg_sub);
+            }
+        }
     }
 
     private void runPackageCommand(String cmd) {

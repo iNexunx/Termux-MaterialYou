@@ -60,15 +60,21 @@
         android:textColor="?attr/colorOnSurface"
         android:textSize="13sp" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/m3_pkg_list"
         android:layout_width="match_parent"
         android:layout_height="360dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
-        <LinearLayout
-            android:id="@+id/m3_pkg_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/m3_pkg_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="14sp"
+        android:visibility="gone" />
 </LinearLayout>
