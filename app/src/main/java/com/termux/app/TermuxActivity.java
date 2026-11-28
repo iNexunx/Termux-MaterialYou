@@ -622,7 +622,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         if (toolbarContainer == null || terminalToolbarViewPager == null || mPreferences == null) return;
         boolean floating = mPreferences.isExtraKeysFloating();
         com.google.android.material.card.MaterialCardView card = (com.google.android.material.card.MaterialCardView) toolbarContainer;
-        card.setRadius(floating ? dp(24) : 0);
+        card.setRadius(floating ? dp(28) : 0);
         card.setCardElevation(floating ? dp(6) : 0);
         card.setStrokeWidth(floating ? dp(1) : 0);
         android.view.ViewGroup.MarginLayoutParams mlp = (android.view.ViewGroup.MarginLayoutParams) card.getLayoutParams();
