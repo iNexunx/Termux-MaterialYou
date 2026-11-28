@@ -622,9 +622,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         if (toolbarContainer == null || terminalToolbarViewPager == null || mPreferences == null) return;
         boolean floating = mPreferences.isExtraKeysFloating();
         com.google.android.material.card.MaterialCardView card = (com.google.android.material.card.MaterialCardView) toolbarContainer;
-        card.setRadius(floating ? dp(28) : 0);
+        card.setRadius(floating ? dp(100) : 0);
         card.setCardElevation(floating ? dp(6) : 0);
-        card.setStrokeWidth(floating ? dp(1) : 0);
+        card.setStrokeWidth(0);
         android.view.ViewGroup.MarginLayoutParams mlp = (android.view.ViewGroup.MarginLayoutParams) card.getLayoutParams();
         int base = floating ? dp(6) : 0;
         mlp.leftMargin = base; mlp.rightMargin = base; mlp.bottomMargin = base; mlp.topMargin = 0;
@@ -778,15 +778,16 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
             LinearLayout labelRow = new LinearLayout(this);
             labelRow.setOrientation(LinearLayout.HORIZONTAL);
-            labelRow.setGravity(Gravity.CENTER_VERTICAL);
+            labelRow.setGravity(Gravity.CENTER);
             LinearLayout.LayoutParams lrp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             lrp.bottomMargin = gap;
             labelRow.setLayoutParams(lrp);
 
             com.google.android.material.textview.MaterialTextView badge = new com.google.android.material.textview.MaterialTextView(this);
             badge.setText(String.valueOf(i + 1));
-            badge.setWidth(dp(30));
-            badge.setHeight(dp(30));
+            LinearLayout.LayoutParams bp = new LinearLayout.LayoutParams(dp(30), dp(30));
+            bp.gravity = Gravity.CENTER;
+            badge.setLayoutParams(bp);
             badge.setBackgroundResource(R.drawable.m3_session_badge);
             badge.setGravity(Gravity.CENTER);
             badge.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnPrimary, 0xFFFFFFFF));

@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/m3_toast_bg"
-    android:gravity="center_vertical"
+    android:gravity="center"
     android:orientation="horizontal"
     android:paddingStart="18dp"
     android:paddingEnd="18dp"
