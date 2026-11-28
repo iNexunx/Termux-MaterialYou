@@ -377,7 +377,11 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (mIsInvalidState) return;
-        if (M3ThemeHelper.syncSystemNightMode(this)) mAppliedM3Mode = null;
+        if (M3ThemeHelper.syncSystemNightMode(this, newConfig)) {
+            mAppliedM3Mode = null;
+            applyM3ThemeIfChanged(true);
+            return;
+        }
         syncDrawerThemeSwitch();
         // If system mode, re-evaluate theme without forced recreation loops
         applyM3ThemeIfChanged(false);
