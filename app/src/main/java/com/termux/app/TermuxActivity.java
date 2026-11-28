@@ -210,6 +210,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         mProperties = TermuxAppSharedProperties.getProperties();
         reloadProperties();
 
+        M3ThemeHelper.syncSystemNightMode(this);
         android.content.SharedPreferences m3p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         mAppliedM3Accent = m3p.getString(M3ThemeHelper.PREF_ACCENT, "default");
         mAppliedM3Mode = m3p.getString(M3ThemeHelper.PREF_MODE, "system");
@@ -375,6 +376,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     public void onConfigurationChanged(android.content.res.Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (mIsInvalidState) return;
+        if (M3ThemeHelper.syncSystemNightMode(this)) mAppliedM3Mode = null;
         syncDrawerThemeSwitch();
         // If system mode, re-evaluate theme without forced recreation loops
         applyM3ThemeIfChanged(false);

@@ -5,6 +5,7 @@ import android.app.WallpaperColors;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -17,6 +18,7 @@ public final class M3ThemeHelper {
 
     public static final String PREF_ACCENT = "m3_accent";
     public static final String PREF_MODE = "m3_theme_mode";
+    public static final String PREF_LAST_SYSTEM_NIGHT = "m3_last_system_night";
     public static final String PREF_SEED_COLOR = "m3_seed_color";
     public static final String PREF_LANGUAGE = "m3_language";
 
@@ -42,6 +44,21 @@ public final class M3ThemeHelper {
             Class<?> nm = Class.forName("com.termux.shared.theme.NightMode");
             nm.getMethod("setAppNightMode", String.class).invoke(null, nightName);
         } catch (Throwable ignored) {}
+    }
+
+    /** Clear a manual light/dark override when the Android system theme changes. */
+    public static boolean syncSystemNightMode(Context context) {
+        int night = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        String current = night == Configuration.UI_MODE_NIGHT_YES ? "yes" : "no";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String previous = prefs.getString(PREF_LAST_SYSTEM_NIGHT, null);
+        prefs.edit().putString(PREF_LAST_SYSTEM_NIGHT, current).apply();
+        boolean changed = previous != null && !previous.equals(current);
+        if (!changed) return false;
+        String mode = prefs.getString(PREF_MODE, "system");
+        if ("light".equals(mode) || "dark".equals(mode))
+            prefs.edit().putString(PREF_MODE, "system").apply();
+        return true;
     }
 
     public static void applyLanguage(Context context) {

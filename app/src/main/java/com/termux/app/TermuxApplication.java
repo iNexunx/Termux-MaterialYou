@@ -50,6 +50,7 @@ public class TermuxApplication extends Application {
         TermuxShellManager shellManager = TermuxShellManager.init(context);
 
         // M3 appearance controls night mode globally; keep legacy property as fallback only if no M3 pref set.
+        com.termux.app.theme.M3ThemeHelper.syncSystemNightMode(this);
         android.content.SharedPreferences p = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
         if (!p.contains(com.termux.app.theme.M3ThemeHelper.PREF_MODE)) {
             TermuxThemeUtils.setAppNightMode(properties.getNightMode());
