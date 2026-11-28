@@ -776,18 +776,37 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             wlp.setMarginEnd(dp(8));
             wrapper.setLayoutParams(wlp);
 
-            TextView nameLabel = new TextView(this);
-            String displayName = (session.mSessionName != null && !session.mSessionName.trim().isEmpty()) ? session.mSessionName : "#" + (i + 1);
-            nameLabel.setText(displayName);
-            nameLabel.setTextSize(11f);
-            nameLabel.setMaxLines(1);
-            nameLabel.setEllipsize(android.text.TextUtils.TruncateAt.END);
-            nameLabel.setGravity(Gravity.CENTER_HORIZONTAL);
-            nameLabel.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222));
-            LinearLayout.LayoutParams nlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            nlp.bottomMargin = gap;
-            nameLabel.setLayoutParams(nlp);
-            wrapper.addView(nameLabel);
+            LinearLayout labelRow = new LinearLayout(this);
+            labelRow.setOrientation(LinearLayout.HORIZONTAL);
+            labelRow.setGravity(Gravity.CENTER_VERTICAL);
+            LinearLayout.LayoutParams lrp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lrp.bottomMargin = gap;
+            labelRow.setLayoutParams(lrp);
+
+            com.google.android.material.textview.MaterialTextView badge = new com.google.android.material.textview.MaterialTextView(this);
+            badge.setText(String.valueOf(i + 1));
+            badge.setWidth(dp(30));
+            badge.setHeight(dp(30));
+            badge.setBackgroundResource(R.drawable.m3_session_badge);
+            badge.setGravity(Gravity.CENTER);
+            badge.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnPrimary, 0xFFFFFFFF));
+            badge.setTextSize(10f);
+            badge.setTypeface(null, android.graphics.Typeface.BOLD);
+            labelRow.addView(badge);
+
+            if (session.mSessionName != null && !session.mSessionName.trim().isEmpty()) {
+                com.google.android.material.textview.MaterialTextView nameLabel = new com.google.android.material.textview.MaterialTextView(this);
+                nameLabel.setText(session.mSessionName.trim());
+                nameLabel.setTextSize(11f);
+                nameLabel.setMaxLines(1);
+                nameLabel.setEllipsize(android.text.TextUtils.TruncateAt.END);
+                nameLabel.setTextColor(com.termux.shared.theme.ThemeUtils.getSystemAttrColor(this, com.google.android.material.R.attr.colorOnSurface, 0xFF222222));
+                LinearLayout.LayoutParams nlp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+                nlp.setMarginStart(dp(4));
+                nameLabel.setLayoutParams(nlp);
+                labelRow.addView(nameLabel);
+            }
+            wrapper.addView(labelRow);
 
             com.termux.app.terminal.MiniTerminalPipView pip = new com.termux.app.terminal.MiniTerminalPipView(this);
             pip.setSession(session);
@@ -1046,7 +1065,15 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         if (text == null || text.isEmpty()) return;
         if (mLastToast != null) mLastToast.cancel();
         android.view.View v = getLayoutInflater().inflate(R.layout.m3_toast, null);
-        ((TextView) v.findViewById(R.id.m3_toast_text)).setText(text);
+        String message = text;
+        java.util.regex.Matcher sessionPrefix = java.util.regex.Pattern.compile("^\\[(\\d+)\\]\\s*").matcher(text);
+        if (sessionPrefix.find()) {
+            com.google.android.material.textview.MaterialTextView badge = v.findViewById(R.id.m3_toast_badge);
+            badge.setText(sessionPrefix.group(1));
+            badge.setVisibility(View.VISIBLE);
+            message = text.substring(sessionPrefix.end());
+        }
+        ((com.google.android.material.textview.MaterialTextView) v.findViewById(R.id.m3_toast_text)).setText(message);
         mLastToast = new Toast(getApplicationContext());
         mLastToast.setDuration(longDuration ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
         mLastToast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, dp(96));
