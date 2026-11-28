@@ -14,126 +14,126 @@
 
 <resources>
 
-    <string name="msg_directory_absolute_path">Ruta absoluta del directorio %1$s: \"%2$s\"</string>
+    <string name="msg_directory_absolute_path">Percorso assoluto della directory %1$s: \"%2$s\"</string>
 
 
 
     <!-- PackageUtils -->
-    <string name="error_app_not_installed_or_disabled_warning">La app %1$s (%2$s) no está instalada o está deshabilitada.</string>
-    <string name="error_get_package_context_failed_title">No se pudo obtener el contexto del paquete</string>
-    <string name="error_get_package_context_failed_message">No se pudo obtener el contexto del paquete \"%1$s\".
-        Esto puede deberse a que el paquete de la app no está instalado o a que tiene una firma APK diferente a la de la app actual.</string>
-    <string name="error_get_package_context_failed_help_url_message">Consulta %1$s para obtener más detalles.</string>
-    <string name="error_get_component_state_failed">No se pudo obtener el estado del componente %1$s/%2$s</string>
-    <string name="error_enable_component_failed">No se pudo habilitar el componente %1$s/%2$s</string>
-    <string name="error_disable_component_failed">No se pudo habilitar el componente %1$s/%2$s</string>
+    <string name="error_app_not_installed_or_disabled_warning">L\'app %1$s (%2$s) non è installata o è disabilitata.</string>
+    <string name="error_get_package_context_failed_title">Impossibile ottenere il contesto del pacchetto</string>
+    <string name="error_get_package_context_failed_message">Impossibile ottenere il contesto del pacchetto \"%1$s\".
+        Ciò può verificarsi perché il pacchetto dell\'app non è installato o ha una firma APK diversa da quella dell\'app attuale.</string>
+    <string name="error_get_package_context_failed_help_url_message">Consulta %1$s per maggiori dettagli.</string>
+    <string name="error_get_component_state_failed">Impossibile ottenere lo stato del componente %1$s/%2$s</string>
+    <string name="error_enable_component_failed">Impossibile abilitare il componente %1$s/%2$s</string>
+    <string name="error_disable_component_failed">Impossibile abilitare il componente %1$s/%2$s</string>
 
 
 
     <!-- PermissionUtils -->
-    <string name="message_sudo_please_grant_permissions">Concede los permisos solicitados</string>
-    <string name="error_failed_to_request_permissions">No se pudieron solicitar los permisos con el código de solicitud %1$d: %2$s</string>
-    <string name="error_attempted_to_check_for_permissions_not_requested">Se intentó verificar permisos que no han sido solicitados en el manifiesto de la app: %1$s</string>
-    <string name="error_attempted_to_ask_for_permissions_not_requested">Se intentó pedir permisos que no han sido solicitados en el manifiesto de la app: %1$s</string>
-    <string name="error_has_not_requested_legacy_external_storage">El paquete \"%1$s\" tiene como objetivo targetSdkVersion %2$d y se ejecuta en android sdk %3$d, pero no ha establecido requestLegacyExternalStorage como true en el manifiesto de la app</string>
-    <string name="msg_requires_dump_and_package_usage_stats_permissions">Requiere el permiso `DUMP` y `PACKAGE_USAGE_STATS`</string>
-    <string name="error_display_over_other_apps_permission_not_granted">%1$s requiere
-        el permiso \"Mostrar sobre otras apps\" para iniciar actividades y servicios desde segundo plano en Android >= 10.
-        Concédelo desde Ajustes de Android -> Apps -> %1$s -> Avanzado -> Dibujar sobre otras apps.
-        El nombre del permiso puede variar según el dispositivo; por ejemplo, en Xiaomi se llama
-        \"Mostrar ventanas emergentes mientras se ejecuta en segundo plano\". Consulta https://dontkillmyapp.com
-        para problemas específicos de cada dispositivo.</string>
+    <string name="message_sudo_please_grant_permissions">Concedi le autorizzazioni richieste</string>
+    <string name="error_failed_to_request_permissions">Impossibile richiedere le autorizzazioni con il codice di richiesta %1$d: %2$s</string>
+    <string name="error_attempted_to_check_for_permissions_not_requested">Tentativo di verificare autorizzazioni non richieste nel manifest dell\'app: %1$s</string>
+    <string name="error_attempted_to_ask_for_permissions_not_requested">Tentativo di richiedere autorizzazioni non richieste nel manifest dell\'app: %1$s</string>
+    <string name="error_has_not_requested_legacy_external_storage">Il pacchetto \"%1$s\" ha come targetSdkVersion %2$d ed è in esecuzione su android sdk %3$d, ma non ha impostato requestLegacyExternalStorage su true nel manifest dell\'app</string>
+    <string name="msg_requires_dump_and_package_usage_stats_permissions">Richiede le autorizzazioni `DUMP` e `PACKAGE_USAGE_STATS`</string>
+    <string name="error_display_over_other_apps_permission_not_granted">%1$s richiede
+        l\'autorizzazione \"Mostra sopra altre app\" per avviare attività e servizi in background su Android &gt;= 10.
+        Concedila dalle Impostazioni di Android -&gt; App -&gt; %1$s -&gt; Avanzate -&gt; Disegna sopra altre app.
+        Il nome dell\'autorizzazione può variare da dispositivo a dispositivo; ad esempio, su Xiaomi si chiama
+        \"Mostra finestre popup durante l\'esecuzione in background\". Consulta https://dontkillmyapp.com
+        per problemi specifici del dispositivo.</string>
 
 
 
     <!-- TermuxPluginUtils -->
-    <string name="error_allow_external_apps_ungranted">%1$s requiere que la propiedad `allow-external-apps`
-        esté establecida como `true` en el archivo `%2$s`.</string>
+    <string name="error_allow_external_apps_ungranted">%1$s richiede che la proprietà `allow-external-apps`
+        sia impostata su `true` nel file `%2$s`.</string>
 
 
 
     <!-- ReportActivity -->
-    <string name="title_report_text">Texto del informe</string>
-    <string name="msg_report_truncated">**Informe truncado**\n\nEl informe es demasiado grande para verlo aquí.
-        Usa la opción `Guardar en archivo` del menú de opciones (los tres puntos en la esquina superior derecha) y ábrelo en una app externa de editor de texto.\n\n##\n\n</string>
+    <string name="title_report_text">Testo del report</string>
+    <string name="msg_report_truncated">**Report troncato**\n\nIl report è troppo grande per essere visualizzato qui.
+        Usa l\'opzione `Salva su file` del menu delle opzioni (i tre punti in alto a destra) e aprilo in un\'app esterna per la modifica dei testi.\n\n##\n\n</string>
 
 
 
     <!-- ShareUtils -->
-    <string name="title_share_with">Compartir con</string>
-    <string name="title_open_url_with">Abrir URL con</string>
-    <string name="msg_storage_permission_not_granted">No se concedió el permiso de almacenamiento.</string>
-    <string name="msg_file_saved_successfully">El archivo %1$s se guardó correctamente en \"%2$s\"</string>
+    <string name="title_share_with">Condividi con</string>
+    <string name="title_open_url_with">Apri URL con</string>
+    <string name="msg_storage_permission_not_granted">Autorizzazione di archiviazione non concessa.</string>
+    <string name="msg_file_saved_successfully">Il file %1$s è stato salvato correttamente in \"%2$s\"</string>
 
 
 
     <!-- Shell -->
-    <string name="error_sending_sigkill_to_process">Enviando SIGKILL al proceso por solicitud del usuario o porque Android está cerrando el servicio de ejecución</string>
-    <string name="error_executable_unset">No se estableció el ejecutable \"%1$s\" para el comando de shell</string>
-    <string name="error_execution_cancelled">La ejecución se canceló porque el servicio de ejecución está siendo cerrado</string>
-    <string name="error_failed_to_execute_termux_session_command">No se pudo ejecutar el comando de sesión de termux \"%1$s\"</string>
-    <string name="error_failed_to_execute_app_shell_command">No se pudo ejecutar el comando de shell de la app \"%1$s\"</string>
-    <string name="error_exception_received_while_executing_termux_session_command">Se recibió una excepción al ejecutar el comando de sesión de termux \"%1$s\".\nExcepción: %2$s</string>
-    <string name="error_exception_received_while_executing_app_shell_command">Se recibió una excepción al ejecutar el comando de shell de la app \"%1$s\".\nExcepción: %2$s</string>
+    <string name="error_sending_sigkill_to_process">Invio SIGKILL al processo su richiesta dell\'utente o perché Android sta chiudendo il servizio di esecuzione</string>
+    <string name="error_executable_unset">Eseguibile \"%1$s\" non impostato per il comando shell</string>
+    <string name="error_execution_cancelled">Esecuzione annullata perché il servizio di esecuzione è in chiusura</string>
+    <string name="error_failed_to_execute_termux_session_command">Impossibile eseguire il comando della sessione termux \"%1$s\"</string>
+    <string name="error_failed_to_execute_app_shell_command">Impossibile eseguire il comando shell dell\'app \"%1$s\"</string>
+    <string name="error_exception_received_while_executing_termux_session_command">Ricevuta un\'eccezione durante l\'esecuzione del comando della sessione termux \"%1$s\".\nEccezione: %2$s</string>
+    <string name="error_exception_received_while_executing_app_shell_command">Ricevuta un\'eccezione durante l\'esecuzione del comando shell dell\'app \"%1$s\".\nEccezione: %2$s</string>
 
 
 
     <!-- TermuxUtils -->
     <string name="msg_report_issue">
-        Si deseas informar de este problema, copia su texto desde el menú de opciones (los tres puntos en la esquina superior derecha) y publica
-        un informe en uno de los siguientes enlaces.
-        \n\nSi vas a publicar un informe de fallo de la app Termux, incluye detalles sobre qué estabas haciendo cuando se produjo el fallo
-        y cómo reproducirlo, si es posible.
-        \n\nSi vas a publicar un informe en GitHub, hazlo en el repositorio al que corresponda el informe.
-        Los informes abiertos o los correos enviados con **capturas parciales** en lugar del texto copiado o de un archivo de este informe
-        **probablemente se cerrarán o eliminarán automáticamente**. Puedes eliminar opcionalmente cualquier información específica del dispositivo
-        que consideres privada, que no quieras compartir o que no sea relevante para el problema.
-        \n\nNo ofrecemos soporte para herramientas o scripts relacionados con hacking. Cualquier pregunta sobre ellos por correo electrónico,
-        en GitHub u otros foros oficiales de la comunidad de termux **probablemente se cerrará o eliminará automáticamente** y puede
-        dar lugar incluso a una suspensión **temporal o permanente**. Consulta %1$s/wiki/Hacking para obtener más detalles.</string>
+        Se vuoi segnalare questo problema, copia il testo dal menu delle opzioni (i tre punti in alto a destra) e pubblica
+        una segnalazione su uno dei seguenti link.
+        \n\nSe pubblichi una segnalazione di arresto anomalo dell\'app Termux, includi dettagli su cosa stavi facendo quando si è verificato l\'arresto anomalo
+        e su come riprodurlo, se possibile.
+        \n\nSe pubblichi una segnalazione su GitHub, fallo nel repository corretto per la segnalazione.
+        Le segnalazioni aperte o le email inviate con **catture parziali** invece del testo copiato o di un file di questa segnalazione
+        **verranno molto probabilmente chiuse o eliminate automaticamente**. Puoi rimuovere facoltativamente qualsiasi informazione specifica del dispositivo
+        che ritieni privata, che non vuoi condividere o che non è rilevante per il problema.
+        \n\nNon offriamo supporto per strumenti o script legati all\'hacking. Qualsiasi domanda al riguardo via email,
+        su GitHub o su altri forum ufficiali della community di termux **verrà molto probabilmente chiusa o eliminata automaticamente** e può
+        comportare addirittura una sospensione **temporanea o permanente**. Consulta %1$s/wiki/Hacking per maggiori dettagli.</string>
 
-    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME; es requerido por la app %1$s para ejecutar comandos de termux.</string>
-    <string name="error_termux_app_package_context_not_accessible">La app &TERMUX_APP_NAME; (contexto del paquete) no está accesible.</string>
-    <string name="error_termux_prefix_dir_path_not_accessible">La app %1$s no puede acceder al directorio $PREFIX de la app &TERMUX_APP_NAME;.
-        Esto puede deberse a que no has instalado o configurado la app &TERMUX_APP_NAME;, o a que la app &TERMUX_APP_NAME; y la app %1$s
-        tienen firmas APK diferentes porque instalaste ambas apps desde fuentes distintas.
-        También puede deberse a que el directorio $PREFIX de &TERMUX_APP_NAME; \"&TERMUX_PREFIX_DIR_PATH;\" no existe o no tiene permisos
-        de lectura, escritura y ejecución.</string>
+    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME; è richiesto dall\'app %1$s per eseguire i comandi di termux.</string>
+    <string name="error_termux_app_package_context_not_accessible">L\'app &TERMUX_APP_NAME; (contesto del pacchetto) non è accessibile.</string>
+    <string name="error_termux_prefix_dir_path_not_accessible">L\'app %1$s non può accedere alla directory $PREFIX dell\'app &TERMUX_APP_NAME;.
+        Ciò può verificarsi perché non hai installato o configurato l\'app &TERMUX_APP_NAME;, o perché l\'app &TERMUX_APP_NAME; e l\'app %1$s
+        hanno firme APK diverse, in quanto hai installato entrambe le app da fonti diverse.
+        Può anche verificarsi perché la directory $PREFIX di &TERMUX_APP_NAME; \"&TERMUX_PREFIX_DIR_PATH;\" non esiste o non dispone delle autorizzazioni
+        di lettura, scrittura ed esecuzione.</string>
 
 
 
     <!-- Miscellaneous -->
-    <string name="action_yes">Sí</string>
+    <string name="action_yes">Sì</string>
     <string name="action_no">No</string>
-    <string name="action_copy">Copiar</string>
-    <string name="action_share">Compartir</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="action_save_to_file">Guardar en archivo</string>
+    <string name="action_copy">Copia</string>
+    <string name="action_share">Condividi</string>
+    <string name="action_cancel">Annulla</string>
+    <string name="action_save_to_file">Salva su file</string>
 
-    <string name="msg_storage_permission_granted_on_request">El usuario concedió el permiso de almacenamiento cuando se le solicitó</string>
-    <string name="msg_storage_permission_not_granted_on_request">El usuario no concedió el permiso de almacenamiento cuando se le solicitó</string>
+    <string name="msg_storage_permission_granted_on_request">L\'utente ha concesso l\'autorizzazione di archiviazione quando richiesto</string>
+    <string name="msg_storage_permission_not_granted_on_request">L\'utente non ha concesso l\'autorizzazione di archiviazione quando richiesto</string>
 
 
 
     <!-- Launcher Icons -->
-    <string name="action_enable_launcher_icon">Habilitar ícono de lanzador</string>
-    <string name="action_disable_launcher_icon">Deshabilitar ícono de lanzador</string>
-    <string name="msg_enabling_launcher_icon">Habilitando el ícono de lanzador de la app %1$s</string>
-    <string name="msg_disabling_launcher_icon">Deshabilitando el ícono de lanzador de la app %1$s</string>
-    <string name="setting_launcher_icon_title">Ícono de lanzador habilitado</string>
-    <string name="setting_launcher_icon_enabled_off">El ícono de lanzador estará deshabilitado.</string>
-    <string name="setting_launcher_icon_enabled_on">El ícono de lanzador estará habilitado. (Predeterminado)</string>
+    <string name="action_enable_launcher_icon">Abilita icona del lanciatore</string>
+    <string name="action_disable_launcher_icon">Disabilita icona del lanciatore</string>
+    <string name="msg_enabling_launcher_icon">Abilitazione dell\'icona del lanciatore dell\'app %1$s</string>
+    <string name="msg_disabling_launcher_icon">Disabilitazione dell\'icona del lanciatore dell\'app %1$s</string>
+    <string name="setting_launcher_icon_title">Icona del lanciatore abilitata</string>
+    <string name="setting_launcher_icon_enabled_off">L\'icona del lanciatore sarà disabilitata.</string>
+    <string name="setting_launcher_icon_enabled_on">L\'icona del lanciatore sarà abilitata. (Predefinito)</string>
 
 
 
     <!-- Log Level -->
-    <string name="log_level_title">Nivel de registro</string>
-    <string name="log_level_off">Desactivado</string>
-    <string name="log_level_normal">Normal</string>
-    <string name="log_level_debug">Depuración</string>
-    <string name="log_level_verbose">Detallado</string>
-    <string name="log_level_unknown">*Desconocido*</string>
-    <string name="log_level_value">Nivel de registro de logcat establecido en \"%1$s\"</string>
+    <string name="log_level_title">Livello di log</string>
+    <string name="log_level_off">Disattivato</string>
+    <string name="log_level_normal">Normale</string>
+    <string name="log_level_debug">Debug</string>
+    <string name="log_level_verbose">Dettagliato</string>
+    <string name="log_level_unknown">*Sconosciuto*</string>
+    <string name="log_level_value">Livello di log di logcat impostato su \"%1$s\"</string>
 
-    <string name="title_text_io_activity">Entrada de texto</string>
+    <string name="title_text_io_activity">Input di testo</string>
 </resources>

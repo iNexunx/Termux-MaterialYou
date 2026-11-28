@@ -14,126 +14,126 @@
 
 <resources>
 
-    <string name="msg_directory_absolute_path">Ruta absoluta del directorio %1$s: \"%2$s\"</string>
+    <string name="msg_directory_absolute_path">Path absolut direktori %1$s: \"%2$s\"</string>
 
 
 
     <!-- PackageUtils -->
-    <string name="error_app_not_installed_or_disabled_warning">La app %1$s (%2$s) no está instalada o está deshabilitada.</string>
-    <string name="error_get_package_context_failed_title">No se pudo obtener el contexto del paquete</string>
-    <string name="error_get_package_context_failed_message">No se pudo obtener el contexto del paquete \"%1$s\".
-        Esto puede deberse a que el paquete de la app no está instalado o a que tiene una firma APK diferente a la de la app actual.</string>
-    <string name="error_get_package_context_failed_help_url_message">Consulta %1$s para obtener más detalles.</string>
-    <string name="error_get_component_state_failed">No se pudo obtener el estado del componente %1$s/%2$s</string>
-    <string name="error_enable_component_failed">No se pudo habilitar el componente %1$s/%2$s</string>
-    <string name="error_disable_component_failed">No se pudo habilitar el componente %1$s/%2$s</string>
+    <string name="error_app_not_installed_or_disabled_warning">Aplikasi %1$s (%2$s) tidak terpasang atau dinonaktifkan.</string>
+    <string name="error_get_package_context_failed_title">Gagal mendapatkan konteks paket</string>
+    <string name="error_get_package_context_failed_message">Gagal mendapatkan konteks paket \"%1$s\".
+        Ini mungkin karena paket aplikasi tidak terpasang atau karena paket tersebut memiliki tanda tangan APK yang berbeda dengan aplikasi saat ini.</string>
+    <string name="error_get_package_context_failed_help_url_message">Lihat %1$s untuk detail lebih lanjut.</string>
+    <string name="error_get_component_state_failed">Gagal mendapatkan status komponen %1$s/%2$s</string>
+    <string name="error_enable_component_failed">Gagal mengaktifkan komponen %1$s/%2$s</string>
+    <string name="error_disable_component_failed">Gagal menonaktifkan komponen %1$s/%2$s</string>
 
 
 
     <!-- PermissionUtils -->
-    <string name="message_sudo_please_grant_permissions">Concede los permisos solicitados</string>
-    <string name="error_failed_to_request_permissions">No se pudieron solicitar los permisos con el código de solicitud %1$d: %2$s</string>
-    <string name="error_attempted_to_check_for_permissions_not_requested">Se intentó verificar permisos que no han sido solicitados en el manifiesto de la app: %1$s</string>
-    <string name="error_attempted_to_ask_for_permissions_not_requested">Se intentó pedir permisos que no han sido solicitados en el manifiesto de la app: %1$s</string>
-    <string name="error_has_not_requested_legacy_external_storage">El paquete \"%1$s\" tiene como objetivo targetSdkVersion %2$d y se ejecuta en android sdk %3$d, pero no ha establecido requestLegacyExternalStorage como true en el manifiesto de la app</string>
-    <string name="msg_requires_dump_and_package_usage_stats_permissions">Requiere el permiso `DUMP` y `PACKAGE_USAGE_STATS`</string>
-    <string name="error_display_over_other_apps_permission_not_granted">%1$s requiere
-        el permiso \"Mostrar sobre otras apps\" para iniciar actividades y servicios desde segundo plano en Android >= 10.
-        Concédelo desde Ajustes de Android -> Apps -> %1$s -> Avanzado -> Dibujar sobre otras apps.
-        El nombre del permiso puede variar según el dispositivo; por ejemplo, en Xiaomi se llama
-        \"Mostrar ventanas emergentes mientras se ejecuta en segundo plano\". Consulta https://dontkillmyapp.com
-        para problemas específicos de cada dispositivo.</string>
+    <string name="message_sudo_please_grant_permissions">Berikan izin yang diminta</string>
+    <string name="error_failed_to_request_permissions">Gagal meminta izin dengan kode permintaan %1$d: %2$s</string>
+    <string name="error_attempted_to_check_for_permissions_not_requested">Mencoba memeriksa izin yang tidak diminta dalam manifest aplikasi: %1$s</string>
+    <string name="error_attempted_to_ask_for_permissions_not_requested">Mencoba meminta izin yang tidak diminta dalam manifest aplikasi: %1$s</string>
+    <string name="error_has_not_requested_legacy_external_storage">Paket \"%1$s\" menargetkan targetSdkVersion %2$d dan berjalan pada android sdk %3$d, tetapi belum menetapkan requestLegacyExternalStorage sebagai true dalam manifest aplikasi</string>
+    <string name="msg_requires_dump_and_package_usage_stats_permissions">Memerlukan izin `DUMP` dan `PACKAGE_USAGE_STATS`</string>
+    <string name="error_display_over_other_apps_permission_not_granted">%1$s memerlukan
+        izin \"Tampilkan di atas aplikasi lain\" untuk memulai aktivitas dan layanan dari latar belakang di Android >= 10.
+        Berikan izin tersebut dari Pengaturan Android -> Aplikasi -> %1$s -> Lanjutan -> Gambar di atas aplikasi lain.
+        Nama izin dapat berbeda pada setiap perangkat; misalnya, di Xiaomi disebut
+        \"Tampilkan jendela popup saat berjalan di latar belakang\". Lihat https://dontkillmyapp.com
+        untuk masalah yang spesifik per perangkat.</string>
 
 
 
     <!-- TermuxPluginUtils -->
-    <string name="error_allow_external_apps_ungranted">%1$s requiere que la propiedad `allow-external-apps`
-        esté establecida como `true` en el archivo `%2$s`.</string>
+    <string name="error_allow_external_apps_ungranted">%1$s memerlukan properti `allow-external-apps`
+        untuk ditetapkan sebagai `true` dalam berkas `%2$s`.</string>
 
 
 
     <!-- ReportActivity -->
-    <string name="title_report_text">Texto del informe</string>
-    <string name="msg_report_truncated">**Informe truncado**\n\nEl informe es demasiado grande para verlo aquí.
-        Usa la opción `Guardar en archivo` del menú de opciones (los tres puntos en la esquina superior derecha) y ábrelo en una app externa de editor de texto.\n\n##\n\n</string>
+    <string name="title_report_text">Teks laporan</string>
+    <string name="msg_report_truncated">**Laporan dipotong**\n\nLaporan terlalu besar untuk dilihat di sini.
+        Gunakan opsi `Simpan ke file` dari menu opsi (titik tiga di sudut kanan atas) dan buka di aplikasi editor teks eksternal.\n\n##\n\n</string>
 
 
 
     <!-- ShareUtils -->
-    <string name="title_share_with">Compartir con</string>
-    <string name="title_open_url_with">Abrir URL con</string>
-    <string name="msg_storage_permission_not_granted">No se concedió el permiso de almacenamiento.</string>
-    <string name="msg_file_saved_successfully">El archivo %1$s se guardó correctamente en \"%2$s\"</string>
+    <string name="title_share_with">Bagikan dengan</string>
+    <string name="title_open_url_with">Buka URL dengan</string>
+    <string name="msg_storage_permission_not_granted">Izin penyimpanan tidak diberikan.</string>
+    <string name="msg_file_saved_successfully">Berkas %1$s berhasil disimpan ke \"%2$s\"</string>
 
 
 
     <!-- Shell -->
-    <string name="error_sending_sigkill_to_process">Enviando SIGKILL al proceso por solicitud del usuario o porque Android está cerrando el servicio de ejecución</string>
-    <string name="error_executable_unset">No se estableció el ejecutable \"%1$s\" para el comando de shell</string>
-    <string name="error_execution_cancelled">La ejecución se canceló porque el servicio de ejecución está siendo cerrado</string>
-    <string name="error_failed_to_execute_termux_session_command">No se pudo ejecutar el comando de sesión de termux \"%1$s\"</string>
-    <string name="error_failed_to_execute_app_shell_command">No se pudo ejecutar el comando de shell de la app \"%1$s\"</string>
-    <string name="error_exception_received_while_executing_termux_session_command">Se recibió una excepción al ejecutar el comando de sesión de termux \"%1$s\".\nExcepción: %2$s</string>
-    <string name="error_exception_received_while_executing_app_shell_command">Se recibió una excepción al ejecutar el comando de shell de la app \"%1$s\".\nExcepción: %2$s</string>
+    <string name="error_sending_sigkill_to_process">Mengirim SIGKILL ke proses atas permintaan pengguna atau karena Android menutup layanan eksekusi</string>
+    <string name="error_executable_unset">Executable \"%1$s\" tidak ditetapkan untuk perintah shell</string>
+    <string name="error_execution_cancelled">Eksekusi dibatalkan karena layanan eksekusi sedang ditutup</string>
+    <string name="error_failed_to_execute_termux_session_command">Gagal menjalankan perintah sesi termux \"%1$s\"</string>
+    <string name="error_failed_to_execute_app_shell_command">Gagal menjalankan perintah shell aplikasi \"%1$s\"</string>
+    <string name="error_exception_received_while_executing_termux_session_command">Terjadi pengecualian saat menjalankan perintah sesi termux \"%1$s\".\nPengecualian: %2$s</string>
+    <string name="error_exception_received_while_executing_app_shell_command">Terjadi pengecualian saat menjalankan perintah shell aplikasi \"%1$s\".\nPengecualian: %2$s</string>
 
 
 
     <!-- TermuxUtils -->
     <string name="msg_report_issue">
-        Si deseas informar de este problema, copia su texto desde el menú de opciones (los tres puntos en la esquina superior derecha) y publica
-        un informe en uno de los siguientes enlaces.
-        \n\nSi vas a publicar un informe de fallo de la app Termux, incluye detalles sobre qué estabas haciendo cuando se produjo el fallo
-        y cómo reproducirlo, si es posible.
-        \n\nSi vas a publicar un informe en GitHub, hazlo en el repositorio al que corresponda el informe.
-        Los informes abiertos o los correos enviados con **capturas parciales** en lugar del texto copiado o de un archivo de este informe
-        **probablemente se cerrarán o eliminarán automáticamente**. Puedes eliminar opcionalmente cualquier información específica del dispositivo
-        que consideres privada, que no quieras compartir o que no sea relevante para el problema.
-        \n\nNo ofrecemos soporte para herramientas o scripts relacionados con hacking. Cualquier pregunta sobre ellos por correo electrónico,
-        en GitHub u otros foros oficiales de la comunidad de termux **probablemente se cerrará o eliminará automáticamente** y puede
-        dar lugar incluso a una suspensión **temporal o permanente**. Consulta %1$s/wiki/Hacking para obtener más detalles.</string>
+        Jika ingin melaporkan masalah ini, salin teksnya dari menu opsi (titik tiga di sudut kanan atas) dan posting
+        laporan di salah satu tautan berikut.
+        \n\nJika ingin memposting laporan kerusakan aplikasi Termux, sertakan detail tentang apa yang sedang kamu lakukan saat kerusakan terjadi
+        dan cara mereproduksinya, jika memungkinkan.
+        \n\nJika ingin memposting laporan di GitHub, posting di repositori yang sesuai dengan laporan tersebut.
+        Laporan yang dibuka atau email yang dikirim dengan **cuplikan sebagian** bukan teks yang disalin atau berkas laporan ini
+        **kemungkinan besar akan ditutup atau dihapus otomatis**. Kamu dapat menghapus secara opsional informasi spesifik perangkat
+        yang kamu anggap pribadi, tidak ingin dibagikan, atau tidak relevan dengan masalah tersebut.
+        \n\nKami tidak memberikan dukungan untuk alat atau skrip terkait peretasan. Pertanyaan apa pun tentang hal itu melalui email,
+        di GitHub, atau forum komunitas resmi termux lainnya **kemungkinan besar akan ditutup atau dihapus otomatis** dan dapat
+        mengakibatkan penangguhan **sementara atau permanen**. Lihat %1$s/wiki/Hacking untuk detail lebih lanjut.</string>
 
-    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME; es requerido por la app %1$s para ejecutar comandos de termux.</string>
-    <string name="error_termux_app_package_context_not_accessible">La app &TERMUX_APP_NAME; (contexto del paquete) no está accesible.</string>
-    <string name="error_termux_prefix_dir_path_not_accessible">La app %1$s no puede acceder al directorio $PREFIX de la app &TERMUX_APP_NAME;.
-        Esto puede deberse a que no has instalado o configurado la app &TERMUX_APP_NAME;, o a que la app &TERMUX_APP_NAME; y la app %1$s
-        tienen firmas APK diferentes porque instalaste ambas apps desde fuentes distintas.
-        También puede deberse a que el directorio $PREFIX de &TERMUX_APP_NAME; \"&TERMUX_PREFIX_DIR_PATH;\" no existe o no tiene permisos
-        de lectura, escritura y ejecución.</string>
+    <string name="msg_termux_app_required_by_app">&TERMUX_APP_NAME; diperlukan oleh aplikasi %1$s untuk menjalankan perintah termux.</string>
+    <string name="error_termux_app_package_context_not_accessible">Aplikasi &TERMUX_APP_NAME; (konteks paket) tidak dapat diakses.</string>
+    <string name="error_termux_prefix_dir_path_not_accessible">Aplikasi %1$s tidak dapat mengakses direktori $PREFIX dari aplikasi &TERMUX_APP_NAME;.
+        Ini mungkin karena kamu belum memasang atau menyiapkan aplikasi &TERMUX_APP_NAME;, atau karena aplikasi &TERMUX_APP_NAME; dan aplikasi %1$s
+        memiliki tanda tangan APK yang berbeda karena kamu memasang kedua aplikasi dari sumber yang berbeda.
+        Hal ini juga mungkin karena direktori $PREFIX &TERMUX_APP_NAME; \"&TERMUX_PREFIX_DIR_PATH;\" tidak ada atau tidak memiliki izin
+        baca, tulis, dan jalankan.</string>
 
 
 
     <!-- Miscellaneous -->
-    <string name="action_yes">Sí</string>
-    <string name="action_no">No</string>
-    <string name="action_copy">Copiar</string>
-    <string name="action_share">Compartir</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="action_save_to_file">Guardar en archivo</string>
+    <string name="action_yes">Ya</string>
+    <string name="action_no">Tidak</string>
+    <string name="action_copy">Salin</string>
+    <string name="action_share">Bagikan</string>
+    <string name="action_cancel">Batal</string>
+    <string name="action_save_to_file">Simpan ke file</string>
 
-    <string name="msg_storage_permission_granted_on_request">El usuario concedió el permiso de almacenamiento cuando se le solicitó</string>
-    <string name="msg_storage_permission_not_granted_on_request">El usuario no concedió el permiso de almacenamiento cuando se le solicitó</string>
+    <string name="msg_storage_permission_granted_on_request">Pengguna memberikan izin penyimpanan saat diminta</string>
+    <string name="msg_storage_permission_not_granted_on_request">Pengguna tidak memberikan izin penyimpanan saat diminta</string>
 
 
 
     <!-- Launcher Icons -->
-    <string name="action_enable_launcher_icon">Habilitar ícono de lanzador</string>
-    <string name="action_disable_launcher_icon">Deshabilitar ícono de lanzador</string>
-    <string name="msg_enabling_launcher_icon">Habilitando el ícono de lanzador de la app %1$s</string>
-    <string name="msg_disabling_launcher_icon">Deshabilitando el ícono de lanzador de la app %1$s</string>
-    <string name="setting_launcher_icon_title">Ícono de lanzador habilitado</string>
-    <string name="setting_launcher_icon_enabled_off">El ícono de lanzador estará deshabilitado.</string>
-    <string name="setting_launcher_icon_enabled_on">El ícono de lanzador estará habilitado. (Predeterminado)</string>
+    <string name="action_enable_launcher_icon">Aktifkan ikon peluncur</string>
+    <string name="action_disable_launcher_icon">Nonaktifkan ikon peluncur</string>
+    <string name="msg_enabling_launcher_icon">Mengaktifkan ikon peluncur aplikasi %1$s</string>
+    <string name="msg_disabling_launcher_icon">Menonaktifkan ikon peluncur aplikasi %1$s</string>
+    <string name="setting_launcher_icon_title">Ikon peluncur diaktifkan</string>
+    <string name="setting_launcher_icon_enabled_off">Ikon peluncur akan dinonaktifkan.</string>
+    <string name="setting_launcher_icon_enabled_on">Ikon peluncur akan diaktifkan. (Bawaan)</string>
 
 
 
     <!-- Log Level -->
-    <string name="log_level_title">Nivel de registro</string>
-    <string name="log_level_off">Desactivado</string>
+    <string name="log_level_title">Tingkat log</string>
+    <string name="log_level_off">Nonaktif</string>
     <string name="log_level_normal">Normal</string>
-    <string name="log_level_debug">Depuración</string>
-    <string name="log_level_verbose">Detallado</string>
-    <string name="log_level_unknown">*Desconocido*</string>
-    <string name="log_level_value">Nivel de registro de logcat establecido en \"%1$s\"</string>
+    <string name="log_level_debug">Debugging</string>
+    <string name="log_level_verbose">Verbose</string>
+    <string name="log_level_unknown">*Tidak diketahui*</string>
+    <string name="log_level_value">Tingkat log logcat ditetapkan ke \"%1$s\"</string>
 
-    <string name="title_text_io_activity">Entrada de texto</string>
+    <string name="title_text_io_activity">Input teks</string>
 </resources>
