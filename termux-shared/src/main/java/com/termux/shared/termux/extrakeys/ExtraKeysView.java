@@ -406,19 +406,11 @@ public final class ExtraKeysView extends GridLayout {
 
         removeAllViews();
 
-        int keyMargin = Math.round(getResources().getDisplayMetrics().density * 2);
+        int keyMargin = Math.round(getResources().getDisplayMetrics().density * 3);
         ExtraKeyButton[][] buttons = extraKeysInfo.getMatrix();
 
         setRowCount(buttons.length);
-        int columnCount = maximumLength(buttons);
-        float[] columnWeights = new float[columnCount];
-        for (ExtraKeyButton[] row : buttons) {
-            for (int col = 0; col < row.length; col++) {
-                String display = row[col].getDisplay();
-                columnWeights[col] = Math.max(columnWeights[col], display == null ? 1 : Math.max(1, display.length()));
-            }
-        }
-        setColumnCount(columnCount);
+        setColumnCount(maximumLength(buttons));
 
         for (int row = 0; row < buttons.length; row++) {
             for (int col = 0; col < buttons[row].length; col++) {
@@ -435,7 +427,7 @@ public final class ExtraKeysView extends GridLayout {
                 button.setText(buttonInfo.getDisplay());
                 button.setTextColor(mButtonTextColor);
                 button.setAllCaps(mButtonTextAllCaps);
-                button.setPadding(dpToPx(1), 0, dpToPx(1), 0);
+                button.setPadding(0, 0, 0, 0);
                 button.setSingleLine(true);
                 button.setMaxLines(1);
                 button.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -515,7 +507,7 @@ public final class ExtraKeysView extends GridLayout {
                 } else {
                     button.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 11);
                 }
-                param.columnSpec = GridLayout.spec(col, GridLayout.FILL, columnWeights[col]);
+                param.columnSpec = GridLayout.spec(col, GridLayout.FILL, 1.f);
                 param.rowSpec = GridLayout.spec(row, GridLayout.FILL, 1.f);
                 button.setLayoutParams(param);
 
@@ -721,7 +713,7 @@ public final class ExtraKeysView extends GridLayout {
         button.setMaxLines(1);
         button.setSingleLine(true);
         button.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        button.setPadding(dpToPx(1), 0, dpToPx(1), 0);
+        button.setPadding(0, 0, 0, 0);
         button.setMinWidth(0);
         button.setMinimumWidth(0);
         button.setMinHeight(0);
